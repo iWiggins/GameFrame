@@ -1,0 +1,91 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+/// Clickable versions of geometric classes.
+/// This code is generated and should not be manually edited.
+using GameFrame.Core.EventHandlers;
+using GameFrame.Core.Geometrics;
+using GameFrame.Core.Interfaces;
+using GameFrame.Core.Input;
+using Microsoft.Xna.Framework;
+
+namespace GameFrame.Core.Clickables;
+
+<#
+string path = System.IO.Path.Combine(Directory.GetCurrentDirectory(),"GameFrame","Core","Components");
+foreach(string fname in Directory.GetFiles(path))
+{
+    string name = Path.GetFileNameWithoutExtension(fname);
+	if(name == "Twig") continue; // twig works differently
+	if(name == "RootComponent") continue; // there is only one root component
+#>
+
+public abstract class Clickable<#=name#>: Geometric<#=name#>, IClick
+{
+    public event MouseDownHandler? Pressed;
+	public event MouseUpHandler? Released;
+	public event MouseHoverHandler? Hovered;
+	public event MouseUnhoverHandler? Unhovered;
+
+	public bool Down { get; private set; } = false;
+	public bool Hovering {get; private set; } = false;
+
+	public void Click(GameTime time, Mouse mouse)
+	{
+		if(Overlaps(mouse.Position))
+		{
+			if(!Hovering)
+			{
+				Hovering = true;
+				hoverTime = time;
+				if(Hovered is not null) Hovered();
+			}
+			if(mouse.LeftDown && !Down)
+			{
+				Down = true;
+				pressedTime = time;
+				if(Pressed is not null)
+				{
+					Pressed(Mouse.Buttons.Left, mouse.Position);
+				}
+			}
+			else if(!mouse.LeftDown && Down)
+			{
+				Down = false;
+				if(Released is not null)
+				{
+					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+					Released(Mouse.Buttons.Left, mouse.Position, dt);
+				}
+			}
+		}
+		else
+		{
+			if(Hovering)
+			{
+				Hovering = false;
+				if(Unhovered is not null)
+				{
+					double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
+				}
+			}
+			if(Down)
+			{
+				Down = false;
+				if(Released is not null)
+				{
+					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+					Released(Mouse.Buttons.Left, mouse.Position, dt);
+				}
+			}
+		}
+	}
+
+	private GameTime pressedTime = new();
+	private GameTime hoverTime = new();
+}
+<#
+}
+#>

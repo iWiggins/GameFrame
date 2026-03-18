@@ -1,0 +1,88 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+/// Geometric versions of core component classes.
+/// This code is generated and should not be manually edited.
+using GameFrame.Core.Components;
+using GameFrame.Core.Interfaces;
+using Microsoft.Xna.Framework;
+
+namespace GameFrame.Core.Geometrics;
+
+<#
+string path = System.IO.Path.Combine(Directory.GetCurrentDirectory(),"GameFrame","Core","Components");
+foreach(string fname in Directory.GetFiles(path))
+{
+    string name = Path.GetFileNameWithoutExtension(fname);
+	if(name == "Twig") continue; // twig works differently
+	if(name == "RootComponent") continue; // there is only one root component
+#>
+public abstract class Geometric<#=name#>: <#=name#>, IGeometric
+{
+    public Rectangle Geometry
+	{
+		get => _geometry;
+		set
+		{
+			_geometry = value;
+			Invalidate();
+		}
+	}
+	public int X
+	{
+		get => _geometry.X;
+		set
+		{
+			_geometry.X = value;
+			Invalidate();
+		}
+	}
+	public int Y
+	{
+		get => _geometry.Y;
+		set
+		{
+			_geometry.Y = value;
+			Invalidate();
+		}
+	}
+	public int Width
+	{
+		get => _geometry.Width;
+		set
+		{
+			_geometry.Width = value;
+			Invalidate();
+		}
+	}
+	public int Height
+	{
+		get => _geometry.Height;
+		set
+		{
+			_geometry.Height = value;
+			Invalidate();
+		}
+	}
+	public Point Center
+	{
+		get => _geometry.Center;
+		set => _geometry.SetCenter(value);
+	}
+
+	protected Geometric<#=name#>(IComponent? parent = null, int layer = 0):
+	base(parent, layer)
+	{ }
+
+	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+
+	public bool Overlaps(Point point) => _geometry.Contains(point);
+	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
+
+	private Rectangle _geometry;
+}
+<#
+}
+#>
