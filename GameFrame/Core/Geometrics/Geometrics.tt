@@ -19,6 +19,9 @@ foreach(string fname in Directory.GetFiles(path))
 	if(name == "Twig") continue; // twig works differently
 	if(name == "RootComponent") continue; // there is only one root component
 #>
+/// <summary>
+/// A <see cref="<#=name#>>"/> with geometry.
+/// </summary>
 public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 {
     public Rectangle Geometry
@@ -76,6 +79,7 @@ public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 	base(parent, layer)
 	{ }
 
+	public void SetCenter(Point p) => _geometry.SetCenter(p);
 	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);

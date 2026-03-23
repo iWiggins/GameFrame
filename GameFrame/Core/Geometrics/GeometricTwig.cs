@@ -77,6 +77,7 @@ public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TCh
 		set => Geometry.SetCenter(value);
 	}
 
+	public void SetCenter(Point p) => _geometry.SetCenter(p);
 	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);

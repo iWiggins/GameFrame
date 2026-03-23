@@ -1,5 +1,6 @@
 ﻿/// Clickable versions of geometric classes.
 /// This code is generated and should not be manually edited.
+using GameFrame.Core.Components;
 using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
@@ -8,7 +9,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameFrame.Core.Clickables;
 
-
+/// <summary>
+/// A <see cref="Branch"/> that is clickable.
+/// </summary>
 public abstract class ClickableBranch: GeometricBranch, IClick
 {
     public event MouseDownHandler? Pressed;
@@ -56,6 +59,7 @@ public abstract class ClickableBranch: GeometricBranch, IClick
 				if(Unhovered is not null)
 				{
 					double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
+					Unhovered(dt);
 				}
 			}
 			if(Down)
@@ -73,7 +77,9 @@ public abstract class ClickableBranch: GeometricBranch, IClick
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
 }
-
+/// <summary>
+/// A <see cref="Component"/> that is clickable.
+/// </summary>
 public abstract class ClickableComponent: GeometricComponent, IClick
 {
     public event MouseDownHandler? Pressed;
@@ -121,6 +127,7 @@ public abstract class ClickableComponent: GeometricComponent, IClick
 				if(Unhovered is not null)
 				{
 					double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
+					Unhovered(dt);
 				}
 			}
 			if(Down)
@@ -138,7 +145,9 @@ public abstract class ClickableComponent: GeometricComponent, IClick
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
 }
-
+/// <summary>
+/// A <see cref="Leaf"/> that is clickable.
+/// </summary>
 public abstract class ClickableLeaf: GeometricLeaf, IClick
 {
     public event MouseDownHandler? Pressed;
@@ -186,6 +195,7 @@ public abstract class ClickableLeaf: GeometricLeaf, IClick
 				if(Unhovered is not null)
 				{
 					double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
+					Unhovered(dt);
 				}
 			}
 			if(Down)

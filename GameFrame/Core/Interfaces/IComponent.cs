@@ -45,7 +45,7 @@ public interface IComponent
 	bool AddChild(IComponent component);
 
 	/// <summary>
-	/// Removoe a child from this component.
+	/// Remove a child from this component.
 	/// </summary>
 	/// <param name="component">The <see cref="IComponent"/> to add.</param>
 	/// <returns>Whether the removal was successful.</returns>

@@ -36,6 +36,12 @@ public interface IGeometric
 	/// <summary>
 	/// Sets the center of the component.
 	/// </summary>
+	/// <param name="p">New position of the center.</param>
+	void SetCenter(Point p);
+
+	/// <summary>
+	/// Sets the center of the component.
+	/// </summary>
 	/// <param name="x">X position of the center.</param>
 	/// <param name="y">Y position of the center.</param>
 	void SetCenter(int x, int y);

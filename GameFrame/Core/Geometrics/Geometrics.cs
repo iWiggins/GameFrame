@@ -6,6 +6,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameFrame.Core.Geometrics;
 
+/// <summary>
+/// A <see cref="Branch>"/> with geometry.
+/// </summary>
 public abstract class GeometricBranch: Branch, IGeometric
 {
     public Rectangle Geometry
@@ -63,6 +66,7 @@ public abstract class GeometricBranch: Branch, IGeometric
 	base(parent, layer)
 	{ }
 
+	public void SetCenter(Point p) => _geometry.SetCenter(p);
 	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
@@ -70,6 +74,9 @@ public abstract class GeometricBranch: Branch, IGeometric
 
 	private Rectangle _geometry;
 }
+/// <summary>
+/// A <see cref="Component>"/> with geometry.
+/// </summary>
 public abstract class GeometricComponent: Component, IGeometric
 {
     public Rectangle Geometry
@@ -127,6 +134,7 @@ public abstract class GeometricComponent: Component, IGeometric
 	base(parent, layer)
 	{ }
 
+	public void SetCenter(Point p) => _geometry.SetCenter(p);
 	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
@@ -134,6 +142,9 @@ public abstract class GeometricComponent: Component, IGeometric
 
 	private Rectangle _geometry;
 }
+/// <summary>
+/// A <see cref="Leaf>"/> with geometry.
+/// </summary>
 public abstract class GeometricLeaf: Leaf, IGeometric
 {
     public Rectangle Geometry
@@ -191,6 +202,7 @@ public abstract class GeometricLeaf: Leaf, IGeometric
 	base(parent, layer)
 	{ }
 
+	public void SetCenter(Point p) => _geometry.SetCenter(p);
 	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);

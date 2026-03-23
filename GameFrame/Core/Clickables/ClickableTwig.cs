@@ -1,39 +1,28 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.IO" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
-/// Clickable versions of geometric classes.
-/// This code is generated and should not be manually edited.
-using GameFrame.Core.Components;
+﻿using GameFrame.Core.Components;
 using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Geometrics;
-using GameFrame.Core.Interfaces;
 using GameFrame.Core.Input;
+using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 
 namespace GameFrame.Core.Clickables;
-
-<#
-string path = System.IO.Path.Combine(Directory.GetCurrentDirectory(),"GameFrame","Core","Components");
-foreach(string fname in Directory.GetFiles(path))
-{
-    string name = Path.GetFileNameWithoutExtension(fname);
-	if(name == "Twig") continue; // twig works differently
-	if(name == "RootComponent") continue; // there is only one root component
-#>
 /// <summary>
-/// A <see cref="<#=name#>"/> that is clickable.
+/// A <see cref="Twig{TChild}"/> that is clickable.
 /// </summary>
-public abstract class Clickable<#=name#>: Geometric<#=name#>, IClick
+public abstract class ClickableTwig<TChild> : GeometricTwig<TChild>, IClick where TChild : IComponent
 {
-    public event MouseDownHandler? Pressed;
+	public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
 	public event MouseHoverHandler? Hovered;
 	public event MouseUnhoverHandler? Unhovered;
 
+	protected ClickableTwig(TChild child, IComponent? parent = null, int layer = 0) :
+		base(child, parent, layer)
+	{ }
+
 	public bool Down { get; private set; } = false;
-	public bool Hovering {get; private set; } = false;
+
+	public bool Hovering { get; private set; } = false;
 
 	public void Click(GameTime time, Mouse mouse)
 	{
@@ -89,7 +78,6 @@ public abstract class Clickable<#=name#>: Geometric<#=name#>, IClick
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
+
+	
 }
-<#
-}
-#>
