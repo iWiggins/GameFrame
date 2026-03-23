@@ -90,7 +90,7 @@ public abstract class Layout: IComponent, IGeometric
 
     public void Invalidate()
     {
-        Arrange();
+        _cache = null;
         foreach(var child in Children)
         {
             child.Invalidate();
