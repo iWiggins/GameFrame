@@ -10,6 +10,8 @@ public abstract class FlowLayoutTestBase(FlowLayout.Direction direction) : TestL
 	[InlineData(1, 1, 1)]
 	[InlineData(1)]
 	[InlineData(1, 2, 1)]
+	[InlineData(2, 1, 1)]
+	[InlineData(1, 1, 2)]
 	public void ComponentsFlow(params int[] proportions)
 	{
 		int count = proportions.Length;
