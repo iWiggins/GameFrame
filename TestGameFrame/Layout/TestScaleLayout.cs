@@ -28,6 +28,8 @@ public class TestScaleLayout : TestLayout
 
 		Assert.True(layout.AddChild(component));
 
+		layout.ArrangeChildren();
+
 		Assert.True(Compare.Same(layout.Geometry, component.Geometry));
 	}
 
@@ -51,6 +53,8 @@ public class TestScaleLayout : TestLayout
 		};
 
 		Assert.True(layout.AddChild(component));
+
+		layout.ArrangeChildren();
 
 		Assert.Equal(75, component.X);
 		Assert.Equal(0, component.Y);
@@ -78,6 +82,8 @@ public class TestScaleLayout : TestLayout
 		};
 
 		Assert.True(layout.AddChild(component));
+
+		layout.ArrangeChildren();
 
 		Assert.Equal(0, component.X);
 		Assert.Equal(25, component.Y);

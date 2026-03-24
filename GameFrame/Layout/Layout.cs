@@ -91,7 +91,7 @@ public abstract class Layout: IComponent, IGeometric
     public void Invalidate()
     {
         _cache = null;
-        foreach(var child in Children)
+        foreach(var child in _children)
         {
             child.Invalidate();
         }
@@ -127,6 +127,11 @@ public abstract class Layout: IComponent, IGeometric
 
     public bool Overlaps(int x, int y) =>
         _geometry.Contains(x, y);
+
+    /// <summary>
+    /// Forces an arrangement to occur, rather than doing so lazily.
+    /// </summary>
+    public void ArrangeChildren() => Arrange();
 
     protected abstract IEnumerable<IComponent> Arrange();
     protected virtual IEnumerable<IComponent> Order()

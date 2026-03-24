@@ -24,8 +24,9 @@ public class TestFillLayout : TestLayout
 		foreach(var component in components)
 		{
 			Assert.True(layout.AddChild(component));
-			Assert.True(Compare.Same(component.Geometry, layout.Geometry));
 		}
+
+		layout.ArrangeChildren();
 
 		foreach(var component in components)
 		{

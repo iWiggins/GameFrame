@@ -23,5 +23,5 @@ public abstract class MetaLayout<T>: Layout
 
 	protected IEnumerable<T> Entries => _metadata.Values;
 
-	private readonly Dictionary<IComponent, T> _metadata;
+	private readonly Dictionary<IComponent, T> _metadata = [];
 }
