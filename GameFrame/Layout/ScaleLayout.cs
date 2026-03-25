@@ -8,7 +8,7 @@ namespace GameFrame.Layout;
 /// <summary>
 /// A layout that stretches components to fill its geometry while maintaining their relative dimentions.
 /// </summary>
-public class ScaleLayout : Layout
+public class ScaleLayout(IComponent? parent = null) : Layout(parent)
 {
 	protected override IEnumerable<IComponent> Arrange()
 	{

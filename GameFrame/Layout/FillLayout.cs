@@ -6,7 +6,7 @@ namespace GameFrame.Layout;
 /// <summary>
 /// A layout that stretches all child components to fully fill its geometry.
 /// </summary>
-public class FillLayout : Layout
+public class FillLayout(IComponent? parent = null) : Layout(parent)
 {
 	protected override IEnumerable<IComponent> Arrange()
 	{

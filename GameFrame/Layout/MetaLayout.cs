@@ -10,7 +10,7 @@ namespace GameFrame.Layout;
 /// <summary>
 /// A base class for layouts carrying metadata about their children.
 /// </summary>
-public abstract class MetaLayout<T>: Layout
+public abstract class MetaLayout<T>(IComponent? parent) : Layout(parent)
 {
 	protected void AddEntry(IComponent component, T entry) =>
 		_metadata[component] = entry;

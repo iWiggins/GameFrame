@@ -10,7 +10,7 @@ namespace GameFrame.Layout;
 /// Arranges components in a linear method that fills the component by proportions.
 /// </summary>
 /// <param name="direction"></param>
-public class FlowLayout(FlowLayout.Direction direction) : MetaLayout<FlowLayout.Metadata>
+public class FlowLayout(FlowLayout.Direction direction, IComponent? parent = null) : MetaLayout<FlowLayout.Metadata>(parent)
 {
 	public enum Direction
 	{

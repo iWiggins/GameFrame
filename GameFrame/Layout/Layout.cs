@@ -1,3 +1,4 @@
+using GameFrame.Core;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
@@ -6,16 +7,16 @@ using System.Linq;
 
 namespace GameFrame.Layout;
 
-public abstract class Layout: IComponent, IGeometric
+public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInitialize
 {
-    public IComponent? Parent { get; }
+	public IComponent? Parent { get; } = parent;
 
-    public ulong Id { get; }
+	public ulong Id { get; } = Identity.GenerateId();
 
-    public int Layer { get; set; }
-    public bool Enabled { get; set; }
+	public int Layer { get; set; } = 0;
+	public bool Enabled { get; set; } = true;
 
-    public IEnumerable<IComponent> Children =>
+	public IEnumerable<IComponent> Children =>
     _cache is not null ? _cache : _cache = Arrange();
 
     public bool HasChildren => _children.Count > 0;
@@ -75,7 +76,7 @@ public abstract class Layout: IComponent, IGeometric
         }
     }
 
-    public virtual bool AddChild(IComponent component)
+	public virtual bool AddChild(IComponent component)
     {
         if(_children.Add(component))
         {
@@ -128,6 +129,11 @@ public abstract class Layout: IComponent, IGeometric
     public bool Overlaps(int x, int y) =>
         _geometry.Contains(x, y);
 
+    public void Initialize() => Arrange();
+
+	public bool Contains(IComponent component) =>
+        _children.Contains(component);
+
     /// <summary>
     /// Forces an arrangement to occur, rather than doing so lazily.
     /// </summary>
@@ -143,7 +149,8 @@ public abstract class Layout: IComponent, IGeometric
 			.ToArray();
 	}
 
-    protected Rectangle _geometry;
+
+	protected Rectangle _geometry;
     protected readonly HashSet<IComponent> _children = [];
     protected IEnumerable<IComponent>? _cache = null;
 }
