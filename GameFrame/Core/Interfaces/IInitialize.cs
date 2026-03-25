@@ -1,5 +1,5 @@
 ﻿namespace GameFrame.Core.Interfaces;
-internal interface IInitialize
+public interface IInitialize
 {
 	void Initialize();
 }

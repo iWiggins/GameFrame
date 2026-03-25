@@ -4,7 +4,7 @@ using static GameFrame.Layout.FlowLayout;
 
 namespace TestGameFrame.Layout;
 
-public abstract class FlowLayoutTestBase(FlowLayout.Direction direction) : TestLayout(new FlowLayout(direction))
+public abstract class FlowLayoutTestBase(FlowLayout.Direction direction) : LayoutTestBase(new FlowLayout(direction))
 {
 	[Theory]
 	[InlineData(1, 1, 1)]

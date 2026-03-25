@@ -3,9 +3,9 @@ using TestGameFrame.Utils;
 
 namespace TestGameFrame.Layout;
 
-public class TestFillLayout : TestLayout
+public class FillLayoutTests : LayoutTestBase
 {
-	public TestFillLayout() : base(new FillLayout())
+	public FillLayoutTests() : base(new FillLayout())
 	{ }
 
 	[Fact]

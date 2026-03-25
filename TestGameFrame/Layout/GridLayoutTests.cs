@@ -2,7 +2,7 @@
 using TestGameFrame.Utils;
 
 namespace TestGameFrame.Layout;
-public abstract class GridLayoutTestBase(int columns, int rows): TestLayout(new GridLayout(columns, rows))
+public abstract class GridLayoutTestBase(int columns, int rows): LayoutTestBase(new GridLayout(columns, rows))
 {
 
 	protected int Columns => columns;
@@ -13,11 +13,6 @@ public abstract class GridLayoutTestBase(int columns, int rows): TestLayout(new 
 	[Fact]
 	public void ComponentsAlign()
 	{
-		var components =
-			(from cell in GetCells()
-			 select new { component = new TestGeometric(), cell })
-			 .ToList();
-
 		GridLayout layout = new(columns, rows)
 		{
 			X = 0,
@@ -25,6 +20,13 @@ public abstract class GridLayoutTestBase(int columns, int rows): TestLayout(new 
 			Width = 1200,
 			Height = 1200
 		};
+
+		ulong id = layout.Id + 1;
+
+		var components =
+			(from cell in GetCells()
+			 select new { component = new TestGeometric(id++), cell })
+			 .ToList();
 
 		foreach(var pair in components)
 		{

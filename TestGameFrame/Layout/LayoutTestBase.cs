@@ -2,7 +2,7 @@
 using TestGameFrame.Utils;
 
 namespace TestGameFrame.Layout;
-public abstract class TestLayout(GameFrame.Layout.Layout layout)
+public abstract class LayoutTestBase(GameFrame.Layout.Layout layout)
 {
 	[Fact]
 	public void StacksGeometricsBasedOnId()
@@ -64,13 +64,13 @@ public abstract class TestLayout(GameFrame.Layout.Layout layout)
 		Random rand = new();
 
 		List<TestGeometric> components = [
-				new(0), // id 0, layer 0
-				new(0), // id 1, layer 0
-				new(1), // id 2, layer 1
-				new(1), // id 3, layer 1
-				new(1), // id 4, layer 1
-				new(2), // id 5, layer 2
-				new(2)  // id 6, layer 2
+				new(0, layout, 0), // id 0, layer 0
+				new(1, layout, 0), // id 1, layer 0
+				new(2, layout, 1), // id 2, layer 1
+				new(3, layout, 1), // id 3, layer 1
+				new(4, layout, 1), // id 4, layer 1
+				new(5, layout, 2), // id 5, layer 2
+				new(6, layout, 2)  // id 6, layer 2
 			];
 		List<TestGeometric> shuffled = [.. components];
 		shuffled.Shuffle(rand);

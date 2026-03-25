@@ -2,9 +2,9 @@
 using TestGameFrame.Utils;
 
 namespace TestGameFrame.Layout;
-public class TestScaleLayout : TestLayout
+public class ScaleLayoutTest : LayoutTestBase
 {
-	public TestScaleLayout() : base(new ScaleLayout())
+	public ScaleLayoutTest() : base(new ScaleLayout())
 	{ }
 
 	[Fact]
@@ -18,7 +18,9 @@ public class TestScaleLayout : TestLayout
 			Height = 100
 		};
 
-		TestGeometric component = new()
+		ulong id = layout.Id + 1;
+
+		TestGeometric component = new(id)
 		{
 			X = 5,
 			Y = 10,
@@ -44,7 +46,9 @@ public class TestScaleLayout : TestLayout
 			Height = 100
 		};
 
-		TestGeometric component = new()
+		ulong id = layout.Id + 1;
+
+		TestGeometric component = new(id)
 		{
 			X = 0,
 			Y = 0,
@@ -73,7 +77,9 @@ public class TestScaleLayout : TestLayout
 			Height = 100
 		};
 
-		TestGeometric component = new()
+		ulong id = layout.Id + 1;
+
+		TestGeometric component = new(id)
 		{
 			X = 0,
 			Y = 0,

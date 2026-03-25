@@ -3,26 +3,28 @@ using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameFrame.Core;
 public abstract class Frame
 {
-	protected RootComponent Root { get; private set; }
+	protected IRoot Root { get; private set; }
 	protected Keyboard Keyboard { get; }
 	protected Mouse Mouse { get; }
 	
-	public Frame(SpriteBatch spriteBatch)
-	{
-		this.spriteBatch = spriteBatch;
+	public Frame(SpriteBatch spriteBatch):
+		this(spriteBatch, new Root())
+		{}
 
-		Root = new();
+	public Frame(SpriteBatch spriteBatch, IRoot root)
+	{
+		this._spriteBatch = spriteBatch;
+
+		Root = root;
 		Keyboard = new(Root);
 		Mouse = new(Root);
+		root.AddKeyboard(Keyboard);
+		root.AddMouse(Mouse);
 		_exitFrame = null;
 		_shouldExit = false;
 	}
@@ -55,6 +57,11 @@ public abstract class Frame
 
 	protected virtual void PreUpdate(GameTime time) { }
 
+	/// <summary>
+	/// Updates all updatable components, and raises click events.
+	/// </summary>
+	/// <param name="time">The time since the last update.</param>
+	/// <returns>The frame to change to, or null to exit the game.</returns>
 	public Frame? Update(GameTime time)
 	{
 		void UpdateComponent(IComponent component)
@@ -70,7 +77,6 @@ public abstract class Frame
 					update.Update(time);
 					if(_shouldExit) return;
 				}
-
 				foreach(IComponent child in component.Children)
 				{
 					UpdateComponent(child);
@@ -99,48 +105,42 @@ public abstract class Frame
 
 	public void Draw()
 	{
-		bool drawing = false;
-
 		void DrawComponent(IComponent component)
 		{
 			if(component.Enabled)
 			{
 				if(component is IDrawZone dzone)
 				{
-					if(drawing)
+					if(_drawZones.Count > 0)
 					{
-						spriteBatch.End();
+						_drawZones.Peek().EndDrawing(_spriteBatch);
 					}
-					dzone.StartDrawing(spriteBatch);
-					drawing = true;
+					_drawZones.Push(dzone);
+					dzone.StartDrawing(_spriteBatch);
 					if(component is IDraw draw)
 					{
-						draw.Draw(spriteBatch);
+						draw.Draw(_spriteBatch);
 					}
 					foreach(IComponent child in component.Children)
 					{
 						DrawComponent(child);
 					}
-					if(drawing)
+					_drawZones.Pop();
+					dzone.EndDrawing(_spriteBatch);
+					if(_drawZones.Count > 0)
 					{
-						spriteBatch.End();
-						drawing = false;
+						_drawZones.Peek().StartDrawing(_spriteBatch);
 					}
 				}
 				else
 				{
-					if(!drawing)
+					if(component is IDraw draw)
 					{
-						Root.StartDrawing(spriteBatch);
-						drawing = true;
-						if(component is IDraw draw)
-						{
-							draw.Draw(spriteBatch);
-						}
-						foreach(IComponent child in component.Children)
-						{
-							DrawComponent(child);
-						}
+						draw.Draw(_spriteBatch);
+					}
+					foreach(IComponent child in component.Children)
+					{
+						DrawComponent(child);
 					}
 				}
 			}
@@ -149,10 +149,6 @@ public abstract class Frame
 		PreDraw();
 
 		DrawComponent(Root);
-
-		// This shouldn't happen, because the root is a draw zone.
-		// But it consts nearly nothing to check.
-		if(drawing) spriteBatch.End();
 
 		PostDraw();
 	}
@@ -167,5 +163,6 @@ public abstract class Frame
 
 	private Frame? _exitFrame;
 	private bool _shouldExit;
-	private readonly SpriteBatch spriteBatch;
+	private readonly SpriteBatch _spriteBatch;
+	private readonly Stack<IDrawZone> _drawZones = [];
 }

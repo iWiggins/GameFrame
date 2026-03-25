@@ -9,8 +9,5 @@ namespace GameFrame.Core.Interfaces;
 public interface IDrawZone
 {
 	void StartDrawing(SpriteBatch spriteBatch);
-	void EndDrawing(SpriteBatch spriteBatch)
-	{
-		spriteBatch.End();
-	}
+	void EndDrawing(SpriteBatch spriteBatch);
 }
