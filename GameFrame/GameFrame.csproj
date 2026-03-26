@@ -2,11 +2,21 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>io.ianw.GameFrame</PackageId>
+    <Title>GameFrame</Title>
+    <Authors>Ian Wiggins</Authors>
+    <Company>ianw.io</Company>
+    <Product>GameFrame</Product>
+    <Description>A flexible and lightweight game engine built on top of MonoGame.</Description>
+    <Copyright>2 Ian Wiggins</Copyright>
+    <PackageProjectUrl>gameframe.ianw.io</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>game, game engine, monogame</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*">
-      <PrivateAssets>All</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.1" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
@@ -40,6 +50,10 @@
     <None Update="Core\Input\KeyboardKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>KeyboardKeys.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 </Project>

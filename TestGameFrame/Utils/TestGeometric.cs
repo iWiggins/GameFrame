@@ -14,6 +14,26 @@ internal class TestGeometric(ulong id, IComponent? parent = null, int layer = 0)
 	public int Width { get =>_geometry.Width; set => _geometry.Width = value; }
 	public int Height { get => _geometry.Height; set => _geometry.Height = value; }
 	public Point Center { get => _geometry.Center; set => SetCenter(value); }
+	public int Left
+	{
+		get => _geometry.Left;
+		set => _geometry.X = value;
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set => _geometry.X = value - _geometry.Width;
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set => _geometry.Y = value;
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set => _geometry.Y = value - _geometry.Height;
+	}
 
 	public static List<TestGeometric> CreateList(int size, ulong firstId = 1, IComponent? parent = null, int layer = 0)
 	{

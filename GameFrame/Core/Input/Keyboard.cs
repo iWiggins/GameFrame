@@ -25,7 +25,7 @@ public partial class Keyboard : IComponent, IUpdate
 	{
 		_root = root;
 		Id = Identity.GenerateId();
-
+		Enabled = true;
 		InitializeKeys();
 	}
 

@@ -3,7 +3,8 @@ using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 
 namespace TestGameFrame.Utils;
-internal class TestFrame(TestRoot root) : Frame(null!, root) // does not matter that SpriteBatch is null as long as draw test code does not reference it.
+// The null constructor values do not matter, as those values are not used in testing.
+internal class TestFrame(TestRoot root) : Frame(null!, null!, root)
 {
 	protected override Frame? PostUpdate(GameTime time) => this;
 

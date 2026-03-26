@@ -34,6 +34,26 @@ public interface IGeometric
 	Point Center { get; set; }
 
 	/// <summary>
+	/// The x coordinate of the left side of the component.
+	/// </summary>
+	int Left { get; set; }
+
+	/// <summary>
+	/// The x coordinate of the right side of the component.
+	/// </summary>
+	int Right { get; set; }
+
+	/// <summary>
+	/// The y coordinate of the top of the component.
+	/// </summary>
+	int Top { get; set; }
+
+	/// <summary>
+	/// The y coordinate of the bottom of the component.
+	/// </summary>
+	int Bottom { get; set; }
+
+	/// <summary>
 	/// Sets the center of the component.
 	/// </summary>
 	/// <param name="p">New position of the center.</param>

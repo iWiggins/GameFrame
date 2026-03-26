@@ -11,8 +11,8 @@ public class Key(Keyboard parent, Keys keycode) : Leaf(parent), IUpdate
 
 	public bool IsDown { get; private set; } = false;
 
-	public KeyDownHandler? KeyPressed;
-	public KeyUpHandler? KeyReleased;
+	public event KeyDownHandler? KeyPressed;
+	public event KeyUpHandler? KeyReleased;
 
 	public void Update(GameTime time)
 	{

@@ -58,23 +58,59 @@ public abstract class GeometricBranch(IComponent? parent = null, int layer = 0):
 	}
 	public Point Center
 	{
-		get => _geometry.Center;
+		get => Geometry.Center;
+		set => SetCenter(value);
+	}
+	public int Left
+	{
+		get => _geometry.Left;
 		set
 		{
 			Invalidate();
-			_geometry.SetCenter(value);
+			_geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			_geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value - _geometry.Height;
 		}
 	}
 
 	public void SetCenter(Point p)
 	{
 		Invalidate();
-		_geometry.SetCenter(p);
+
+		var loc = _geometry.MoveCenterpoint(p);
+		_geometry.Location = loc;
 	}
 	public void SetCenter(int x, int y)
 	{
 		Invalidate();
-		_geometry.SetCenter(x, y);
+
+		var loc = _geometry.MoveCenterpoint(x, y);
+		_geometry.Location = loc;
 	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
@@ -134,23 +170,59 @@ public abstract class GeometricComponent(IComponent? parent = null, int layer = 
 	}
 	public Point Center
 	{
-		get => _geometry.Center;
+		get => Geometry.Center;
+		set => SetCenter(value);
+	}
+	public int Left
+	{
+		get => _geometry.Left;
 		set
 		{
 			Invalidate();
-			_geometry.SetCenter(value);
+			_geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			_geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value - _geometry.Height;
 		}
 	}
 
 	public void SetCenter(Point p)
 	{
 		Invalidate();
-		_geometry.SetCenter(p);
+
+		var loc = _geometry.MoveCenterpoint(p);
+		_geometry.Location = loc;
 	}
 	public void SetCenter(int x, int y)
 	{
 		Invalidate();
-		_geometry.SetCenter(x, y);
+
+		var loc = _geometry.MoveCenterpoint(x, y);
+		_geometry.Location = loc;
 	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
@@ -210,23 +282,59 @@ public abstract class GeometricLeaf(IComponent? parent = null, int layer = 0): L
 	}
 	public Point Center
 	{
-		get => _geometry.Center;
+		get => Geometry.Center;
+		set => SetCenter(value);
+	}
+	public int Left
+	{
+		get => _geometry.Left;
 		set
 		{
 			Invalidate();
-			_geometry.SetCenter(value);
+			_geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			_geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value - _geometry.Height;
 		}
 	}
 
 	public void SetCenter(Point p)
 	{
 		Invalidate();
-		_geometry.SetCenter(p);
+
+		var loc = _geometry.MoveCenterpoint(p);
+		_geometry.Location = loc;
 	}
 	public void SetCenter(int x, int y)
 	{
 		Invalidate();
-		_geometry.SetCenter(x, y);
+
+		var loc = _geometry.MoveCenterpoint(x, y);
+		_geometry.Location = loc;
 	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);

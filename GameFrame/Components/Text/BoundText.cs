@@ -61,10 +61,42 @@ public class BoundText : Component, IGeometric
 	public Point Center
 	{
 		get => _geometry.Center;
+		set => SetCenter(value);
+	}
+	public int Left
+	{
+		get => _geometry.Left;
 		set
 		{
 			Invalidate();
-			_geometry.SetCenter(value);
+			_geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			_geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value - _geometry.Height;
 		}
 	}
 	public SpriteFont Font
@@ -115,12 +147,14 @@ public class BoundText : Component, IGeometric
 	public void SetCenter(Point p)
 	{
 		Invalidate();
-		_geometry.SetCenter(p);
+		var location = _geometry.MoveCenterpoint(p);
+		_geometry.Location = location;
 	}
 	public void SetCenter(int x, int y)
 	{
 		Invalidate();
-		_geometry.SetCenter(x, y);
+		var location = _geometry.MoveCenterpoint(x, y);
+		_geometry.Location = location;
 	}
 
 	public void FitText()

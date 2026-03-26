@@ -1,6 +1,6 @@
-﻿/// Events for each keyboard key.
+﻿#nullable disable
+/// Events for each keyboard key.
 /// This code is generated and should not be manually edited.
-#nullable disable
 using GameFrame.Core;
 using GameFrame.Core.Components;
 using GameFrame.Core.Interfaces;
@@ -12,516 +12,516 @@ namespace GameFrame.Core.Input;
 public partial class Keyboard : IComponent, IUpdate
 {
         
-    Key Back;
+    public Key KeyBack { get; private set; }
         
-    Key Tab;
+    public Key KeyTab { get; private set; }
         
-    Key Enter;
+    public Key KeyEnter { get; private set; }
         
-    Key CapsLock;
+    public Key KeyCapsLock { get; private set; }
         
-    Key Escape;
+    public Key KeyEscape { get; private set; }
         
-    Key Space;
+    public Key KeySpace { get; private set; }
         
-    Key PageUp;
+    public Key KeyPageUp { get; private set; }
         
-    Key PageDown;
+    public Key KeyPageDown { get; private set; }
         
-    Key End;
+    public Key KeyEnd { get; private set; }
         
-    Key Home;
+    public Key KeyHome { get; private set; }
         
-    Key Left;
+    public Key KeyLeft { get; private set; }
         
-    Key Up;
+    public Key KeyUp { get; private set; }
         
-    Key Right;
+    public Key KeyRight { get; private set; }
         
-    Key Down;
+    public Key KeyDown { get; private set; }
         
-    Key PrintScreen;
+    public Key KeyPrintScreen { get; private set; }
         
-    Key Insert;
+    public Key KeyInsert { get; private set; }
         
-    Key Delete;
+    public Key KeyDelete { get; private set; }
         
-    Key A;
+    public Key KeyA { get; private set; }
         
-    Key B;
+    public Key KeyB { get; private set; }
         
-    Key C;
+    public Key KeyC { get; private set; }
         
-    Key D;
+    public Key KeyD { get; private set; }
         
-    Key E;
+    public Key KeyE { get; private set; }
         
-    Key F;
+    public Key KeyF { get; private set; }
         
-    Key G;
+    public Key KeyG { get; private set; }
         
-    Key H;
+    public Key KeyH { get; private set; }
         
-    Key I;
+    public Key KeyI { get; private set; }
         
-    Key J;
+    public Key KeyJ { get; private set; }
         
-    Key K;
+    public Key KeyK { get; private set; }
         
-    Key L;
+    public Key KeyL { get; private set; }
         
-    Key M;
+    public Key KeyM { get; private set; }
         
-    Key N;
+    public Key KeyN { get; private set; }
         
-    Key O;
+    public Key KeyO { get; private set; }
         
-    Key P;
+    public Key KeyP { get; private set; }
         
-    Key Q;
+    public Key KeyQ { get; private set; }
         
-    Key R;
+    public Key KeyR { get; private set; }
         
-    Key S;
+    public Key KeyS { get; private set; }
         
-    Key T;
+    public Key KeyT { get; private set; }
         
-    Key U;
+    public Key KeyU { get; private set; }
         
-    Key V;
+    public Key KeyV { get; private set; }
         
-    Key W;
+    public Key KeyW { get; private set; }
         
-    Key X;
+    public Key KeyX { get; private set; }
         
-    Key Y;
+    public Key KeyY { get; private set; }
         
-    Key Z;
+    public Key KeyZ { get; private set; }
         
-    Key LeftWindows;
+    public Key KeyLeftWindows { get; private set; }
         
-    Key RightWindows;
+    public Key KeyRightWindows { get; private set; }
         
-    Key NumPad0;
+    public Key KeyNumPad0 { get; private set; }
         
-    Key NumPad1;
+    public Key KeyNumPad1 { get; private set; }
         
-    Key NumPad2;
+    public Key KeyNumPad2 { get; private set; }
         
-    Key NumPad3;
+    public Key KeyNumPad3 { get; private set; }
         
-    Key NumPad4;
+    public Key KeyNumPad4 { get; private set; }
         
-    Key NumPad5;
+    public Key KeyNumPad5 { get; private set; }
         
-    Key NumPad6;
+    public Key KeyNumPad6 { get; private set; }
         
-    Key NumPad7;
+    public Key KeyNumPad7 { get; private set; }
         
-    Key NumPad8;
+    public Key KeyNumPad8 { get; private set; }
         
-    Key NumPad9;
+    public Key KeyNumPad9 { get; private set; }
         
-    Key Multiply;
+    public Key KeyMultiply { get; private set; }
         
-    Key Add;
+    public Key KeyAdd { get; private set; }
         
-    Key Subtract;
+    public Key KeySubtract { get; private set; }
         
-    Key Decimal;
+    public Key KeyDecimal { get; private set; }
         
-    Key Divide;
+    public Key KeyDivide { get; private set; }
         
-    Key F1;
+    public Key KeyF1 { get; private set; }
         
-    Key F2;
+    public Key KeyF2 { get; private set; }
         
-    Key F3;
+    public Key KeyF3 { get; private set; }
         
-    Key F4;
+    public Key KeyF4 { get; private set; }
         
-    Key F5;
+    public Key KeyF5 { get; private set; }
         
-    Key F6;
+    public Key KeyF6 { get; private set; }
         
-    Key F7;
+    public Key KeyF7 { get; private set; }
         
-    Key F8;
+    public Key KeyF8 { get; private set; }
         
-    Key F9;
+    public Key KeyF9 { get; private set; }
         
-    Key F10;
+    public Key KeyF10 { get; private set; }
         
-    Key F11;
+    public Key KeyF11 { get; private set; }
         
-    Key F12;
+    public Key KeyF12 { get; private set; }
         
-    Key F13;
+    public Key KeyF13 { get; private set; }
         
-    Key F14;
+    public Key KeyF14 { get; private set; }
         
-    Key F15;
+    public Key KeyF15 { get; private set; }
         
-    Key F16;
+    public Key KeyF16 { get; private set; }
         
-    Key NumLock;
+    public Key KeyNumLock { get; private set; }
         
-    Key Scroll;
+    public Key KeyScroll { get; private set; }
         
-    Key LeftShift;
+    public Key KeyLeftShift { get; private set; }
         
-    Key RightShift;
+    public Key KeyRightShift { get; private set; }
         
-    Key LeftControl;
+    public Key KeyLeftControl { get; private set; }
         
-    Key RightControl;
+    public Key KeyRightControl { get; private set; }
         
-    Key LeftAlt;
+    public Key KeyLeftAlt { get; private set; }
         
-    Key RightAlt;
+    public Key KeyRightAlt { get; private set; }
     
     private void InitializeKeys() {
     
 
     
-    Back = new(this, Keys.Back);
+    KeyBack = new(this, Keys.Back);
     
-    Tab = new(this, Keys.Tab);
+    KeyTab = new(this, Keys.Tab);
     
-    Enter = new(this, Keys.Enter);
+    KeyEnter = new(this, Keys.Enter);
     
-    CapsLock = new(this, Keys.CapsLock);
+    KeyCapsLock = new(this, Keys.CapsLock);
     
-    Escape = new(this, Keys.Escape);
+    KeyEscape = new(this, Keys.Escape);
     
-    Space = new(this, Keys.Space);
+    KeySpace = new(this, Keys.Space);
     
-    PageUp = new(this, Keys.PageUp);
+    KeyPageUp = new(this, Keys.PageUp);
     
-    PageDown = new(this, Keys.PageDown);
+    KeyPageDown = new(this, Keys.PageDown);
     
-    End = new(this, Keys.End);
+    KeyEnd = new(this, Keys.End);
     
-    Home = new(this, Keys.Home);
+    KeyHome = new(this, Keys.Home);
     
-    Left = new(this, Keys.Left);
+    KeyLeft = new(this, Keys.Left);
     
-    Up = new(this, Keys.Up);
+    KeyUp = new(this, Keys.Up);
     
-    Right = new(this, Keys.Right);
+    KeyRight = new(this, Keys.Right);
     
-    Down = new(this, Keys.Down);
+    KeyDown = new(this, Keys.Down);
     
-    PrintScreen = new(this, Keys.PrintScreen);
+    KeyPrintScreen = new(this, Keys.PrintScreen);
     
-    Insert = new(this, Keys.Insert);
+    KeyInsert = new(this, Keys.Insert);
     
-    Delete = new(this, Keys.Delete);
+    KeyDelete = new(this, Keys.Delete);
     
-    A = new(this, Keys.A);
+    KeyA = new(this, Keys.A);
     
-    B = new(this, Keys.B);
+    KeyB = new(this, Keys.B);
     
-    C = new(this, Keys.C);
+    KeyC = new(this, Keys.C);
     
-    D = new(this, Keys.D);
+    KeyD = new(this, Keys.D);
     
-    E = new(this, Keys.E);
+    KeyE = new(this, Keys.E);
     
-    F = new(this, Keys.F);
+    KeyF = new(this, Keys.F);
     
-    G = new(this, Keys.G);
+    KeyG = new(this, Keys.G);
     
-    H = new(this, Keys.H);
+    KeyH = new(this, Keys.H);
     
-    I = new(this, Keys.I);
+    KeyI = new(this, Keys.I);
     
-    J = new(this, Keys.J);
+    KeyJ = new(this, Keys.J);
     
-    K = new(this, Keys.K);
+    KeyK = new(this, Keys.K);
     
-    L = new(this, Keys.L);
+    KeyL = new(this, Keys.L);
     
-    M = new(this, Keys.M);
+    KeyM = new(this, Keys.M);
     
-    N = new(this, Keys.N);
+    KeyN = new(this, Keys.N);
     
-    O = new(this, Keys.O);
+    KeyO = new(this, Keys.O);
     
-    P = new(this, Keys.P);
+    KeyP = new(this, Keys.P);
     
-    Q = new(this, Keys.Q);
+    KeyQ = new(this, Keys.Q);
     
-    R = new(this, Keys.R);
+    KeyR = new(this, Keys.R);
     
-    S = new(this, Keys.S);
+    KeyS = new(this, Keys.S);
     
-    T = new(this, Keys.T);
+    KeyT = new(this, Keys.T);
     
-    U = new(this, Keys.U);
+    KeyU = new(this, Keys.U);
     
-    V = new(this, Keys.V);
+    KeyV = new(this, Keys.V);
     
-    W = new(this, Keys.W);
+    KeyW = new(this, Keys.W);
     
-    X = new(this, Keys.X);
+    KeyX = new(this, Keys.X);
     
-    Y = new(this, Keys.Y);
+    KeyY = new(this, Keys.Y);
     
-    Z = new(this, Keys.Z);
+    KeyZ = new(this, Keys.Z);
     
-    LeftWindows = new(this, Keys.LeftWindows);
+    KeyLeftWindows = new(this, Keys.LeftWindows);
     
-    RightWindows = new(this, Keys.RightWindows);
+    KeyRightWindows = new(this, Keys.RightWindows);
     
-    NumPad0 = new(this, Keys.NumPad0);
+    KeyNumPad0 = new(this, Keys.NumPad0);
     
-    NumPad1 = new(this, Keys.NumPad1);
+    KeyNumPad1 = new(this, Keys.NumPad1);
     
-    NumPad2 = new(this, Keys.NumPad2);
+    KeyNumPad2 = new(this, Keys.NumPad2);
     
-    NumPad3 = new(this, Keys.NumPad3);
+    KeyNumPad3 = new(this, Keys.NumPad3);
     
-    NumPad4 = new(this, Keys.NumPad4);
+    KeyNumPad4 = new(this, Keys.NumPad4);
     
-    NumPad5 = new(this, Keys.NumPad5);
+    KeyNumPad5 = new(this, Keys.NumPad5);
     
-    NumPad6 = new(this, Keys.NumPad6);
+    KeyNumPad6 = new(this, Keys.NumPad6);
     
-    NumPad7 = new(this, Keys.NumPad7);
+    KeyNumPad7 = new(this, Keys.NumPad7);
     
-    NumPad8 = new(this, Keys.NumPad8);
+    KeyNumPad8 = new(this, Keys.NumPad8);
     
-    NumPad9 = new(this, Keys.NumPad9);
+    KeyNumPad9 = new(this, Keys.NumPad9);
     
-    Multiply = new(this, Keys.Multiply);
+    KeyMultiply = new(this, Keys.Multiply);
     
-    Add = new(this, Keys.Add);
+    KeyAdd = new(this, Keys.Add);
     
-    Subtract = new(this, Keys.Subtract);
+    KeySubtract = new(this, Keys.Subtract);
     
-    Decimal = new(this, Keys.Decimal);
+    KeyDecimal = new(this, Keys.Decimal);
     
-    Divide = new(this, Keys.Divide);
+    KeyDivide = new(this, Keys.Divide);
     
-    F1 = new(this, Keys.F1);
+    KeyF1 = new(this, Keys.F1);
     
-    F2 = new(this, Keys.F2);
+    KeyF2 = new(this, Keys.F2);
     
-    F3 = new(this, Keys.F3);
+    KeyF3 = new(this, Keys.F3);
     
-    F4 = new(this, Keys.F4);
+    KeyF4 = new(this, Keys.F4);
     
-    F5 = new(this, Keys.F5);
+    KeyF5 = new(this, Keys.F5);
     
-    F6 = new(this, Keys.F6);
+    KeyF6 = new(this, Keys.F6);
     
-    F7 = new(this, Keys.F7);
+    KeyF7 = new(this, Keys.F7);
     
-    F8 = new(this, Keys.F8);
+    KeyF8 = new(this, Keys.F8);
     
-    F9 = new(this, Keys.F9);
+    KeyF9 = new(this, Keys.F9);
     
-    F10 = new(this, Keys.F10);
+    KeyF10 = new(this, Keys.F10);
     
-    F11 = new(this, Keys.F11);
+    KeyF11 = new(this, Keys.F11);
     
-    F12 = new(this, Keys.F12);
+    KeyF12 = new(this, Keys.F12);
     
-    F13 = new(this, Keys.F13);
+    KeyF13 = new(this, Keys.F13);
     
-    F14 = new(this, Keys.F14);
+    KeyF14 = new(this, Keys.F14);
     
-    F15 = new(this, Keys.F15);
+    KeyF15 = new(this, Keys.F15);
     
-    F16 = new(this, Keys.F16);
+    KeyF16 = new(this, Keys.F16);
     
-    NumLock = new(this, Keys.NumLock);
+    KeyNumLock = new(this, Keys.NumLock);
     
-    Scroll = new(this, Keys.Scroll);
+    KeyScroll = new(this, Keys.Scroll);
     
-    LeftShift = new(this, Keys.LeftShift);
+    KeyLeftShift = new(this, Keys.LeftShift);
     
-    RightShift = new(this, Keys.RightShift);
+    KeyRightShift = new(this, Keys.RightShift);
     
-    LeftControl = new(this, Keys.LeftControl);
+    KeyLeftControl = new(this, Keys.LeftControl);
     
-    RightControl = new(this, Keys.RightControl);
+    KeyRightControl = new(this, Keys.RightControl);
     
-    LeftAlt = new(this, Keys.LeftAlt);
+    KeyLeftAlt = new(this, Keys.LeftAlt);
     
-    RightAlt = new(this, Keys.RightAlt);
+    KeyRightAlt = new(this, Keys.RightAlt);
     
     }
 
     public IEnumerable<IComponent> Children => [
-    this.Back
+    this.KeyBack
     
-    ,this.Tab
+    ,this.KeyTab
     
-    ,this.Enter
+    ,this.KeyEnter
     
-    ,this.CapsLock
+    ,this.KeyCapsLock
     
-    ,this.Escape
+    ,this.KeyEscape
     
-    ,this.Space
+    ,this.KeySpace
     
-    ,this.PageUp
+    ,this.KeyPageUp
     
-    ,this.PageDown
+    ,this.KeyPageDown
     
-    ,this.End
+    ,this.KeyEnd
     
-    ,this.Home
+    ,this.KeyHome
     
-    ,this.Left
+    ,this.KeyLeft
     
-    ,this.Up
+    ,this.KeyUp
     
-    ,this.Right
+    ,this.KeyRight
     
-    ,this.Down
+    ,this.KeyDown
     
-    ,this.PrintScreen
+    ,this.KeyPrintScreen
     
-    ,this.Insert
+    ,this.KeyInsert
     
-    ,this.Delete
+    ,this.KeyDelete
     
-    ,this.A
+    ,this.KeyA
     
-    ,this.B
+    ,this.KeyB
     
-    ,this.C
+    ,this.KeyC
     
-    ,this.D
+    ,this.KeyD
     
-    ,this.E
+    ,this.KeyE
     
-    ,this.F
+    ,this.KeyF
     
-    ,this.G
+    ,this.KeyG
     
-    ,this.H
+    ,this.KeyH
     
-    ,this.I
+    ,this.KeyI
     
-    ,this.J
+    ,this.KeyJ
     
-    ,this.K
+    ,this.KeyK
     
-    ,this.L
+    ,this.KeyL
     
-    ,this.M
+    ,this.KeyM
     
-    ,this.N
+    ,this.KeyN
     
-    ,this.O
+    ,this.KeyO
     
-    ,this.P
+    ,this.KeyP
     
-    ,this.Q
+    ,this.KeyQ
     
-    ,this.R
+    ,this.KeyR
     
-    ,this.S
+    ,this.KeyS
     
-    ,this.T
+    ,this.KeyT
     
-    ,this.U
+    ,this.KeyU
     
-    ,this.V
+    ,this.KeyV
     
-    ,this.W
+    ,this.KeyW
     
-    ,this.X
+    ,this.KeyX
     
-    ,this.Y
+    ,this.KeyY
     
-    ,this.Z
+    ,this.KeyZ
     
-    ,this.LeftWindows
+    ,this.KeyLeftWindows
     
-    ,this.RightWindows
+    ,this.KeyRightWindows
     
-    ,this.NumPad0
+    ,this.KeyNumPad0
     
-    ,this.NumPad1
+    ,this.KeyNumPad1
     
-    ,this.NumPad2
+    ,this.KeyNumPad2
     
-    ,this.NumPad3
+    ,this.KeyNumPad3
     
-    ,this.NumPad4
+    ,this.KeyNumPad4
     
-    ,this.NumPad5
+    ,this.KeyNumPad5
     
-    ,this.NumPad6
+    ,this.KeyNumPad6
     
-    ,this.NumPad7
+    ,this.KeyNumPad7
     
-    ,this.NumPad8
+    ,this.KeyNumPad8
     
-    ,this.NumPad9
+    ,this.KeyNumPad9
     
-    ,this.Multiply
+    ,this.KeyMultiply
     
-    ,this.Add
+    ,this.KeyAdd
     
-    ,this.Subtract
+    ,this.KeySubtract
     
-    ,this.Decimal
+    ,this.KeyDecimal
     
-    ,this.Divide
+    ,this.KeyDivide
     
-    ,this.F1
+    ,this.KeyF1
     
-    ,this.F2
+    ,this.KeyF2
     
-    ,this.F3
+    ,this.KeyF3
     
-    ,this.F4
+    ,this.KeyF4
     
-    ,this.F5
+    ,this.KeyF5
     
-    ,this.F6
+    ,this.KeyF6
     
-    ,this.F7
+    ,this.KeyF7
     
-    ,this.F8
+    ,this.KeyF8
     
-    ,this.F9
+    ,this.KeyF9
     
-    ,this.F10
+    ,this.KeyF10
     
-    ,this.F11
+    ,this.KeyF11
     
-    ,this.F12
+    ,this.KeyF12
     
-    ,this.F13
+    ,this.KeyF13
     
-    ,this.F14
+    ,this.KeyF14
     
-    ,this.F15
+    ,this.KeyF15
     
-    ,this.F16
+    ,this.KeyF16
     
-    ,this.NumLock
+    ,this.KeyNumLock
     
-    ,this.Scroll
+    ,this.KeyScroll
     
-    ,this.LeftShift
+    ,this.KeyLeftShift
     
-    ,this.RightShift
+    ,this.KeyRightShift
     
-    ,this.LeftControl
+    ,this.KeyLeftControl
     
-    ,this.RightControl
+    ,this.KeyRightControl
     
-    ,this.LeftAlt
+    ,this.KeyLeftAlt
     
-    ,this.RightAlt
+    ,this.KeyRightAlt
     
     ];
 }

@@ -9,6 +9,7 @@ namespace GameFrame.Core;
 public abstract class Frame
 {
 	protected IRoot Root { get; private set; }
+	protected IBoundsProvider Screen { get; private set; }
 	protected Keyboard Keyboard { get; }
 	protected Mouse Mouse { get; }
 	public IMouseCursor? Cursor
@@ -17,14 +18,15 @@ public abstract class Frame
 		set => Mouse.Cursor = value;
 	}
 	
-	public Frame(SpriteBatch spriteBatch):
-		this(spriteBatch, new Root())
+	public Frame(SpriteBatch spriteBatch, IBoundsProvider bounds) :
+		this(spriteBatch, bounds, new Root())
 		{}
 
-	public Frame(SpriteBatch spriteBatch, IRoot root)
+	public Frame(SpriteBatch spriteBatch, IBoundsProvider bounds, IRoot root)
 	{
-		this._spriteBatch = spriteBatch;
+		_spriteBatch = spriteBatch;
 
+		Screen = bounds;
 		Root = root;
 		Keyboard = new(Root);
 		Mouse = new(Root);
@@ -104,7 +106,7 @@ public abstract class Frame
 		else return updateFrame;
 	}
 
-	protected abstract Frame? PostUpdate(GameTime time);
+	protected virtual Frame? PostUpdate(GameTime time) => this;
 
 	protected virtual void PreDraw() { }
 

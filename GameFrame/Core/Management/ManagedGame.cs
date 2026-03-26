@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameFrame.Core.Interfaces;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 
-namespace GameFrame.Core;
+namespace GameFrame.Core.Management;
 public abstract class ManagedGame : Game
 {
 	public static class Defaults
@@ -62,8 +64,10 @@ public abstract class ManagedGame : Game
 		};
 		Log = Defaults.Log;
 		Content.RootDirectory = "Content";
-		IsMouseVisible = true;
+		IsMouseVisible = Defaults.MouseVisible;
 	}
+
+	protected IBoundsProvider Bounds => new ScreenProvider(Window);
 
 	/// <summary>
 	/// Create the entry frame to the game. Commonly a main menu or loading screen.
@@ -74,7 +78,7 @@ public abstract class ManagedGame : Game
 	/// </remarks>
 	/// <param name="sprites">The SpriteBatch to provide to the frame.</param>
 	/// <returns>The created frame.</returns>
-	protected abstract Frame CreateFirstFrame(SpriteBatch sprites);
+	protected abstract Frame CreateFirstFrame(ContentManager content, SpriteBatch sprites, IBoundsProvider bounds);
 
 	protected override void Initialize()
 	{
@@ -99,7 +103,7 @@ public abstract class ManagedGame : Game
 		try
 		{
 #endif
-			_currentFrame = CreateFirstFrame(_spriteBatch);
+			_currentFrame = CreateFirstFrame(Content, _spriteBatch, Bounds);
 			_currentFrame.Initialize();
 			IsMouseVisible = _currentFrame.Cursor is not null;
 #if !DEBUG

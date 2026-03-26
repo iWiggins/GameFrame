@@ -68,22 +68,74 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 	public Point Center
 	{
 		get => Geometry.Center;
+		set => SetCenter(value);
+	}
+	public int Left
+	{
+		get => _geometry.Left;
 		set
 		{
 			Invalidate();
-			_geometry.SetCenter(value);
+			if(Child is IGeometric geo) geo.Left = value;
+			else _geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			if(Child is IGeometric geo) geo.Right = value;
+			else _geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			if(Child is IGeometric geo) geo.Top = value;
+			else _geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			if(Child is IGeometric geo) geo.Bottom = value;
+			else _geometry.Y = value - _geometry.Height;
 		}
 	}
 
 	public void SetCenter(Point p)
 	{
 		Invalidate();
-		_geometry.SetCenter(p);
+		if(Child is IGeometric geo)
+		{
+			geo.SetCenter(p);
+		}
+		else
+		{
+			var loc = _geometry.MoveCenterpoint(p);
+			_geometry.Location = loc;
+		}
 	}
 	public void SetCenter(int x, int y)
 	{
 		Invalidate();
-		_geometry.SetCenter(x, y);
+		if(Child is IGeometric geo)
+		{
+			geo.SetCenter(x, y);
+		}
+		else
+		{
+			var loc = _geometry.MoveCenterpoint(x, y);
+			_geometry.Location = loc;
+		}
 	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);

@@ -7,9 +7,9 @@
 <#
 List<string> keys = ["Back","Tab","Enter","CapsLock","Escape","Space","PageUp","PageDown","End","Home","Left","Up","Right","Down","PrintScreen","Insert","Delete","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","LeftWindows","RightWindows","NumPad0","NumPad1","NumPad2","NumPad3","NumPad4","NumPad5","NumPad6","NumPad7","NumPad8","NumPad9","Multiply","Add","Subtract","Decimal","Divide","F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12","F13","F14","F15","F16","NumLock","Scroll","LeftShift","RightShift","LeftControl","RightControl","LeftAlt","RightAlt"];
 #>
+#nullable disable
 /// Events for each keyboard key.
 /// This code is generated and should not be manually edited.
-#nullable disable
 using GameFrame.Core;
 using GameFrame.Core.Components;
 using GameFrame.Core.Interfaces;
@@ -25,7 +25,7 @@ public partial class Keyboard : IComponent, IUpdate
     {
     #>
     
-    Key <#=key#>;
+    public Key Key<#=key#> { get; private set; }
     <#
     }
     #>
@@ -38,7 +38,7 @@ public partial class Keyboard : IComponent, IUpdate
     {
     #>
 
-    <#=key#> = new(this, Keys.<#=key#>);
+    Key<#=key#> = new(this, Keys.<#=key#>);
     <#
     }
     #>
@@ -46,13 +46,13 @@ public partial class Keyboard : IComponent, IUpdate
     }
 
     public IEnumerable<IComponent> Children => [
-    this.<#=keys.First()#>
+    this.Key<#=keys.First()#>
     <#
     foreach(string key in keys.Skip(1))
     {
     #>
 
-    ,this.<#=key#>
+    ,this.Key<#=key#>
     <#
     }
     #>

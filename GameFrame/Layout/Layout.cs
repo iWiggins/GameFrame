@@ -26,8 +26,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry;
         set
         {
-            _geometry = value;
             Invalidate();
+			_geometry = value;
         }
     }
     public int X
@@ -35,8 +35,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry.X;
         set
         {
-            _geometry.X = value;
             Invalidate();
+			_geometry.X = value;
         }
     }
     public int Y
@@ -44,8 +44,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry.Y;
         set
         {
-            _geometry.Y = value;
             Invalidate();
+			_geometry.Y = value;
         }
     }
     public int Width
@@ -53,8 +53,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry.Width;
         set
         {
-            _geometry.Width = value;
             Invalidate();
+			_geometry.Width = value;
         }
     }
     public int Height
@@ -62,8 +62,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry.Height;
         set
         {
-            _geometry.Height = value;
             Invalidate();
+			_geometry.Height = value;
         }
     }
     public Point Center
@@ -72,9 +72,46 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         set
         {
             Invalidate();
-			_geometry.SetCenter(value.X, value.Y);
+			SetCenter(value);
         }
     }
+
+	public int Left
+	{
+		get => _geometry.Left;
+		set
+		{
+			Invalidate();
+			_geometry.X = value;
+		}
+	}
+	public int Right
+	{
+		get => _geometry.Right;
+		set
+		{
+			Invalidate();
+			_geometry.X = value - _geometry.Width;
+		}
+	}
+	public int Top
+	{
+		get => _geometry.Top;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value;
+		}
+	}
+	public int Bottom
+	{
+		get => _geometry.Bottom;
+		set
+		{
+			Invalidate();
+			_geometry.Y = value - _geometry.Height;
+		}
+	}
 
 	public virtual bool AddChild(IComponent component)
     {
@@ -114,13 +151,15 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
 	public virtual void SetCenter(Point p)
 	{
         Invalidate();
-		_geometry.SetCenter(p);
+        var loc = _geometry.MoveCenterpoint(p);
+        _geometry.Location = loc;
 	}
 
 	public virtual void SetCenter(int x, int y)
     {
         Invalidate();
-		_geometry.SetCenter(x, y);
+		var loc = _geometry.MoveCenterpoint(x, y);
+        _geometry.Location = loc;
 	}
 
     public bool Overlaps(Point point) =>
