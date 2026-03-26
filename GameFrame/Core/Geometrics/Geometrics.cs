@@ -9,15 +9,15 @@ namespace GameFrame.Core.Geometrics;
 /// <summary>
 /// A <see cref="Branch>"/> with geometry.
 /// </summary>
-public abstract class GeometricBranch: Branch, IGeometric
+public abstract class GeometricBranch(IComponent? parent = null, int layer = 0): Branch(parent, layer), IGeometric
 {
     public Rectangle Geometry
 	{
 		get => _geometry;
 		set
 		{
-			_geometry = value;
 			Invalidate();
+			_geometry = value;
 		}
 	}
 	public int X
@@ -25,8 +25,8 @@ public abstract class GeometricBranch: Branch, IGeometric
 		get => _geometry.X;
 		set
 		{
-			_geometry.X = value;
 			Invalidate();
+			_geometry.X = value;
 		}
 	}
 	public int Y
@@ -34,8 +34,8 @@ public abstract class GeometricBranch: Branch, IGeometric
 		get => _geometry.Y;
 		set
 		{
-			_geometry.Y = value;
 			Invalidate();
+			_geometry.Y = value;
 		}
 	}
 	public int Width
@@ -43,8 +43,8 @@ public abstract class GeometricBranch: Branch, IGeometric
 		get => _geometry.Width;
 		set
 		{
-			_geometry.Width = value;
 			Invalidate();
+			_geometry.Width = value;
 		}
 	}
 	public int Height
@@ -52,22 +52,30 @@ public abstract class GeometricBranch: Branch, IGeometric
 		get => _geometry.Height;
 		set
 		{
-			_geometry.Height = value;
 			Invalidate();
+			_geometry.Height = value;
 		}
 	}
 	public Point Center
 	{
 		get => _geometry.Center;
-		set => _geometry.SetCenter(value);
+		set
+		{
+			Invalidate();
+			_geometry.SetCenter(value);
+		}
 	}
 
-	protected GeometricBranch(IComponent? parent = null, int layer = 0):
-	base(parent, layer)
-	{ }
-
-	public void SetCenter(Point p) => _geometry.SetCenter(p);
-	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+	public void SetCenter(Point p)
+	{
+		Invalidate();
+		_geometry.SetCenter(p);
+	}
+	public void SetCenter(int x, int y)
+	{
+		Invalidate();
+		_geometry.SetCenter(x, y);
+	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
 	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
@@ -77,15 +85,15 @@ public abstract class GeometricBranch: Branch, IGeometric
 /// <summary>
 /// A <see cref="Component>"/> with geometry.
 /// </summary>
-public abstract class GeometricComponent: Component, IGeometric
+public abstract class GeometricComponent(IComponent? parent = null, int layer = 0): Component(parent, layer), IGeometric
 {
     public Rectangle Geometry
 	{
 		get => _geometry;
 		set
 		{
-			_geometry = value;
 			Invalidate();
+			_geometry = value;
 		}
 	}
 	public int X
@@ -93,8 +101,8 @@ public abstract class GeometricComponent: Component, IGeometric
 		get => _geometry.X;
 		set
 		{
-			_geometry.X = value;
 			Invalidate();
+			_geometry.X = value;
 		}
 	}
 	public int Y
@@ -102,8 +110,8 @@ public abstract class GeometricComponent: Component, IGeometric
 		get => _geometry.Y;
 		set
 		{
-			_geometry.Y = value;
 			Invalidate();
+			_geometry.Y = value;
 		}
 	}
 	public int Width
@@ -111,8 +119,8 @@ public abstract class GeometricComponent: Component, IGeometric
 		get => _geometry.Width;
 		set
 		{
-			_geometry.Width = value;
 			Invalidate();
+			_geometry.Width = value;
 		}
 	}
 	public int Height
@@ -120,22 +128,30 @@ public abstract class GeometricComponent: Component, IGeometric
 		get => _geometry.Height;
 		set
 		{
-			_geometry.Height = value;
 			Invalidate();
+			_geometry.Height = value;
 		}
 	}
 	public Point Center
 	{
 		get => _geometry.Center;
-		set => _geometry.SetCenter(value);
+		set
+		{
+			Invalidate();
+			_geometry.SetCenter(value);
+		}
 	}
 
-	protected GeometricComponent(IComponent? parent = null, int layer = 0):
-	base(parent, layer)
-	{ }
-
-	public void SetCenter(Point p) => _geometry.SetCenter(p);
-	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+	public void SetCenter(Point p)
+	{
+		Invalidate();
+		_geometry.SetCenter(p);
+	}
+	public void SetCenter(int x, int y)
+	{
+		Invalidate();
+		_geometry.SetCenter(x, y);
+	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
 	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
@@ -145,15 +161,15 @@ public abstract class GeometricComponent: Component, IGeometric
 /// <summary>
 /// A <see cref="Leaf>"/> with geometry.
 /// </summary>
-public abstract class GeometricLeaf: Leaf, IGeometric
+public abstract class GeometricLeaf(IComponent? parent = null, int layer = 0): Leaf(parent, layer), IGeometric
 {
     public Rectangle Geometry
 	{
 		get => _geometry;
 		set
 		{
-			_geometry = value;
 			Invalidate();
+			_geometry = value;
 		}
 	}
 	public int X
@@ -161,8 +177,8 @@ public abstract class GeometricLeaf: Leaf, IGeometric
 		get => _geometry.X;
 		set
 		{
-			_geometry.X = value;
 			Invalidate();
+			_geometry.X = value;
 		}
 	}
 	public int Y
@@ -170,8 +186,8 @@ public abstract class GeometricLeaf: Leaf, IGeometric
 		get => _geometry.Y;
 		set
 		{
-			_geometry.Y = value;
 			Invalidate();
+			_geometry.Y = value;
 		}
 	}
 	public int Width
@@ -179,8 +195,8 @@ public abstract class GeometricLeaf: Leaf, IGeometric
 		get => _geometry.Width;
 		set
 		{
-			_geometry.Width = value;
 			Invalidate();
+			_geometry.Width = value;
 		}
 	}
 	public int Height
@@ -188,22 +204,30 @@ public abstract class GeometricLeaf: Leaf, IGeometric
 		get => _geometry.Height;
 		set
 		{
-			_geometry.Height = value;
 			Invalidate();
+			_geometry.Height = value;
 		}
 	}
 	public Point Center
 	{
 		get => _geometry.Center;
-		set => _geometry.SetCenter(value);
+		set
+		{
+			Invalidate();
+			_geometry.SetCenter(value);
+		}
 	}
 
-	protected GeometricLeaf(IComponent? parent = null, int layer = 0):
-	base(parent, layer)
-	{ }
-
-	public void SetCenter(Point p) => _geometry.SetCenter(p);
-	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+	public void SetCenter(Point p)
+	{
+		Invalidate();
+		_geometry.SetCenter(p);
+	}
+	public void SetCenter(int x, int y)
+	{
+		Invalidate();
+		_geometry.SetCenter(x, y);
+	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
 	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);

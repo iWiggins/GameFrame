@@ -71,8 +71,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         get => _geometry.Center;
         set
         {
-            SetCenter(value.X, value.Y);
             Invalidate();
+			_geometry.SetCenter(value.X, value.Y);
         }
     }
 
@@ -113,14 +113,14 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
 
 	public virtual void SetCenter(Point p)
 	{
-        _geometry.SetCenter(p);
         Invalidate();
+		_geometry.SetCenter(p);
 	}
 
 	public virtual void SetCenter(int x, int y)
     {
-		_geometry.SetCenter(x, y);
         Invalidate();
+		_geometry.SetCenter(x, y);
 	}
 
     public bool Overlaps(Point point) =>

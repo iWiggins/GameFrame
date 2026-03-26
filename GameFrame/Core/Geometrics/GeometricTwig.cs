@@ -13,22 +13,16 @@ namespace GameFrame.Core.Geometrics;
 /// the component is first accessed, leading to 0 overhead for the child geometry check.
 /// </remarks>
 /// <typeparam name="TChild">The type for this twig's child component.</typeparam>
-public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TChild : IComponent
+public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0) : Twig<TChild>(child, parent, layer), IGeometric where TChild : IComponent
 {
-	protected GeometricTwig(TChild child, IComponent? parent = null, int layer = 0):
-		base(child, parent, layer)
-	{
-
-	}
-
 	public Rectangle Geometry
 	{
 		get => Child is IGeometric geo ? geo.Geometry : _geometry;
 		set
 		{
+			Invalidate();
 			if(Child is IGeometric geo) geo.Geometry = value;
 			else _geometry = value;
-			Parent?.Invalidate();
 		}
 	}
 	public int X
@@ -36,9 +30,9 @@ public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TCh
 		get => Geometry.X;
 		set
 		{
+			Invalidate();
 			if(Child is IGeometric geo) geo.X = value;
 			else _geometry.X = value;
-			Parent?.Invalidate();
 		}
 	}
 	public int Y
@@ -46,9 +40,9 @@ public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TCh
 		get => Geometry.Y;
 		set
 		{
+			Invalidate();
 			if(Child is IGeometric geo) geo.X = value;
 			else _geometry.X = value;
-			Parent?.Invalidate();
 		}
 	}
 	public int Width
@@ -56,9 +50,9 @@ public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TCh
 		get => Geometry.Width;
 		set
 		{
+			Invalidate();
 			if(Child is IGeometric geo) geo.Width = value;
 			else _geometry.Width = value;
-			Parent?.Invalidate();
 		}
 	}
 	public int Height
@@ -66,19 +60,31 @@ public abstract class GeometricTwig<TChild> : Twig<TChild>, IGeometric where TCh
 		get => Geometry.Height;
 		set
 		{
+			Invalidate();
 			if(Child is IGeometric geo) geo.Height = value;
 			else _geometry.Height = value;
-			Parent?.Invalidate();
 		}
 	}
 	public Point Center
 	{
 		get => Geometry.Center;
-		set => Geometry.SetCenter(value);
+		set
+		{
+			Invalidate();
+			_geometry.SetCenter(value);
+		}
 	}
 
-	public void SetCenter(Point p) => _geometry.SetCenter(p);
-	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+	public void SetCenter(Point p)
+	{
+		Invalidate();
+		_geometry.SetCenter(p);
+	}
+	public void SetCenter(int x, int y)
+	{
+		Invalidate();
+		_geometry.SetCenter(x, y);
+	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
 	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);

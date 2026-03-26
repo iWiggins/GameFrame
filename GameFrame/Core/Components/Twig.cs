@@ -47,6 +47,8 @@ public abstract class Twig<TChild> : Component where TChild : IComponent
 	/// <returns>false</returns>
 	public override bool RemoveChild(IComponent component) => false;
 
+	public override void Invalidate() => _child.Invalidate();
+
 	/// <summary>
 	/// This <see cref="Twig{T}"/>'s child.
 	/// </summary>

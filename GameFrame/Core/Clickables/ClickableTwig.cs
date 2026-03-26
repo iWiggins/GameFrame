@@ -9,16 +9,12 @@ namespace GameFrame.Core.Clickables;
 /// <summary>
 /// A <see cref="Twig{TChild}"/> that is clickable.
 /// </summary>
-public abstract class ClickableTwig<TChild> : GeometricTwig<TChild>, IClick where TChild : IComponent
+public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0) : GeometricTwig<TChild>(child, parent, layer), IClick where TChild : IComponent
 {
 	public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
 	public event MouseHoverHandler? Hovered;
 	public event MouseUnhoverHandler? Unhovered;
-
-	protected ClickableTwig(TChild child, IComponent? parent = null, int layer = 0) :
-		base(child, parent, layer)
-	{ }
 
 	public bool Down { get; private set; } = false;
 
@@ -32,13 +28,13 @@ public abstract class ClickableTwig<TChild> : GeometricTwig<TChild>, IClick wher
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered();
 			}
 			if(mouse.LeftDown && !Down)
 			{
 				Down = true;
 				pressedTime = time;
-				if(Pressed is not null)
+				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
 				{
 					Pressed(Mouse.Buttons.Left, mouse.Position);
 				}
@@ -46,9 +42,9 @@ public abstract class ClickableTwig<TChild> : GeometricTwig<TChild>, IClick wher
 			else if(!mouse.LeftDown && Down)
 			{
 				Down = false;
-				if(Released is not null)
+				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 					Released(Mouse.Buttons.Left, mouse.Position, dt);
 				}
 			}
@@ -58,23 +54,53 @@ public abstract class ClickableTwig<TChild> : GeometricTwig<TChild>, IClick wher
 			if(Hovering)
 			{
 				Hovering = false;
-				if(Unhovered is not null)
+				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
+				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 					Unhovered(dt);
 				}
 			}
 			if(Down)
 			{
 				Down = false;
-				if(Released is not null)
+				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 					Released(Mouse.Buttons.Left, mouse.Position, dt);
 				}
 			}
 		}
 	}
+
+	/// <summary>
+	/// Internal callback when the button is hovered.
+	/// </summary>
+	/// <returns>Whether the Hovered event should be raised.</returns>
+	protected virtual bool OnHovered() => true;
+
+	/// <summary>
+	/// Internal callback when the button is unhovered.
+	/// </summary>
+	/// <param name="dt">The time the button was hovered.</param>
+	/// <returns>Whether the Unhovered event should be raised.</returns>
+	protected virtual bool OnUnhovered(double dt) => true;
+
+	/// <summary>
+	/// Internal callback when the button is pressed.
+	/// </summary>
+	/// <param name="button">The mouse button pressed.</param>
+	/// <param name="position">The position of the mouse.</param>
+	/// <returns>Whether the Pressed event should be raised.</returns>
+	protected virtual bool OnPressed(Mouse.Buttons button, Point position) => true;
+
+	/// <summary>
+	/// Internal callback when the button is released.
+	/// </summary>
+	/// <param name="button">The mouse button pressed.</param>
+	/// <param name="position">The position of the mouse.</param>
+	/// <param name="duration">The time the button spent down.</param>
+	/// <returns>Whether the Released event should be raised.</returns>
+	protected virtual bool OnReleased(Mouse.Buttons button, Point position, double duration) => true;
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();

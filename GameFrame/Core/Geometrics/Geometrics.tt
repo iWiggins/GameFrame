@@ -17,20 +17,20 @@ foreach(string fname in Directory.GetFiles(path))
 {
     string name = Path.GetFileNameWithoutExtension(fname);
 	if(name == "Twig") continue; // twig works differently
-	if(name == "RootComponent") continue; // there is only one root component
+	if(name == "Root") continue; // the root is not geometric
 #>
 /// <summary>
 /// A <see cref="<#=name#>>"/> with geometry.
 /// </summary>
-public abstract class Geometric<#=name#>: <#=name#>, IGeometric
+public abstract class Geometric<#=name#>(IComponent? parent = null, int layer = 0): <#=name#>(parent, layer), IGeometric
 {
     public Rectangle Geometry
 	{
 		get => _geometry;
 		set
 		{
-			_geometry = value;
 			Invalidate();
+			_geometry = value;
 		}
 	}
 	public int X
@@ -38,8 +38,8 @@ public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 		get => _geometry.X;
 		set
 		{
-			_geometry.X = value;
 			Invalidate();
+			_geometry.X = value;
 		}
 	}
 	public int Y
@@ -47,8 +47,8 @@ public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 		get => _geometry.Y;
 		set
 		{
-			_geometry.Y = value;
 			Invalidate();
+			_geometry.Y = value;
 		}
 	}
 	public int Width
@@ -56,8 +56,8 @@ public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 		get => _geometry.Width;
 		set
 		{
-			_geometry.Width = value;
 			Invalidate();
+			_geometry.Width = value;
 		}
 	}
 	public int Height
@@ -65,22 +65,30 @@ public abstract class Geometric<#=name#>: <#=name#>, IGeometric
 		get => _geometry.Height;
 		set
 		{
-			_geometry.Height = value;
 			Invalidate();
+			_geometry.Height = value;
 		}
 	}
 	public Point Center
 	{
 		get => _geometry.Center;
-		set => _geometry.SetCenter(value);
+		set
+		{
+			Invalidate();
+			_geometry.SetCenter(value);
+		}
 	}
 
-	protected Geometric<#=name#>(IComponent? parent = null, int layer = 0):
-	base(parent, layer)
-	{ }
-
-	public void SetCenter(Point p) => _geometry.SetCenter(p);
-	public void SetCenter(int x, int y) => _geometry.SetCenter(x, y);
+	public void SetCenter(Point p)
+	{
+		Invalidate();
+		_geometry.SetCenter(p);
+	}
+	public void SetCenter(int x, int y)
+	{
+		Invalidate();
+		_geometry.SetCenter(x, y);
+	}
 
 	public bool Overlaps(Point point) => _geometry.Contains(point);
 	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
