@@ -11,6 +11,11 @@ public abstract class Frame
 	protected IRoot Root { get; private set; }
 	protected Keyboard Keyboard { get; }
 	protected Mouse Mouse { get; }
+	public IMouseCursor? Cursor
+	{
+		get => Mouse.Cursor;
+		set => Mouse.Cursor = value;
+	}
 	
 	public Frame(SpriteBatch spriteBatch):
 		this(spriteBatch, new Root())

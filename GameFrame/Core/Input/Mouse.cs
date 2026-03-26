@@ -1,7 +1,9 @@
-﻿using GameFrame.Core;
+﻿using GameFrame.Components;
+using GameFrame.Core;
 using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
@@ -30,9 +32,17 @@ public class Mouse: IComponent, IUpdate
 	}
 	public bool Enabled { get; set; }
 
-	public IEnumerable<IComponent> Children => [];
+	public IEnumerable<IComponent> Children
+	{
+		get
+		{
+			if(Cursor is not null) yield return Cursor;
+		}
+	}
 
 	public bool HasChildren => false;
+
+	public IMouseCursor? Cursor { get; set; }
 
 	public Mouse(IComponent root)
 	{
@@ -49,6 +59,8 @@ public class Mouse: IComponent, IUpdate
 		MouseState state = Microsoft.Xna.Framework.Input.Mouse.GetState();
 
 		Position = state.Position;
+
+		Cursor?.Move(Position);
 
 		bool pressed = state.LeftButton == ButtonState.Pressed;
 		var position = state.Position;
