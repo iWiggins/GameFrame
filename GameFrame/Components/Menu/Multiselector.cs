@@ -17,14 +17,25 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 	public bool Initialized { get; private set; } = false;
 
 	public IComponent CurrentComponent => _options[_current];
-	public int Current => _current;
+	public int Current
+	{
+		get => _current;
+		set
+		{
+			if(value > 0 && value < _options.Length)
+			{
+				SwitchChild(_current, value);
+				_current = value;
+			}
+		}
+	}
 
 	public void Advance()
 	{
-		Child.RemoveChild(_options[_current]);
-		_current += 1;
-		if(_current >= _options.Length) _current = 0;
-		Child.AddChild(_options[_current]);
+		int next = _current + 1;
+		if(next >= _options.Length) next = 0;
+		SwitchChild(_current, next);
+		_current = next;
 	}
 
 	public void Initialize()
@@ -39,6 +50,12 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 		Advance();
 
 		return true;
+	}
+
+	private void SwitchChild(int oldSelection, int newSelection)
+	{
+		Child.RemoveChild(_options[oldSelection]);
+		Child.AddChild(_options[newSelection]);
 	}
 
 	readonly IComponent[] _options = [.. options];
