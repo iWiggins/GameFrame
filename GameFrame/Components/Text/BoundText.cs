@@ -168,22 +168,22 @@ public class BoundText : Component, IGeometric
 			{
 				// by default, attempt to scale width first
 				int newWidth = Width;
-				float scaleFactor = newWidth / textSize.Y;
-				int newHeight = (int)(scaleFactor * textSize.X);
+				float scaleFactor = newWidth / textSize.X;
+				int newHeight = (int)(scaleFactor * textSize.Y);
 
 				// If new height would exceed parent, set new height to parent
 				// height and calculate new scale factor for the width
 				if(newHeight > Height)
 				{
 					newHeight = Height;
-					scaleFactor = newHeight / textSize.X;
-					newWidth = (int)(scaleFactor * textSize.Y);
+					scaleFactor = newHeight / textSize.Y;
+					newWidth = (int)(scaleFactor * textSize.X);
 				}
 
 				_text.Scale = new(scaleFactor, scaleFactor);
 
-				int xOffset = newWidth / 3;
-				int yOffset = newHeight / 4;
+				int xOffset = (Width - newWidth) / 2;
+				int yOffset = (Height - newHeight) / 2;
 
 				_text.Position = new(X + xOffset, Y + yOffset);				
 			}

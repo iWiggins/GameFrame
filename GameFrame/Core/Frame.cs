@@ -120,7 +120,8 @@ public abstract class Frame
 	{
 		void DrawComponent(IComponent component)
 		{
-			if(component.Enabled)
+			// The keyboard has many children that will never draw, skip it.
+			if(component.Enabled && component != Keyboard)
 			{
 				if(component is IDrawZone dzone)
 				{
