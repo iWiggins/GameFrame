@@ -182,8 +182,8 @@ public class BoundText : Component, IGeometric
 
 				_text.Scale = new(scaleFactor, scaleFactor);
 
-				int xOffset = (Width - newWidth) / 2;
-				int yOffset = (Height - newHeight) / 2;
+				int xOffset = newWidth / 3;
+				int yOffset = newHeight / 4;
 
 				_text.Position = new(X + xOffset, Y + yOffset);				
 			}

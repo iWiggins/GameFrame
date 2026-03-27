@@ -15,7 +15,7 @@ public class Branch : Component
 		_cache = null;
 	}
 	public override IEnumerable<IComponent> Children =>
-		_cache ??= [.. _children.OrderByDescending(c => c.Layer).ThenBy(c => c.Id)];
+		_cache ??= [.. _children.OrderBy(c => c.Layer).ThenBy(c => c.Id)];
 
 	public override bool HasChildren => _children.Count > 0;
 

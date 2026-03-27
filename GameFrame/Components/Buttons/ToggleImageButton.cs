@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Buttons;
 public class ToggleImageButton(Texture2D texture, IComponent? parent = null, int layer = 0) : ImageButton(texture, parent, layer), IInitialize
 {
+	public bool Initialized { get; private set; } = false;
 	public Color OnColor { get; set; }
 	public Color OffColor { get; set; }
 	
@@ -29,7 +30,11 @@ public class ToggleImageButton(Texture2D texture, IComponent? parent = null, int
 		}
 	}
 
-	public void Initialize() => Color = OffColor;
+	public void Initialize()
+	{
+		Color = OffColor;
+		Initialized = true;
+	}
 	protected override bool OnReleased(Mouse.Buttons button, Point position, double duration)
 	{
 		_on = !_on;

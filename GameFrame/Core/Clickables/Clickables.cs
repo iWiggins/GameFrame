@@ -22,6 +22,12 @@ public abstract class ClickableBranch(IComponent? parent, int layer = 0): Geomet
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
 
+	public void Reset()
+	{
+		Down = false;
+		Hovering = false;
+	}
+
 	public void Click(GameTime time, Mouse mouse)
 	{
 		if(Overlaps(mouse.Position))
@@ -120,6 +126,12 @@ public abstract class ClickableComponent(IComponent? parent, int layer = 0): Geo
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
 
+	public void Reset()
+	{
+		Down = false;
+		Hovering = false;
+	}
+
 	public void Click(GameTime time, Mouse mouse)
 	{
 		if(Overlaps(mouse.Position))
@@ -217,6 +229,12 @@ public abstract class ClickableLeaf(IComponent? parent, int layer = 0): Geometri
 
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
+
+	public void Reset()
+	{
+		Down = false;
+		Hovering = false;
+	}
 
 	public void Click(GameTime time, Mouse mouse)
 	{

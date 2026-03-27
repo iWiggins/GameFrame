@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using GameFrame.Core.Input;
 
 namespace GameFrame.Core.Interfaces;
-public interface IClick
+public interface IClick: IReset
 {
 	event MouseDownHandler? Pressed;
 	event MouseUpHandler? Released;

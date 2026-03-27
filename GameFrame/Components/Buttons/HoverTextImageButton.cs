@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Buttons;
 public class HoverTextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null, int layer = 0) : TextImageButton(font, texture, parent, layer), IInitialize
 {
+	public bool Initialized { get; private set; } = false;
 	public Color TextHoverColor { get; set; }
 	public Color TextNormalColor { get; set; }
 	public Color HoverColor { get; set; }
@@ -14,6 +15,7 @@ public class HoverTextImageButton(SpriteFont font, Texture2D texture, IComponent
 	{
 		Color = NormalColor;
 		TextColor = TextNormalColor;
+		Initialized = true;
 	}
 	protected override bool OnHovered()
 	{

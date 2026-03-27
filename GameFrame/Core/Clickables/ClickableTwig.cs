@@ -20,6 +20,12 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 
 	public bool Hovering { get; private set; } = false;
 
+	public void Reset()
+	{
+		Down = false;
+		Hovering = false;
+	}
+
 	public void Click(GameTime time, Mouse mouse)
 	{
 		if(Overlaps(mouse.Position))

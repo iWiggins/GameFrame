@@ -12,11 +12,15 @@ public abstract class Frame
 	protected IBoundsProvider Screen { get; private set; }
 	protected Keyboard Keyboard { get; }
 	protected Mouse Mouse { get; }
+	protected readonly SpriteBatch SpriteBatch;
+
 	public IMouseCursor? Cursor
 	{
 		get => Mouse.Cursor;
 		set => Mouse.Cursor = value;
 	}
+
+	public bool Initialized { get; private set; }
 	
 	public Frame(SpriteBatch spriteBatch, IBoundsProvider bounds) :
 		this(spriteBatch, bounds, new Root())
@@ -24,7 +28,7 @@ public abstract class Frame
 
 	public Frame(SpriteBatch spriteBatch, IBoundsProvider bounds, IRoot root)
 	{
-		_spriteBatch = spriteBatch;
+		SpriteBatch = spriteBatch;
 
 		Screen = bounds;
 		Root = root;
@@ -32,6 +36,7 @@ public abstract class Frame
 		Mouse = new(Root);
 		root.AddKeyboard(Keyboard);
 		root.AddMouse(Mouse);
+		Initialized = false;
 		_exitFrame = null;
 		_shouldExit = false;
 	}
@@ -58,6 +63,7 @@ public abstract class Frame
 		PreInitialize();
 		InitializeComponent(Root);
 		PostInitialize();
+		Initialized = true;
 	}
 
 	protected virtual void PostInitialize() { }
@@ -120,30 +126,30 @@ public abstract class Frame
 				{
 					if(_drawZones.Count > 0)
 					{
-						_drawZones.Peek().EndDrawing(_spriteBatch);
+						_drawZones.Peek().EndDrawing(SpriteBatch);
 					}
 					_drawZones.Push(dzone);
-					dzone.StartDrawing(_spriteBatch);
+					dzone.StartDrawing(SpriteBatch);
 					if(component is IDraw draw)
 					{
-						draw.Draw(_spriteBatch);
+						draw.Draw(SpriteBatch);
 					}
 					foreach(IComponent child in component.Children)
 					{
 						DrawComponent(child);
 					}
 					_drawZones.Pop();
-					dzone.EndDrawing(_spriteBatch);
+					dzone.EndDrawing(SpriteBatch);
 					if(_drawZones.Count > 0)
 					{
-						_drawZones.Peek().StartDrawing(_spriteBatch);
+						_drawZones.Peek().StartDrawing(SpriteBatch);
 					}
 				}
 				else
 				{
 					if(component is IDraw draw)
 					{
-						draw.Draw(_spriteBatch);
+						draw.Draw(SpriteBatch);
 					}
 					foreach(IComponent child in component.Children)
 					{
@@ -162,6 +168,30 @@ public abstract class Frame
 
 	protected virtual void PostDraw() { }
 
+	protected virtual void PreReset() { }
+
+	public void Reset()
+	{
+		_exitFrame = null;
+		_shouldExit = false;
+		void ResetComponent(IComponent component)
+		{
+			if(component is IReset reset)
+			{
+				reset.Reset();
+			}
+			foreach(var child in component.Children)
+			{
+				ResetComponent(child);
+			}
+		}
+		PreReset();
+		ResetComponent(Root);
+		PostReset();
+	}
+
+	protected virtual void PostReset() { }
+
 	protected void Exit(Frame? frame)
 	{
 		_exitFrame = frame;
@@ -170,6 +200,5 @@ public abstract class Frame
 
 	private Frame? _exitFrame;
 	private bool _shouldExit;
-	private readonly SpriteBatch _spriteBatch;
 	private readonly Stack<IDrawZone> _drawZones = [];
 }

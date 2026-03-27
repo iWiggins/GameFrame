@@ -5,10 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Buttons;
 public class HoverImageButton(Texture2D texture, IComponent? parent = null, int layer = 0) : ImageButton(texture, parent, layer), IInitialize
 {
+	public bool Initialized { get; private set; } = false;
 	public Color HoverColor { get; set; }
 	public Color NormalColor { get; set; }
 
-	public void Initialize() => Color = NormalColor;
+	public void Initialize()
+	{
+		Color = NormalColor;
+		Initialized = true;
+	}
 	protected override bool OnHovered()
 	{
 		Color = HoverColor;

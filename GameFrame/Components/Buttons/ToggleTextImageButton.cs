@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Buttons;
 public class ToggleTextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null, int layer = 0) : TextImageButton(font, texture, parent, layer), IInitialize
 {
+	public bool Initialized { get; private set; } = false;
 	public Color OnColor { get; set; }
 	public Color OffColor { get; set; }
 	public Color ImageOnColor { get; set; }
@@ -34,6 +35,7 @@ public class ToggleTextImageButton(SpriteFont font, Texture2D texture, IComponen
 	{
 		Color = ImageOffColor;
 		TextColor = OffColor;
+		Initialized = true;
 	}
 	protected override bool OnReleased(Mouse.Buttons button, Point position, double duration)
 	{

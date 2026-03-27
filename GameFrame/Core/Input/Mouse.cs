@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace GameFrame.Core.Input;
-public class Mouse: IComponent, IUpdate
+public class Mouse: IComponent, IUpdate, IReset
 {
 	public enum Buttons
 	{
@@ -46,6 +46,7 @@ public class Mouse: IComponent, IUpdate
 
 	public Mouse(IComponent root)
 	{
+		Enabled = true;
 		_root = root;
 		Id = Identity.GenerateId();
 		PressedOn = new();
@@ -54,6 +55,12 @@ public class Mouse: IComponent, IUpdate
 	public bool AddChild(IComponent component) => false;
 	public bool RemoveChild(IComponent component) => false;
 	public void Invalidate() { }
+
+	public void Reset()
+	{
+		LeftDown = false;
+	}
+
 	public void Update(GameTime time)
 	{
 		MouseState state = Microsoft.Xna.Framework.Input.Mouse.GetState();

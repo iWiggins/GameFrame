@@ -16,6 +16,8 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
 	public int Layer { get; set; } = 0;
 	public bool Enabled { get; set; } = true;
 
+    public bool Initialized { get; private set; }
+
 	public IEnumerable<IComponent> Children =>
     _cache is not null ? _cache : _cache = Arrange();
 
@@ -168,7 +170,11 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
     public bool Overlaps(int x, int y) =>
         _geometry.Contains(x, y);
 
-    public void Initialize() => Arrange();
+    public void Initialize()
+    {
+		Arrange();
+        Initialized = true;
+	}
 
 	public bool Contains(IComponent component) =>
         _children.Contains(component);

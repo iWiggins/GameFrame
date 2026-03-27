@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Buttons;
 public class SwitchImageButton(Texture2D offTexture, Texture2D onTexture, IComponent? parent = null, int layer = 0) : ImageButton(offTexture, parent, layer), IInitialize
 {
+	public bool Initialized { get; private set; } = false;
 	public Color OnColor { get; set; }
 	public Color OffColor { get; set; }
 	public Texture2D OnTexture { get; set; } = onTexture;
@@ -31,7 +32,11 @@ public class SwitchImageButton(Texture2D offTexture, Texture2D onTexture, ICompo
 		}
 	}
 
-	public void Initialize() => Color = OffColor;
+	public void Initialize()
+	{
+		Color = OffColor;
+		Initialized = true;
+	}
 	protected override bool OnReleased(Mouse.Buttons button, Point position, double duration)
 	{
 		_on = !_on;

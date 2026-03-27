@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameFrame.Core.Input;
-public class Key(Keyboard parent, Keys keycode) : Leaf(parent), IUpdate
+public class Key(Keyboard parent, Keys keycode) : Leaf(parent), IUpdate, IReset
 {
 	public Keys KeyCode { get; } = keycode;
 
@@ -13,6 +13,11 @@ public class Key(Keyboard parent, Keys keycode) : Leaf(parent), IUpdate
 
 	public event KeyDownHandler? KeyPressed;
 	public event KeyUpHandler? KeyReleased;
+
+	public void Reset()
+	{
+		IsDown = false;
+	}
 
 	public void Update(GameTime time)
 	{

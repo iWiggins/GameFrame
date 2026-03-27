@@ -105,7 +105,7 @@ public abstract class ManagedGame : Game
 #endif
 			_currentFrame = CreateFirstFrame(Content, _spriteBatch, Bounds);
 			_currentFrame.Initialize();
-			IsMouseVisible = _currentFrame.Cursor is not null;
+			IsMouseVisible = _currentFrame.Cursor is null;
 #if !DEBUG
 		}
 		catch(Exception e)
@@ -127,8 +127,11 @@ public abstract class ManagedGame : Game
 
 			else if(nextFrame != _currentFrame)
 			{
-				nextFrame.Initialize();
-				IsMouseVisible = nextFrame.Cursor is not null;
+				// If switching to an uninitialized frame, initialize it.
+				// otherwise reset it.
+				if(!nextFrame.Initialized) nextFrame.Initialize();
+				else nextFrame.Reset();
+				IsMouseVisible = nextFrame.Cursor is null;
 				_currentFrame = nextFrame;
 			}
 			base.Update(gameTime);
@@ -150,7 +153,7 @@ public abstract class ManagedGame : Game
 #endif
 			GraphicsDevice.Clear(Color.Black);
 
-			_currentFrame!.Draw();
+			_currentFrame?.Draw();
 
 			base.Draw(gameTime);
 #if !DEBUG
