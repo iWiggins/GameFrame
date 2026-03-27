@@ -8,7 +8,7 @@ namespace GameFrame.Core.Components;
 /// </summary>
 public abstract class Leaf(IComponent? parent = null, int layer = 0) : Component(parent, layer)
 {
-	public override IEnumerable<IComponent> Children => Enumerable.Empty<IComponent>();
+	public override IEnumerable<IComponent> Children => [];
 
 	public override bool HasChildren => false;
 
