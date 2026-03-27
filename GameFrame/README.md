@@ -1,6 +1,6 @@
 # GameFrame
 
-A monogame framework for quidkly building dynamic 2D games using an extensible component library.
+A monogame framework for quickly building dynamic 2D games using an extensible component library.
 
 ## Examples
 
