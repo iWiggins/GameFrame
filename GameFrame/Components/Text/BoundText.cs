@@ -11,94 +11,8 @@ namespace GameFrame.Components.Text;
 /// <summary>
 /// Text bound to a specific geometry, scaling to fit that geometry.
 /// </summary>
-public class BoundText : Component, IGeometric
+public class BoundText : GeometricComponent
 {
-	public Rectangle Geometry
-	{
-		get => _geometry;
-		set
-		{
-			Invalidate();
-			_geometry = value;
-		}
-	}
-	public int X
-	{
-		get => _geometry.X;
-		set
-		{
-			Invalidate();
-			_geometry.X = value;
-		}
-	}
-	public int Y
-	{
-		get => _geometry.Y;
-		set
-		{
-			Invalidate();
-			_geometry.Y = value;
-		}
-	}
-	public int Width
-	{
-		get => _geometry.Width;
-		set
-		{
-			Invalidate();
-			_geometry.Width = value;
-		}
-	}
-	public int Height
-	{
-		get => _geometry.Height;
-		set
-		{
-			Invalidate();
-			_geometry.Height = value;
-		}
-	}
-	public Point Center
-	{
-		get => _geometry.Center;
-		set => SetCenter(value);
-	}
-	public int Left
-	{
-		get => _geometry.Left;
-		set
-		{
-			Invalidate();
-			_geometry.X = value;
-		}
-	}
-	public int Right
-	{
-		get => _geometry.Right;
-		set
-		{
-			Invalidate();
-			_geometry.X = value - _geometry.Width;
-		}
-	}
-	public int Top
-	{
-		get => _geometry.Top;
-		set
-		{
-			Invalidate();
-			_geometry.Y = value;
-		}
-	}
-	public int Bottom
-	{
-		get => _geometry.Bottom;
-		set
-		{
-			Invalidate();
-			_geometry.Y = value - _geometry.Height;
-		}
-	}
 	public SpriteFont Font
 	{
 		get => _text.Font;
@@ -141,21 +55,7 @@ public class BoundText : Component, IGeometric
 	public override bool AddChild(IComponent component) => false;
 	public override void Invalidate() =>
 		valid = false;
-	public bool Overlaps(Point point) => _geometry.Contains(point);
-	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
 	public override bool RemoveChild(IComponent component) => false;
-	public void SetCenter(Point p)
-	{
-		Invalidate();
-		var location = _geometry.MoveCenterpoint(p);
-		_geometry.Location = location;
-	}
-	public void SetCenter(int x, int y)
-	{
-		Invalidate();
-		var location = _geometry.MoveCenterpoint(x, y);
-		_geometry.Location = location;
-	}
 
 	public void FitText()
 	{
@@ -191,8 +91,6 @@ public class BoundText : Component, IGeometric
 
 		valid = true;
 	}
-
-	private Rectangle _geometry;
 	private readonly Text _text;
 	private bool valid;
 }
