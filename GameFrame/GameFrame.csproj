@@ -8,7 +8,7 @@
     <Authors>Ian Wiggins</Authors>
     <Company>ianw.io</Company>
     <Product>GameFrame</Product>
-    <Description>A flexible and lightweight game engine built on top of MonoGame.</Description>
+    <Description>A monogame framework for quickly building dynamic 2D games using an extensible component library.</Description>
     <Copyright>2 Ian Wiggins</Copyright>
     <PackageProjectUrl>gameframe.ianw.io</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>

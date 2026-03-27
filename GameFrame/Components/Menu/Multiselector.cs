@@ -14,6 +14,12 @@ namespace GameFrame.Components.Menu;
 public class Multiselector(IEnumerable<IComponent> options, IComponent? parent = null, int layer = 0) :
 	ClickableTwig<FillLayout>(new(), parent, layer), IInitialize
 {
+	public delegate void OnCurrentChanged(int oldValue, int newValue);
+	public OnCurrentChanged? Changed;
+
+	public delegate void OnComponentChanged(IComponent oldComponent, IComponent newComponent);
+	public OnComponentChanged? ComponentChanged;
+
 	public bool Initialized { get; private set; } = false;
 
 	public IComponent CurrentComponent => _options[_current];
@@ -56,6 +62,8 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 	{
 		Child.RemoveChild(_options[oldSelection]);
 		Child.AddChild(_options[newSelection]);
+		if(Changed is not null) Changed(oldSelection, newSelection);
+		if(ComponentChanged is not null) ComponentChanged(_options[oldSelection], _options[newSelection]);
 	}
 
 	readonly IComponent[] _options = [.. options];

@@ -10,6 +10,10 @@ namespace GameFrame.Components.Menu;
 public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int min, int max, int start, IComponent? parent = null, int layer = 0) :
 	GeometricTwig<FlowLayout>(new(FlowLayout.Direction.Down), parent, layer), IInitialize, IReset
 {
+	public delegate void OnValueChanged(int oldValue, int newValue);
+
+	public event OnValueChanged? ValueChanged;
+
 	public bool Initialized { get; private set; } = false;
 
 	public Color TextColor
@@ -33,8 +37,13 @@ public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int 
 		get => _value;
 		set
 		{
-			_value = value;
-			SetText();
+			if(value >= min && value <= max)
+			{
+				int old = _value;
+				_value = value;
+				SetText();
+				if(ValueChanged is not null) ValueChanged(old, _value);
+			}
 		}
 	}
 
@@ -44,6 +53,7 @@ public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int 
 		{
 			_value += 1;
 			SetText();
+			if(ValueChanged is not null) ValueChanged(_value - 1, Value);
 		}
 	}
 
@@ -53,6 +63,7 @@ public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int 
 		{
 			_value -= 1;
 			SetText();
+			if(ValueChanged is not null) ValueChanged(_value + 1, Value);
 		}
 	}
 
