@@ -1,8 +1,6 @@
 ﻿#nullable disable
 /// Events for each keyboard key.
 /// This code is generated and should not be manually edited.
-using GameFrame.Core;
-using GameFrame.Core.Components;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
