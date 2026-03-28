@@ -25,9 +25,9 @@ public class ScaleLayout(IComponent? parent = null) : Layout(parent)
 				else
 				{
 					// by default, attempt to scale height first
-					int newHeight = Height;
+					double newHeight = Height;
 					double scaleFactor = newHeight / geometric.Height;
-					int newWidth = (int)(scaleFactor * geometric.Width);
+					double newWidth = scaleFactor * geometric.Width;
 
 					// If new width would exceed parent, set new width to parent
 					// width and calculate new scale factor for the height
@@ -35,17 +35,17 @@ public class ScaleLayout(IComponent? parent = null) : Layout(parent)
 					{
 						newWidth = Width;
 						scaleFactor = newWidth / geometric.Width;
-						newHeight = (int)(scaleFactor * geometric.Height);
+						newHeight = scaleFactor * geometric.Height;
 					}
 
 					// Create a new rectangle to avoid multiple calls to invalidate on the child.
 					Rectangle newGeometry = geometric.Geometry;
 
-					newGeometry.Height = newHeight;
-					newGeometry.Width = newWidth;
+					newGeometry.Height = (int)newHeight;
+					newGeometry.Width = (int)newWidth;
 
-					newGeometry.X = Center.X - newWidth / 2;
-					newGeometry.Y = Center.Y - newHeight / 2;
+					newGeometry.X = Center.X - (int)newWidth / 2;
+					newGeometry.Y = Center.Y - (int)newHeight / 2;
 
 					geometric.Geometry = newGeometry;
 				}

@@ -36,6 +36,34 @@ public class ScaleLayoutTest : LayoutTestBase
 	}
 
 	[Fact]
+	public void ScalesLargerPerfectGeometric()
+	{
+		ScaleLayout layout = new()
+		{
+			X = 0,
+			Y = 0,
+			Width = 200,
+			Height = 100
+		};
+
+		ulong id = layout.Id + 1;
+
+		TestGeometric component = new(id)
+		{
+			X = 5,
+			Y = 10,
+			Width = 2000,
+			Height = 1000
+		};
+
+		Assert.True(layout.AddChild(component));
+
+		layout.ArrangeChildren();
+
+		Assert.True(Compare.Same(layout.Geometry, component.Geometry));
+	}
+
+	[Fact]
 	public void ScalesTallGeometric()
 	{
 		ScaleLayout layout = new()

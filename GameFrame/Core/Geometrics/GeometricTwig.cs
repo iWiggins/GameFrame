@@ -137,9 +137,8 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 			_geometry.Location = loc;
 		}
 	}
-
-	public bool Overlaps(Point point) => _geometry.Contains(point);
-	public bool Overlaps(int x, int y) => _geometry.Contains(x, y);
+	public bool Overlaps(Point point) => Geometry.Contains(point);
+	public bool Overlaps(int x, int y) => Geometry.Contains(x, y);
 
 	private Rectangle _geometry;
 }
