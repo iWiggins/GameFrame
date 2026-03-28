@@ -9,6 +9,10 @@ namespace GameFrame.Core.Geometrics;
 /// <summary>
 /// A <see cref="Branch>"/> with geometry.
 /// </summary>
+/// <remarks>
+/// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for geometric components.
+/// </remarks>
 public abstract class GeometricBranch(IComponent? parent = null, int layer = 0): Branch(parent, layer), IGeometric
 {
     public Rectangle Geometry
@@ -121,6 +125,10 @@ public abstract class GeometricBranch(IComponent? parent = null, int layer = 0):
 /// <summary>
 /// A <see cref="Component>"/> with geometry.
 /// </summary>
+/// <remarks>
+/// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for geometric components.
+/// </remarks>
 public abstract class GeometricComponent(IComponent? parent = null, int layer = 0): Component(parent, layer), IGeometric
 {
     public Rectangle Geometry
@@ -233,6 +241,10 @@ public abstract class GeometricComponent(IComponent? parent = null, int layer = 
 /// <summary>
 /// A <see cref="Leaf>"/> with geometry.
 /// </summary>
+/// <remarks>
+/// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for geometric components.
+/// </remarks>
 public abstract class GeometricLeaf(IComponent? parent = null, int layer = 0): Leaf(parent, layer), IGeometric
 {
     public Rectangle Geometry

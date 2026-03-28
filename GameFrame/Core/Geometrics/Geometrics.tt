@@ -22,6 +22,10 @@ foreach(string fname in Directory.GetFiles(path))
 /// <summary>
 /// A <see cref="<#=name#>>"/> with geometry.
 /// </summary>
+/// <remarks>
+/// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for geometric components.
+/// </remarks>
 public abstract class Geometric<#=name#>(IComponent? parent = null, int layer = 0): <#=name#>(parent, layer), IGeometric
 {
     public Rectangle Geometry

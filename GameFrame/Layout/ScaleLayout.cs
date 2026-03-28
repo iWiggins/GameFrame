@@ -1,13 +1,14 @@
-﻿using GameFrame.Core.Interfaces;
+﻿using GameFrame.Core.Components;
+using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GameFrame.Layout;
 
 /// <summary>
 /// A layout that stretches components to fill its geometry while maintaining their relative dimentions.
 /// </summary>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public class ScaleLayout(IComponent? parent = null) : Layout(parent)
 {
 	protected override IEnumerable<IComponent> Arrange()

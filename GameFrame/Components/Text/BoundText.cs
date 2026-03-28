@@ -3,7 +3,6 @@ using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace GameFrame.Components.Text;
@@ -13,21 +12,33 @@ namespace GameFrame.Components.Text;
 /// </summary>
 public class BoundText : GeometricComponent
 {
+	/// <summary>
+	/// <inheritdoc cref="Text.Font" path="/summary"/>
+	/// </summary>
 	public SpriteFont Font
 	{
 		get => _text.Font;
 		set => _text.Font = value;
 	}
+	/// <summary>
+	/// <inheritdoc cref="Text.Contents" path="/summary"/>
+	/// </summary>
 	public string Contents
 	{
 		get => _text.Contents;
 		set => _text.Contents = value;
 	}
+	/// <summary>
+	/// <inheritdoc cref="Text.Color" path="/summary"/>
+	/// </summary>
 	public Color Color
 	{
 		get => _text.Color;
 		set => _text.Color = value;
 	}
+	/// <summary>
+	/// <inheritdoc cref="Text.Effect" path="/summary"/>
+	/// </summary>
 	public SpriteEffects Effect
 	{
 		get => _text.Effect;
@@ -45,6 +56,9 @@ public class BoundText : GeometricComponent
 
 	public override bool HasChildren => true;
 
+	/// <param name="font"><inheritdoc cref="Font" path="/summary"/></param>
+	/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+	/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
 	public BoundText(SpriteFont font, IComponent? parent = null, int layer = 0):
 		base(parent, layer)
 	{
@@ -57,6 +71,9 @@ public class BoundText : GeometricComponent
 		valid = false;
 	public override bool RemoveChild(IComponent component) => false;
 
+	/// <summary>
+	/// Aligns the inner text object within the boundtext.
+	/// </summary>
 	public void FitText()
 	{
 		if(Contents != "")
@@ -91,6 +108,7 @@ public class BoundText : GeometricComponent
 
 		valid = true;
 	}
+
 	private readonly Text _text;
 	private bool valid;
 }

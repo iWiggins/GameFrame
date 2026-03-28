@@ -180,175 +180,173 @@ public partial class Keyboard : IComponent, IUpdate
     
     private void InitializeKeys() {
     
-
+        KeyBack = new(this, Keys.Back);
     
-    KeyBack = new(this, Keys.Back);
+        KeyTab = new(this, Keys.Tab);
     
-    KeyTab = new(this, Keys.Tab);
+        KeyEnter = new(this, Keys.Enter);
     
-    KeyEnter = new(this, Keys.Enter);
+        KeyCapsLock = new(this, Keys.CapsLock);
     
-    KeyCapsLock = new(this, Keys.CapsLock);
+        KeyEscape = new(this, Keys.Escape);
     
-    KeyEscape = new(this, Keys.Escape);
+        KeySpace = new(this, Keys.Space);
     
-    KeySpace = new(this, Keys.Space);
+        KeyPageUp = new(this, Keys.PageUp);
     
-    KeyPageUp = new(this, Keys.PageUp);
+        KeyPageDown = new(this, Keys.PageDown);
     
-    KeyPageDown = new(this, Keys.PageDown);
+        KeyEnd = new(this, Keys.End);
     
-    KeyEnd = new(this, Keys.End);
+        KeyHome = new(this, Keys.Home);
     
-    KeyHome = new(this, Keys.Home);
+        KeyLeft = new(this, Keys.Left);
     
-    KeyLeft = new(this, Keys.Left);
+        KeyUp = new(this, Keys.Up);
     
-    KeyUp = new(this, Keys.Up);
+        KeyRight = new(this, Keys.Right);
     
-    KeyRight = new(this, Keys.Right);
+        KeyDown = new(this, Keys.Down);
     
-    KeyDown = new(this, Keys.Down);
+        KeyPrintScreen = new(this, Keys.PrintScreen);
     
-    KeyPrintScreen = new(this, Keys.PrintScreen);
+        KeyInsert = new(this, Keys.Insert);
     
-    KeyInsert = new(this, Keys.Insert);
+        KeyDelete = new(this, Keys.Delete);
     
-    KeyDelete = new(this, Keys.Delete);
+        KeyA = new(this, Keys.A);
     
-    KeyA = new(this, Keys.A);
+        KeyB = new(this, Keys.B);
     
-    KeyB = new(this, Keys.B);
+        KeyC = new(this, Keys.C);
     
-    KeyC = new(this, Keys.C);
+        KeyD = new(this, Keys.D);
     
-    KeyD = new(this, Keys.D);
+        KeyE = new(this, Keys.E);
     
-    KeyE = new(this, Keys.E);
+        KeyF = new(this, Keys.F);
     
-    KeyF = new(this, Keys.F);
+        KeyG = new(this, Keys.G);
     
-    KeyG = new(this, Keys.G);
+        KeyH = new(this, Keys.H);
     
-    KeyH = new(this, Keys.H);
+        KeyI = new(this, Keys.I);
     
-    KeyI = new(this, Keys.I);
+        KeyJ = new(this, Keys.J);
     
-    KeyJ = new(this, Keys.J);
+        KeyK = new(this, Keys.K);
     
-    KeyK = new(this, Keys.K);
+        KeyL = new(this, Keys.L);
     
-    KeyL = new(this, Keys.L);
+        KeyM = new(this, Keys.M);
     
-    KeyM = new(this, Keys.M);
+        KeyN = new(this, Keys.N);
     
-    KeyN = new(this, Keys.N);
+        KeyO = new(this, Keys.O);
     
-    KeyO = new(this, Keys.O);
+        KeyP = new(this, Keys.P);
     
-    KeyP = new(this, Keys.P);
+        KeyQ = new(this, Keys.Q);
     
-    KeyQ = new(this, Keys.Q);
+        KeyR = new(this, Keys.R);
     
-    KeyR = new(this, Keys.R);
+        KeyS = new(this, Keys.S);
     
-    KeyS = new(this, Keys.S);
+        KeyT = new(this, Keys.T);
     
-    KeyT = new(this, Keys.T);
+        KeyU = new(this, Keys.U);
     
-    KeyU = new(this, Keys.U);
+        KeyV = new(this, Keys.V);
     
-    KeyV = new(this, Keys.V);
+        KeyW = new(this, Keys.W);
     
-    KeyW = new(this, Keys.W);
+        KeyX = new(this, Keys.X);
     
-    KeyX = new(this, Keys.X);
+        KeyY = new(this, Keys.Y);
     
-    KeyY = new(this, Keys.Y);
+        KeyZ = new(this, Keys.Z);
     
-    KeyZ = new(this, Keys.Z);
+        KeyLeftWindows = new(this, Keys.LeftWindows);
     
-    KeyLeftWindows = new(this, Keys.LeftWindows);
+        KeyRightWindows = new(this, Keys.RightWindows);
     
-    KeyRightWindows = new(this, Keys.RightWindows);
+        KeyNumPad0 = new(this, Keys.NumPad0);
     
-    KeyNumPad0 = new(this, Keys.NumPad0);
+        KeyNumPad1 = new(this, Keys.NumPad1);
     
-    KeyNumPad1 = new(this, Keys.NumPad1);
+        KeyNumPad2 = new(this, Keys.NumPad2);
     
-    KeyNumPad2 = new(this, Keys.NumPad2);
+        KeyNumPad3 = new(this, Keys.NumPad3);
     
-    KeyNumPad3 = new(this, Keys.NumPad3);
+        KeyNumPad4 = new(this, Keys.NumPad4);
     
-    KeyNumPad4 = new(this, Keys.NumPad4);
+        KeyNumPad5 = new(this, Keys.NumPad5);
     
-    KeyNumPad5 = new(this, Keys.NumPad5);
+        KeyNumPad6 = new(this, Keys.NumPad6);
     
-    KeyNumPad6 = new(this, Keys.NumPad6);
+        KeyNumPad7 = new(this, Keys.NumPad7);
     
-    KeyNumPad7 = new(this, Keys.NumPad7);
+        KeyNumPad8 = new(this, Keys.NumPad8);
     
-    KeyNumPad8 = new(this, Keys.NumPad8);
+        KeyNumPad9 = new(this, Keys.NumPad9);
     
-    KeyNumPad9 = new(this, Keys.NumPad9);
+        KeyMultiply = new(this, Keys.Multiply);
     
-    KeyMultiply = new(this, Keys.Multiply);
+        KeyAdd = new(this, Keys.Add);
     
-    KeyAdd = new(this, Keys.Add);
+        KeySubtract = new(this, Keys.Subtract);
     
-    KeySubtract = new(this, Keys.Subtract);
+        KeyDecimal = new(this, Keys.Decimal);
     
-    KeyDecimal = new(this, Keys.Decimal);
+        KeyDivide = new(this, Keys.Divide);
     
-    KeyDivide = new(this, Keys.Divide);
+        KeyF1 = new(this, Keys.F1);
     
-    KeyF1 = new(this, Keys.F1);
+        KeyF2 = new(this, Keys.F2);
     
-    KeyF2 = new(this, Keys.F2);
+        KeyF3 = new(this, Keys.F3);
     
-    KeyF3 = new(this, Keys.F3);
+        KeyF4 = new(this, Keys.F4);
     
-    KeyF4 = new(this, Keys.F4);
+        KeyF5 = new(this, Keys.F5);
     
-    KeyF5 = new(this, Keys.F5);
+        KeyF6 = new(this, Keys.F6);
     
-    KeyF6 = new(this, Keys.F6);
+        KeyF7 = new(this, Keys.F7);
     
-    KeyF7 = new(this, Keys.F7);
+        KeyF8 = new(this, Keys.F8);
     
-    KeyF8 = new(this, Keys.F8);
+        KeyF9 = new(this, Keys.F9);
     
-    KeyF9 = new(this, Keys.F9);
+        KeyF10 = new(this, Keys.F10);
     
-    KeyF10 = new(this, Keys.F10);
+        KeyF11 = new(this, Keys.F11);
     
-    KeyF11 = new(this, Keys.F11);
+        KeyF12 = new(this, Keys.F12);
     
-    KeyF12 = new(this, Keys.F12);
+        KeyF13 = new(this, Keys.F13);
     
-    KeyF13 = new(this, Keys.F13);
+        KeyF14 = new(this, Keys.F14);
     
-    KeyF14 = new(this, Keys.F14);
+        KeyF15 = new(this, Keys.F15);
     
-    KeyF15 = new(this, Keys.F15);
+        KeyF16 = new(this, Keys.F16);
     
-    KeyF16 = new(this, Keys.F16);
+        KeyNumLock = new(this, Keys.NumLock);
     
-    KeyNumLock = new(this, Keys.NumLock);
+        KeyScroll = new(this, Keys.Scroll);
     
-    KeyScroll = new(this, Keys.Scroll);
+        KeyLeftShift = new(this, Keys.LeftShift);
     
-    KeyLeftShift = new(this, Keys.LeftShift);
+        KeyRightShift = new(this, Keys.RightShift);
     
-    KeyRightShift = new(this, Keys.RightShift);
+        KeyLeftControl = new(this, Keys.LeftControl);
     
-    KeyLeftControl = new(this, Keys.LeftControl);
+        KeyRightControl = new(this, Keys.RightControl);
     
-    KeyRightControl = new(this, Keys.RightControl);
+        KeyLeftAlt = new(this, Keys.LeftAlt);
     
-    KeyLeftAlt = new(this, Keys.LeftAlt);
-    
-    KeyRightAlt = new(this, Keys.RightAlt);
+        KeyRightAlt = new(this, Keys.RightAlt);
     
     }
 

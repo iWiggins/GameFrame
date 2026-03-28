@@ -1,9 +1,17 @@
-﻿using GameFrame.Core.Input;
+﻿using GameFrame.Core.Components;
+using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameFrame.Components.Buttons;
+/// <summary>
+/// A button that switches between two images when clicked.
+/// </summary>
+/// /// <param name="offTexture">The texture to display when the button is off.</param>
+/// <param name="onTexture">The texture to display when the button is on.</param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
 public class SwitchImageButton(Texture2D offTexture, Texture2D onTexture, IComponent? parent = null, int layer = 0) : ImageButton(offTexture, parent, layer), IInitialize
 {
 	public bool Initialized { get; private set; } = false;

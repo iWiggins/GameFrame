@@ -4,16 +4,15 @@ using System.Linq;
 
 namespace GameFrame.Core.Components;
 /// <summary>
-/// A base class for a <see cref="Component"/> with multiple children.
+/// A <see cref="Component"/> with multiple children.
 /// </summary>
-public class Branch : Component
+/// <remarks>
+/// <inheritdoc cref="Component" path="/remarks"/>
+/// </remarks>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
+public abstract class Branch(IComponent? parent = null, int layer = 0) : Component(parent, layer)
 {
-	protected Branch(IComponent? parent = null, int layer = 0):
-		base(parent, layer)
-	{
-		_children = [];
-		_cache = null;
-	}
 	public override IEnumerable<IComponent> Children =>
 		_cache ??= [.. _children.OrderBy(c => c.Layer).ThenBy(c => c.Id)];
 
@@ -45,6 +44,6 @@ public class Branch : Component
 	}
 	public override void Invalidate() => _cache = null;
 
-	private List<IComponent>? _cache;
-	private readonly HashSet<IComponent> _children;
+	private IComponent[]? _cache = null;
+	private readonly HashSet<IComponent> _children = [];
 }

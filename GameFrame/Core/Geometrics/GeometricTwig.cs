@@ -9,10 +9,13 @@ namespace GameFrame.Core.Geometrics;
 /// If the child element is not geometric, this component generates its own geometry.
 /// </summary>
 /// <remarks>
-/// Because Child is readonly, the JIT should optimize all of the if/else logic when
-/// the component is first accessed, leading to 0 overhead for the child geometry check.
+/// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for geometric components.
 /// </remarks>
 /// <typeparam name="TChild">The type for this twig's child component.</typeparam>
+/// <param name="child"><inheritdoc cref="Twig{TChild}.Twig" path="/param[@name='child']"/></param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
 public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0) : Twig<TChild>(child, parent, layer), IGeometric where TChild : IComponent
 {
 	public Rectangle Geometry

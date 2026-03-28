@@ -6,6 +6,14 @@ using System;
 using System.IO;
 
 namespace GameFrame.Core.Management;
+/// <summary>
+/// A MonoGame <see cref="Game"/> which automates game management through the use of <see cref="Frame"/> automation.
+/// </summary>
+/// <remarks>
+/// Has an exception handler and crash logger on by default in release builds.
+/// This is disabled in debug builds.
+/// This can be disabled in release builds by setting <see cref="Log"/> to null.
+/// </remarks>
 public abstract class ManagedGame : Game
 {
 	public static class Defaults
@@ -20,36 +28,57 @@ public abstract class ManagedGame : Game
 		public static bool MouseVisible => true;
 	}
 
+	/// <summary>
+	/// Whether the game is fullscreen.
+	/// </summary>
 	public bool Fullscreen
 	{
 		get => _graphics.IsFullScreen;
 		set => _graphics.IsFullScreen = value;
 	}
+	/// <summary>
+	/// Whether the game window is borderless.
+	/// </summary>
 	public bool Borderless
 	{
 		get => !_graphics.HardwareModeSwitch;
 		set => _graphics.HardwareModeSwitch = !value;
 	}
+	/// <summary>
+	/// The Hardware Acceleration mode to use.
+	/// </summary>
 	public GraphicsProfile HardwarwareAcceleration
 	{
 		get => _graphics.GraphicsProfile;
 		set => _graphics.GraphicsProfile = value;
 	}
+	/// <summary>
+	/// Is Vertical Sync enabled.
+	/// </summary>
 	public bool VSync
 	{
 		get => _graphics.SynchronizeWithVerticalRetrace;
 		set => _graphics.SynchronizeWithVerticalRetrace = value;
 	}
+	/// <summary>
+	/// The horizontal resolution.
+	/// </summary>
 	public int Width
 	{
 		get => _graphics.PreferredBackBufferWidth;
 		set => _graphics.PreferredBackBufferWidth = value;
 	}
+	/// <summary>
+	/// The vertical resolution.
+	/// </summary>
 	public int Height
 	{
 		get => _graphics.PreferredBackBufferHeight;
 		set => _graphics.PreferredBackBufferHeight = value;
 	}
+	/// <summary>
+	/// An optional filename to use for a crash log file.
+	/// </summary>
 	public string? Log { get; set; }
 	protected ManagedGame()
 	{
@@ -67,14 +96,17 @@ public abstract class ManagedGame : Game
 		IsMouseVisible = Defaults.MouseVisible;
 	}
 
-	protected IBoundsProvider Bounds => new ScreenProvider(Window);
+	/// <summary>
+	/// Get an <see cref="IBoundsProvider"/> for this game.
+	/// </summary>
+	protected virtual IBoundsProvider Bounds => new ScreenProvider(Window);
 
 	/// <summary>
 	/// Create the entry frame to the game. Commonly a main menu or loading screen.
 	/// </summary>
 	/// <remarks>
 	/// This is also a good function to use for loading settings files,
-	/// rather than overriding Initialize or LoadContent.
+	/// rather than overriding <see cref="Initialize"> or <see cref="LoadContent"/>.
 	/// </remarks>
 	/// <param name="sprites">The SpriteBatch to provide to the frame.</param>
 	/// <returns>The created frame.</returns>

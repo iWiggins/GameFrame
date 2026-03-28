@@ -6,6 +6,7 @@ namespace GameFrame.Layout;
 /// <summary>
 /// A layout which centers all components it contains.
 /// </summary>
+/// <param name="parent"><inheritdoc cref="Layout.Layout" path="/param[@name='parent']"/></param>
 public class CenterLayout(IComponent? parent = null) : Layout(parent)
 {
     protected override IEnumerable<IComponent> Arrange()

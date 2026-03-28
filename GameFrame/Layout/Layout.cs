@@ -1,4 +1,5 @@
 using GameFrame.Core;
+using GameFrame.Core.Components;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,11 @@ using System.Linq;
 
 namespace GameFrame.Layout;
 
+/// <summary>
+/// Base class for all Layout classes.
+/// A layout is a UI element that spatially organizes its children in a configurable manner.
+/// </summary>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInitialize
 {
 	public IComponent? Parent { get; } = parent;
@@ -184,7 +190,17 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
     /// </summary>
     public void ArrangeChildren() => Arrange();
 
+    /// <summary>
+    /// Performs the logic of spatially organizing all child components.
+    /// </summary>
+    /// <returns>The children in draw order.</returns>
     protected abstract IEnumerable<IComponent> Arrange();
+
+    /// <summary>
+    /// Performs the logic of ordering all child components.
+    /// By default, orders according to layer, then ID.
+    /// </summary>
+    /// <returns>The children in draw order.</returns>
     protected virtual IEnumerable<IComponent> Order()
     {
 		return _cache =

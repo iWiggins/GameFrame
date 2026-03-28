@@ -1,5 +1,4 @@
 ﻿using GameFrame.Core.Interfaces;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,8 @@ namespace GameFrame.Layout;
 /// <summary>
 /// Arranges components in a linear method that fills the component by proportions.
 /// </summary>
-/// <param name="direction"></param>
+/// <param name="direction">The direction the children should be arranged.</param>
+/// <param name="parent"><inheritdoc cref="Layout.Layout" path="/param[@name='parent']"/></param>
 public class FlowLayout(FlowLayout.Direction direction, IComponent? parent = null) : MetaLayout<FlowLayout.Metadata>(parent)
 {
 	public enum Direction
@@ -20,15 +20,30 @@ public class FlowLayout(FlowLayout.Direction direction, IComponent? parent = nul
 		Up
 	}
 
+	/// <summary>
+	/// The spatial metadata about the children.
+	/// </summary>
+	/// <param name="Proportion">How much of the FlowLayout the child should take up.</param>
+	/// <param name="Order">The order of insertion of the child.</param>
 	public record Metadata(int Proportion, int Order);
 
+	/// <summary>
+	/// <inheritdoc cref="Layout.AddChild" path="/summary"/>
+	/// Uses the specified poroportion and remembers the order of insertion.
+	/// </summary>
+	/// <remarks>
+	/// If <paramref name="component"/> is not <see cref="IGeometric"/>, <paramref name="proportion"/> is ignored and set to 0.
+	/// </remarks>
+	/// <param name="component"><inheritdoc cref="Layout.AddChild" path="/param[@name='component']"/></param>
+	/// <param name="proportion">The relative proportion this child should take up, compared to other children.</param>
+	/// <returns><inheritdoc cref="Layout.AddChild" path="/returns"/></returns>
 	public bool AddChild(IComponent component, int proportion)
 	{
 		Invalidate();
 
 		if(_children.Add(component))
 		{
-			if(component is not IGeometric) proportion = 0;// TODO: Document this behavior on both ADD functions
+			if(component is not IGeometric) proportion = 0;
 			AddEntry(component, new(proportion, count++)); 
 			return true;
 		}
@@ -38,8 +53,22 @@ public class FlowLayout(FlowLayout.Direction direction, IComponent? parent = nul
 		}
 	}
 
+	/// <summary>
+	/// <inheritdoc cref="Layout.AddChild" path="/summary"/>
+	/// Uses a proportion of 1 and remembers the order of insertion.
+	/// </summary>
+	/// <remarks>
+	/// If <paramref name="component"/> is not <see cref="IGeometric"/>, the proportion is set to 0.
+	/// </remarks>
+	/// <param name="component"><inheritdoc cref="AddChild(IComponent, int)" path="/param[@name='component']"/></param>
+	/// <returns><inheritdoc cref="AddChild(IComponent, int)" path="/returns"/></returns>
 	public override bool AddChild(IComponent component) => AddChild(component, 1);
 
+	/// <summary>
+	/// Adds empty space within the spatial flow, with the provided proportion.
+	/// </summary>
+	/// <param name="proportion">The relative proportion the empty space should take up.</param>
+	/// <returns>true</returns>
 	public bool AddFiller(int proportion = 1) => AddChild(new Filler(), proportion);
 
 	/// <summary>

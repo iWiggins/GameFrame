@@ -2,32 +2,29 @@
 using System.Collections.Generic;
 
 namespace GameFrame.Core.Components;
-public abstract class Component : IComponent
+/// <summary>
+/// A minimal component base class.
+/// </summary>
+/// <remarks>
+/// ABCs in the <see cref="GameFrame.Core.Components"/> namespace ease development
+/// of custom components by implementing the minimal boilerplate needed for components.
+/// </remarks>
+/// <param name="parent">This component's parent (default null).</param>
+/// <param name="layer">This component's layer (default 0).</param>
+public abstract class Component(IComponent? parent = null, int layer = 0) : IComponent
 {
-	/// <summary>
-	/// Constructs a component with an optional parent and layer.
-	/// </summary>
-	/// <param name="parent">This component's parent (default null).</param>
-	/// <param name="layer">This component's layer (default 0).</param>
-	protected Component(IComponent? parent = null, int layer = 0)
-	{
-		Id = Identity.GenerateId();
-		Enabled = true;
-		Parent = parent;
-		_layer = layer;
-	}
-	public IComponent? Parent { get; }
-	public ulong Id { get; }
+	public IComponent? Parent { get; } = parent;
+	public ulong Id { get; } = Identity.GenerateId();
 	public int Layer
 	{
-		get => _layer;
+		get => layer;
 		set
 		{
-			_layer = value;
+			layer = value;
 			Parent?.Invalidate();
 		}
 	}
-	public bool Enabled { get; set; }
+	public bool Enabled { get; set; } = true;
 
 	public abstract IEnumerable<IComponent> Children { get; }
 
@@ -37,6 +34,4 @@ public abstract class Component : IComponent
 	public abstract bool RemoveChild(IComponent component);
 
 	public abstract void Invalidate();
-
-	private int _layer;
 }

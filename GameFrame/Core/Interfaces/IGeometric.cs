@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 
 namespace GameFrame.Core.Interfaces;
+/// <summary>
+/// Components with rectangular geometry.
+/// </summary>
 public interface IGeometric
 {
 	/// <summary>
-	/// The bounding box for the component.
+	/// The bounding rectangle of the component.
 	/// </summary>
 	Rectangle Geometry { get; set; }
 

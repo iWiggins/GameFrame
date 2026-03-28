@@ -8,9 +8,7 @@ namespace GameFrame.Layout;
 /// A layout that arranges children in relative positioning.
 /// When resized, the children maintain their relative positions and relative sizes.
 /// </summary>
-/// <param name="parent"></param>
-/// <param name="width"></param>
-/// <param name="height"></param>
+/// <param name="parent"><inheritdoc cref="Layout.Layout" path="/param[@name='parent']"/></param>
 public class CanvasLayout(IComponent? parent = null) : Layout(parent)
 {
 

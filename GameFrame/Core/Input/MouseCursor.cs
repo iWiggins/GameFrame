@@ -1,15 +1,13 @@
-﻿using GameFrame.Components;
-using GameFrame.Core.Geometrics;
-using GameFrame.Core.Interfaces;
+﻿using GameFrame.Core.Geometrics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameFrame.Core.Input;
+
+/// <summary>
+/// A simple mouse cursor.
+/// </summary>
+/// <param name="texture">The texture for the mouse cursor.</param>
 public class MouseCursor(Texture2D texture) : GeometricLeaf, IMouseCursor
 {
 	public bool Centered { get; set; } = false;

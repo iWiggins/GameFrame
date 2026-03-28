@@ -6,15 +6,39 @@ using Microsoft.Xna.Framework.Graphics;
 namespace GameFrame.Components.Text;
 
 /// <summary>
-/// A simple Text object, supporting basic customization.
+/// A simple drawable Text component.
 /// </summary>
+/// <param name="font"><inheritdoc cref="Text.Font" path="/summary"/></param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// /// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
 public class Text(SpriteFont font, IComponent? parent = null, int layer = 0) : Leaf(parent, layer), IDraw
 {
+	/// <summary>
+	/// The font used while drawing the text.
+	/// </summary>
 	public SpriteFont Font { get; set; } = font;
+	/// <summary>
+	/// The string data being drawn.
+	/// </summary>
 	public string Contents { get; set; } = "";
+	/// <summary>
+	/// Scale transformation to increase or decrease the size of the rendered image.
+	/// </summary>
 	public Vector2 Scale { get; set; } = Vector2.One;
+	/// <summary>
+	/// The color to draw the text in.
+	/// </summary>
 	public Color Color { get; set; } = Color.Black;
+	/// <summary>
+	/// The position on screen to draw the text.
+	/// </summary>
+	/// <remarks>
+	/// This is the top left corner of the text.
+	/// </remarks>
 	public Vector2 Position { get; set; } = Vector2.Zero;
+	/// <summary>
+	/// Text effects to use while drawing.
+	/// </summary>
 	public SpriteEffects Effect { get; set; } = SpriteEffects.None;
 
 	public void Draw(SpriteBatch spriteBatch)

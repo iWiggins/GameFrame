@@ -1,29 +1,53 @@
 ﻿using GameFrame.Core.Clickables;
+using GameFrame.Core.Components;
 using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using GameFrame.Layout;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameFrame.Components.Menu;
+/// <summary>
+/// A UI component which changes between a selection of components when it is clicked and exposes events for the changes.
+/// </summary>
+/// <param name="options">The components to switch between.</param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
 public class Multiselector(IEnumerable<IComponent> options, IComponent? parent = null, int layer = 0) :
 	ClickableTwig<FillLayout>(new(), parent, layer), IInitialize
 {
+	/// <summary>
+	/// Handler for when the current selection has been changed.
+	/// </summary>
+	/// <param name="oldValue">The previous selected value.</param>
+	/// <param name="newValue">The new selected value.</param>
 	public delegate void OnCurrentChanged(int oldValue, int newValue);
+	/// <summary>
+	/// An event raised when the current selection has been changed.
+	/// </summary>
 	public OnCurrentChanged? Changed;
 
+	/// <summary>
+	/// Handler for when the current selection has been changed.
+	/// </summary>
+	/// <param name="oldComponent">The previous selected component.</param>
+	/// <param name="newComponent">The new selected component.</param>
+
 	public delegate void OnComponentChanged(IComponent oldComponent, IComponent newComponent);
+	/// <summary>
+	/// An event raised when the current selection has been changed.
+	/// </summary>
 	public OnComponentChanged? ComponentChanged;
 
 	public bool Initialized { get; private set; } = false;
 
+	/// <summary>
+	/// The currently selected component.
+	/// </summary>
 	public IComponent CurrentComponent => _options[_current];
+	/// <summary>
+	/// The current selection.
+	/// </summary>
 	public int Current
 	{
 		get => _current;
@@ -37,6 +61,9 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 		}
 	}
 
+	/// <summary>
+	/// Advance forward to the next selection.
+	/// </summary>
 	public void Advance()
 	{
 		int next = _current + 1;

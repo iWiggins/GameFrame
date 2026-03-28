@@ -29,14 +29,12 @@ public partial class Keyboard : IComponent, IUpdate
     #>
 
     private void InitializeKeys() {
-    
-
     <#
     foreach(string key in keys)
     {
     #>
 
-    Key<#=key#> = new(this, Keys.<#=key#>);
+        Key<#=key#> = new(this, Keys.<#=key#>);
     <#
     }
     #>

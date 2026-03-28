@@ -8,57 +8,58 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 
 namespace GameFrame.Core.Input;
-public class Mouse: IComponent, IUpdate, IReset
+
+/// <summary>
+/// A component that manages the mouse, and optionally a mouse pointer.
+/// </summary>
+/// <param name="root">The root component of the frame this mouse belongs to.</param>
+public class Mouse(IRoot root) : IComponent, IUpdate, IReset
 {
 	public enum Buttons
 	{
-		Left
+		Left,
+		Right
 	}
 
 	public event MouseDownHandler? LeftPressed;
 	public event MouseUpHandler? LeftReleased;
 
+	public event MouseDownHandler? RightPressed;
+	public event MouseUpHandler? RightReleased;
+
 	public Point Position { get; private set; }
 	public bool LeftDown { get; private set; }
+	public bool RightDown { get; private set; }
 
-	public IComponent? Parent => _root;
+	public IComponent? Parent => root;
 
-	public ulong Id { get; }
+	public ulong Id { get; } = Identity.GenerateId();
 
 	public int Layer
 	{
-		get => int.MaxValue;
+		get => int.MinValue;
 		set { }
 	}
-	public bool Enabled { get; set; }
+	public bool Enabled { get; set; } = true;
 
-	public IEnumerable<IComponent> Children
-	{
-		get
-		{
-			if(Cursor is not null) yield return Cursor;
-		}
-	}
+	public IEnumerable<IComponent> Children =>
+		Cursor is not null ? [Cursor] : [];
 
-	public bool HasChildren => false;
+	public bool HasChildren => Cursor is not null;
 
+	/// <summary>
+	/// The mouse cursor associated to this mouse.
+	/// </summary>
 	public IMouseCursor? Cursor { get; set; }
-
-	public Mouse(IComponent root)
-	{
-		Enabled = true;
-		_root = root;
-		Id = Identity.GenerateId();
-		PressedOn = new();
-	}
 
 	public bool AddChild(IComponent component) => false;
 	public bool RemoveChild(IComponent component) => false;
-	public void Invalidate() { }
+	public void Invalidate() => Cursor?.Invalidate();
 
 	public void Reset()
 	{
 		LeftDown = false;
+		RightDown = false;
 	}
 
 	public void Update(GameTime time)
@@ -69,29 +70,48 @@ public class Mouse: IComponent, IUpdate, IReset
 
 		Cursor?.Move(Position);
 
-		bool pressed = state.LeftButton == ButtonState.Pressed;
-		var position = state.Position;
+		bool leftPressed = state.LeftButton == ButtonState.Pressed;
+		bool rightPressed = state.RightButton == ButtonState.Pressed;
 
-		if(pressed && !LeftDown)
+		if(leftPressed && !LeftDown)
 		{
 			LeftDown = true;
-			PressedOn = time;
+			LeftPressedOn = time;
 			if(LeftPressed is not null)
 			{
-				LeftPressed(Buttons.Left, position);
+				LeftPressed(Buttons.Left, Position);
 			}
 		}
-		else if(!pressed && LeftDown)
+		else if(!leftPressed && LeftDown)
 		{
 			LeftDown = false;
 			if(LeftReleased is not null)
 			{
-				double dt = time.TotalGameTime.TotalMilliseconds - PressedOn.TotalGameTime.TotalMilliseconds;
-				LeftReleased(Buttons.Left, position, dt);
+				double dt = time.TotalGameTime.TotalMilliseconds - LeftPressedOn.TotalGameTime.TotalMilliseconds;
+				LeftReleased(Buttons.Left, Position, dt);
+			}
+		}
+
+		if(rightPressed && !RightDown)
+		{
+			RightDown = true;
+			RightPressedOn = time;
+			if(RightPressed is not null)
+			{
+				RightPressed(Buttons.Right, Position);
+			}
+		}
+		else if(!rightPressed && RightDown)
+		{
+			RightDown = false;
+			if(RightReleased is not null)
+			{
+				double dt = time.TotalGameTime.TotalMilliseconds - RightPressedOn.TotalGameTime.TotalMilliseconds;
+				RightReleased(Buttons.Right, Position, dt);
 			}
 		}
 	}
 
-	private readonly IComponent _root;
-	private GameTime PressedOn;
+	private GameTime LeftPressedOn = new();
+	private GameTime RightPressedOn = new();
 }

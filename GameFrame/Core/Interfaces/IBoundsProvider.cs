@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameFrame.Core.Interfaces;
+/// <summary>
+/// An object capable of providing the bounds of the screen to a Frame.
+/// </summary>
 public interface IBoundsProvider
 {
 	Rectangle Bounds { get; }

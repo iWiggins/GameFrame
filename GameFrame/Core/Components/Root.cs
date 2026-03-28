@@ -2,6 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameFrame.Core.Components;
+/// <summary>
+/// This is the default <see cref="IRoot"/> used by frames
+/// if none is provided by the implementor.
+/// It uses minimal drawing settings.
+/// </summary>
 public class Root : Branch, IRoot
 {
 	public SpriteSortMode DefaultSortMode { get; set; } = SpriteSortMode.Deferred;

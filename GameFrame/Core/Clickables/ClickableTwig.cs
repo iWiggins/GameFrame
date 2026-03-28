@@ -9,7 +9,11 @@ namespace GameFrame.Core.Clickables;
 /// <summary>
 /// A <see cref="Twig{TChild}"/> that is clickable.
 /// </summary>
-public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0) : GeometricTwig<TChild>(child, parent, layer), IClick where TChild : IComponent
+/// <param name="child"><inheritdoc cref="Twig{TChild}.Twig" path="/param[@name='child']"/></param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
+public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0):
+	GeometricTwig<TChild>(child, parent, layer), IClick where TChild : IComponent
 {
 	public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
@@ -79,20 +83,20 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 	}
 
 	/// <summary>
-	/// Internal callback when the button is hovered.
+	/// Overridable logic for when the component is hovered over.
 	/// </summary>
 	/// <returns>Whether the Hovered event should be raised.</returns>
 	protected virtual bool OnHovered() => true;
 
 	/// <summary>
-	/// Internal callback when the button is unhovered.
+	/// Overridable logic for when a pointer stops hovering the component.
 	/// </summary>
-	/// <param name="dt">The time the button was hovered.</param>
+	/// <param name="dt">The duration the component was hovered.</param>
 	/// <returns>Whether the Unhovered event should be raised.</returns>
 	protected virtual bool OnUnhovered(double dt) => true;
 
 	/// <summary>
-	/// Internal callback when the button is pressed.
+	/// Overridable logic for when the component is pressed.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
@@ -100,16 +104,14 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 	protected virtual bool OnPressed(Mouse.Buttons button, Point position) => true;
 
 	/// <summary>
-	/// Internal callback when the button is released.
+	/// Overridable logic for when the component is released.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
-	/// <param name="duration">The time the button spent down.</param>
+	/// <param name="duration">The time the component spent down.</param>
 	/// <returns>Whether the Released event should be raised.</returns>
 	protected virtual bool OnReleased(Mouse.Buttons button, Point position, double duration) => true;
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-
-	
 }
