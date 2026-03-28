@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GameFrame.Components.Menu;
 public class Multiselector(IEnumerable<IComponent> options, IComponent? parent = null, int layer = 0) :
-	ClickableTwig<FillLayout>(new(), parent, layer), IInitialize, IDraw
+	ClickableTwig<FillLayout>(new(), parent, layer), IInitialize
 {
 	public delegate void OnCurrentChanged(int oldValue, int newValue);
 	public OnCurrentChanged? Changed;
@@ -29,7 +29,7 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 		get => _current;
 		set
 		{
-			if(value > 0 && value < _options.Length)
+			if(value != _current && value > 0 && value < _options.Length)
 			{
 				SwitchChild(_current, value);
 				_current = value;
@@ -47,7 +47,12 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 
 	public void Initialize()
 	{
-		Child.AddChild(_options[0]);
+		foreach(var option in _options)
+		{
+			Child.AddChild(option);
+			option.Enabled = false;
+		}
+		_options[_current].Enabled = true;
 
 		Initialized = true;
 	}
@@ -61,42 +66,10 @@ public class Multiselector(IEnumerable<IComponent> options, IComponent? parent =
 
 	private void SwitchChild(int oldSelection, int newSelection)
 	{
-		Child.RemoveChild(_options[oldSelection]);
-		Child.AddChild(_options[newSelection]);
+		_options[oldSelection].Enabled = false;
+		_options[newSelection].Enabled = true;
 		if(Changed is not null) Changed(oldSelection, newSelection);
 		if(ComponentChanged is not null) ComponentChanged(_options[oldSelection], _options[newSelection]);
-	}
-
-	public void Draw(SpriteBatch spriteBatch)
-	{
-		// for debugging
-		// Source - https://stackoverflow.com/a/31316757
-		// Posted by Zillo, modified by community. See post 'Timeline' for change history
-		// Retrieved 2026-03-27, License - CC BY-SA 4.0
-		{
-			Color[] data = new Color[Width * Height];
-			Texture2D rectTexture = new Texture2D(spriteBatch.GraphicsDevice, Width, Height);
-
-			for(int i = 0; i < data.Length; ++i)
-				data[i] = Color.White;
-
-			rectTexture.SetData(data);
-			var position = new Vector2(Left, Top);
-
-			spriteBatch.Draw(rectTexture, position, Color.Red);
-		}
-		{
-			Color[] data = new Color[Child.Width * Child.Height];
-			Texture2D rectTexture = new Texture2D(spriteBatch.GraphicsDevice, Child.Width, Child.Height);
-
-			for(int i = 0; i < data.Length; ++i)
-				data[i] = Color.White;
-
-			rectTexture.SetData(data);
-			var position = new Vector2(Child.Left, Child.Top);
-
-			spriteBatch.Draw(rectTexture, position, Color.Blue);
-		}
 	}
 
 	readonly IComponent[] _options = [.. options];

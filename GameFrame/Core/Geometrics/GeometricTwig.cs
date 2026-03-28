@@ -72,7 +72,7 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 	}
 	public int Left
 	{
-		get => _geometry.Left;
+		get => Geometry.Left;
 		set
 		{
 			Invalidate();
@@ -82,7 +82,7 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 	}
 	public int Right
 	{
-		get => _geometry.Right;
+		get => Geometry.Right;
 		set
 		{
 			Invalidate();
@@ -92,7 +92,7 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 	}
 	public int Top
 	{
-		get => _geometry.Top;
+		get => Geometry.Top;
 		set
 		{
 			Invalidate();
@@ -102,7 +102,7 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 	}
 	public int Bottom
 	{
-		get => _geometry.Bottom;
+		get => Geometry.Bottom;
 		set
 		{
 			Invalidate();

@@ -47,16 +47,13 @@ public abstract class Frame
 	{
 		void InitializeComponent(IComponent component)
 		{
-			if(component.Enabled)
+			if(component is IInitialize initialize)
 			{
-				if(component is IInitialize initialize)
-				{
-					initialize.Initialize();
-				}
-				foreach(IComponent child in component.Children)
-				{
-					InitializeComponent(child);
-				}
+				if(!initialize.Initialized) initialize.Initialize();
+			}
+			foreach(IComponent child in component.Children)
+			{
+				InitializeComponent(child);
 			}
 		}
 
