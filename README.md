@@ -34,4 +34,4 @@ GameFrame comes with a library of common components like buttons and autosizing 
 
 ## Documentation
 
-[ianw.io](https://gameframe.ianw.io)
+[gameframe.ianw.io](https://gameframe.ianw.io)
