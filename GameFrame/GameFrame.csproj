@@ -12,7 +12,7 @@
     <Copyright>2024 Ian Wiggins</Copyright>
     <PackageProjectUrl>https://gameframe.ianw.io</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>game,game engine,monogame</PackageTags>
+    <PackageTags>game;game engine;monogame</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/iWiggins/GameFrame</RepositoryUrl>
     <Version>1.0.0</Version>
