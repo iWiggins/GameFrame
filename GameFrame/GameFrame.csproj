@@ -16,6 +16,15 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.4.1" />
   </ItemGroup>
   <ItemGroup>
@@ -50,10 +59,6 @@
     <None Update="Core\Input\KeyboardKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>KeyboardKeys.cs</LastGenOutput>
-    </None>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 </Project>
