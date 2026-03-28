@@ -1,6 +1,5 @@
 ﻿using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace TestGameFrame.Utils;
 internal class TestUpdateLeaf(ulong id, Action<IComponent> signal) : TestLeaf(id), IUpdate

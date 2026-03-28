@@ -1,5 +1,4 @@
-﻿using GameFrame.Core.Components;
-using GameFrame.Core.Interfaces;
+﻿using GameFrame.Core.Interfaces;
 
 namespace TestGameFrame.Utils;
 internal class TestBranch(ulong id, IComponent? parent = null, int layer = 0) : IComponent

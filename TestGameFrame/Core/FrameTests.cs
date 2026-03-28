@@ -1,5 +1,4 @@
 ﻿using GameFrame.Core.Interfaces;
-using Microsoft.Xna.Framework;
 using TestGameFrame.Utils;
 
 namespace TestGameFrame.Core;

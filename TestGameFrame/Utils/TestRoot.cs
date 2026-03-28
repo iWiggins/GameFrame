@@ -1,5 +1,4 @@
-﻿using GameFrame.Core.Components;
-using GameFrame.Core.Interfaces;
+﻿using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace TestGameFrame.Utils;
