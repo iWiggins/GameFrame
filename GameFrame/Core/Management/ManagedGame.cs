@@ -106,7 +106,7 @@ public abstract class ManagedGame : Game
 	/// </summary>
 	/// <remarks>
 	/// This is also a good function to use for loading settings files,
-	/// rather than overriding <see cref="Initialize"> or <see cref="LoadContent"/>.
+	/// rather than overriding <see cref="Initialize"/> or <see cref="LoadContent"/>.
 	/// </remarks>
 	/// <param name="sprites">The SpriteBatch to provide to the frame.</param>
 	/// <returns>The created frame.</returns>

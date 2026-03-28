@@ -9,12 +9,14 @@ namespace GameFrame.Core;
 /// <summary>
 /// The core automation logic for a GameFrame game.
 /// Consists of four stages:
-/// * <see cref="Initialize"/> (<see cref="IInitialize"/>)
-/// * <see cref="Update"/> (<see cref="IUpdate"/>)
-/// * <see cref="Draw"/> (<see cref="IDraw"/> & <see cref="IDrawZone"/>)
-/// * <see cref="Reset"/> (<see cref="IReset"/>)
+/// <list type="number">
+/// <item>One time, <see cref="Initialize"/> triggers <see cref="IInitialize.Initialize"/> on implementing components.</item>
+/// <item>Each update, <see cref="Update"/> triggers <see cref="IUpdate.Update"/> on implementing components.</item>
+/// <item>Each draw, <see cref="Draw"/> triggers <see cref="IDraw.Draw"/> on implementing components.</item>
+/// <item>On changing back to this Frame, <see cref="Reset"/> triggers <see cref="IReset.Reset"/> on implementing components.</item>
+/// </list>
 /// Any <see cref="IComponent"/> implementing one of the above interfaces
-/// that is an ancestor of the Frame's <see cref="Root"/> will have its functionality automated.
+/// that is an ancestor of the Frame's <see cref="Frame.Root"/> will have its functionality automated.
 /// </summary>
 public abstract class Frame
 {
