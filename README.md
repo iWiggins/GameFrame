@@ -2,6 +2,8 @@
 
 A monogame framework for quickly building dynamic 2D games using an extensible component library.
 
+Available on NuGet: [io.ianw.gameframe](https://www.nuget.org/packages/io.ianw.GameFrame/)
+
 ## Examples
 
 [Pong](https://github.com/iWiggins/Pong)
