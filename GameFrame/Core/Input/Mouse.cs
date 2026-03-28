@@ -37,7 +37,7 @@ public class Mouse(IRoot root) : IComponent, IUpdate, IReset
 
 	public int Layer
 	{
-		get => int.MinValue;
+		get => int.MaxValue;
 		set { }
 	}
 	public bool Enabled { get; set; } = true;

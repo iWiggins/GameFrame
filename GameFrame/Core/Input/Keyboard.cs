@@ -16,7 +16,7 @@ public partial class Keyboard : IComponent, IUpdate
 
 	public int Layer
 	{
-		get => int.MinValue;
+		get => int.MaxValue;
 		set { }
 	}
 	public bool Enabled { get; set; }
