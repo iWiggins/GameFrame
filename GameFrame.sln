@@ -10,10 +10,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		docfx.json = docfx.json
-		index.md = index.md
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docfx.json = docfx.json
+		docs\getting-started.md = docs\getting-started.md
+		index.md = index.md
+		docs\introduction.md = docs\introduction.md
 	EndProjectSection
 EndProject
 Global
