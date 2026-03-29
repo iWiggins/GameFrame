@@ -13,7 +13,7 @@ namespace GameFrame.Layout;
 /// A layout is a UI element that spatially organizes its children in a configurable manner.
 /// </summary>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInitialize
+public abstract class Layout(IComponent? parent = null) : IComponent, IGeometric, IInitialize
 {
 	public IComponent? Parent { get; } = parent;
 
