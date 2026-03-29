@@ -25,7 +25,7 @@ foreach(string fname in Directory.GetFiles(path))
 /// <summary>
 /// A <see cref="<#=name#>"/> that is clickable.
 /// </summary>
-public abstract class Clickable<#=name#>(IComponent? parent, int layer = 0): Geometric<#=name#>(parent, layer), IClick
+public abstract class Clickable<#=name#>(IComponent? parent = null, int layer = 0): Geometric<#=name#>(parent, layer), IClick
 {
     public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;

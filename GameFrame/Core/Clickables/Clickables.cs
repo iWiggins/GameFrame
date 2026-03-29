@@ -12,7 +12,7 @@ namespace GameFrame.Core.Clickables;
 /// <summary>
 /// A <see cref="Branch"/> that is clickable.
 /// </summary>
-public abstract class ClickableBranch(IComponent? parent, int layer = 0): GeometricBranch(parent, layer), IClick
+public abstract class ClickableBranch(IComponent? parent = null, int layer = 0): GeometricBranch(parent, layer), IClick
 {
     public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
@@ -116,7 +116,7 @@ public abstract class ClickableBranch(IComponent? parent, int layer = 0): Geomet
 /// <summary>
 /// A <see cref="Component"/> that is clickable.
 /// </summary>
-public abstract class ClickableComponent(IComponent? parent, int layer = 0): GeometricComponent(parent, layer), IClick
+public abstract class ClickableComponent(IComponent? parent = null, int layer = 0): GeometricComponent(parent, layer), IClick
 {
     public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
@@ -220,7 +220,7 @@ public abstract class ClickableComponent(IComponent? parent, int layer = 0): Geo
 /// <summary>
 /// A <see cref="Leaf"/> that is clickable.
 /// </summary>
-public abstract class ClickableLeaf(IComponent? parent, int layer = 0): GeometricLeaf(parent, layer), IClick
+public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): GeometricLeaf(parent, layer), IClick
 {
     public event MouseDownHandler? Pressed;
 	public event MouseUpHandler? Released;
