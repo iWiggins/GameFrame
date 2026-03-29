@@ -107,7 +107,7 @@ public class FlowLayout(FlowLayout.Direction direction, IComponent? parent = nul
 		{
 			var children = (
 				from child in _children
-				where child is IGeometric
+				where child.Enabled && child is IGeometric
 				orderby GetEntry(child).Order
 				select new { Child = child as IGeometric, GetEntry(child).Proportion })
 				.ToArray();
