@@ -59,10 +59,10 @@ public class BoundText : GeometricComponent
 	/// <param name="font"><inheritdoc cref="Font" path="/summary"/></param>
 	/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 	/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-	public BoundText(SpriteFont font, IComponent? parent = null, int layer = 0):
-		base(parent, layer)
+	public BoundText(SpriteFont font, IComponent? parent = null):
+		base(parent)
 	{
-		_text = new(font, this, layer);
+		_text = new(font, this);
 		valid = false;
 	}
 

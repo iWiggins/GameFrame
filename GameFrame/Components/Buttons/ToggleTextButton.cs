@@ -9,8 +9,7 @@ namespace GameFrame.Components.Buttons;
 /// </summary>
 /// <param name="font"><inheritdoc cref="TextButton" path="/param[@name='font']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class ToggleTextButton(SpriteFont font, IComponent? parent = null, int layer = 0) : TextButton(font, parent, layer), IInitialize
+public class ToggleTextButton(SpriteFont font, IComponent? parent = null) : TextButton(font, parent), IInitialize
 {
 	public bool Initialized { get; private set; } = false;
 	/// <summary>

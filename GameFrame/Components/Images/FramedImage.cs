@@ -5,16 +5,15 @@ using GameFrame.Layout;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameFrame.Components;
+namespace GameFrame.Components.Images;
 /// <summary>
 /// An image that scales its texture instead of stretching,
 /// to avoid distorting the image.
 /// </summary>
-/// <param name="texture"><inheritdoc cref="FramedImage.Texture" path="/summary"/></param>
+/// <param name="texture"><inheritdoc cref="Texture" path="/summary"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class FramedImage(Texture2D texture, IComponent? parent = null, int layer = 0) :
-	GeometricTwig<ScaleLayout>(new(), parent, layer), IInitialize
+public class FramedImage(Texture2D texture, IComponent? parent = null) :
+	GeometricTwig<ScaleLayout>(new(), parent), IInitialize
 {
 	public bool Initialized { get; private set; } = false;
 

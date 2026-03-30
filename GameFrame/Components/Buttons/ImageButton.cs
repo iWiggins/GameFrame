@@ -1,4 +1,5 @@
-﻿using GameFrame.Core.Clickables;
+﻿using GameFrame.Components.Images;
+using GameFrame.Core.Clickables;
 using GameFrame.Core.Components;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
@@ -10,9 +11,8 @@ namespace GameFrame.Components.Buttons;
 /// </summary>
 /// <param name="texture">A texture for the button image.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class ImageButton(Texture2D texture, IComponent? parent = null, int layer = 0):
-	ClickableTwig<Image>(new(texture), parent, layer), IButton
+public class ImageButton(Texture2D texture, IComponent? parent = null):
+	ClickableTwig<Image>(new(texture), parent), IButton
 {
 	/// <summary>
 	/// The button image's texture.

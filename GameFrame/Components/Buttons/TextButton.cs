@@ -11,9 +11,8 @@ namespace GameFrame.Components.Buttons;
 /// </summary>
 /// <param name="font">The font for the button's text.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class TextButton(SpriteFont font, IComponent? parent = null, int layer = 0):
-	ClickableTwig<BoundText>(new(font), parent, layer), IButton
+public class TextButton(SpriteFont font, IComponent? parent = null):
+	ClickableTwig<BoundText>(new(font), parent), IButton
 {
 	/// <summary>
 	/// The button text's font.

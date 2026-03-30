@@ -1,6 +1,6 @@
-﻿using GameFrame.Core.EventHandlers;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using GameFrame.Core.Input;
+using GameFrame.Core.Clickables;
 
 namespace GameFrame.Core.Interfaces;
 /// <summary>
@@ -11,19 +11,19 @@ public interface IClick: IReset
 	/// <summary>
 	/// An event raised when the component is pressed.
 	/// </summary>
-	event MouseDownHandler? Pressed;
+	event ClickablePressedHandler? Pressed;
 	/// <summary>
 	/// An event raised when the component is released.
 	/// </summary>
-	event MouseUpHandler? Released;
+	event ClickableReleasedHandler? Released;
 	/// <summary>
 	/// An event raised when the component is hovered over with a pointer.
 	/// </summary>
-	event MouseHoverHandler? Hovered;
+	event ClickableHoveredHandler? Hovered;
 	/// <summary>
 	/// An event raised when a pointer leaves the component.
 	/// </summary>
-	event MouseUnhoverHandler? Unhovered;
+	event ClickableUnhoveredHandler? Unhovered;
 	/// <summary>
 	/// Whether the component is currently held down.
 	/// </summary>

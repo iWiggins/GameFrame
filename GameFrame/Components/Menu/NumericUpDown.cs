@@ -18,9 +18,8 @@ namespace GameFrame.Components.Menu;
 /// <param name="max"><inheritdoc cref="NumericUpDown.Max" path="/summary"/></param>
 /// <param name="start">The starting number.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int min, int max, int start, IComponent? parent = null, int layer = 0) :
-	GeometricTwig<FlowLayout>(new(FlowLayout.Direction.Down), parent, layer), IInitialize, IReset
+public class NumericUpDown(Texture2D up, Texture2D down, SpriteFont number, int min, int max, int start, IComponent? parent = null) :
+	GeometricTwig<FlowLayout>(new(FlowLayout.Direction.Down), parent), IInitialize, IReset
 {
 	/// <summary>
 	/// A handler for when the value of the component is changed.

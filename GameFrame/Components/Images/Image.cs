@@ -5,14 +5,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
-namespace GameFrame.Components;
+namespace GameFrame.Components.Images;
 /// <summary>
 /// A component that draws a 2d image.
 /// </summary>
-/// <param name="texture"><inheritdoc cref="Image.Texture" path="/summary"/></param>
+/// <param name="texture"><inheritdoc cref="Texture" path="/summary"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class Image(Texture2D texture, IComponent? parent = null, int layer = 0) : GeometricLeaf(parent, layer), IDraw
+public class Image(Texture2D texture, IComponent? parent = null) : GeometricLeaf(parent), IDraw
 {
 	/// <summary>
 	/// The texture to draw.

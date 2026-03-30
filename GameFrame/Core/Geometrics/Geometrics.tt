@@ -26,7 +26,8 @@ foreach(string fname in Directory.GetFiles(path))
 /// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
 /// of custom components by implementing the minimal boilerplate needed for geometric components.
 /// </remarks>
-public abstract class Geometric<#=name#>(IComponent? parent = null, int layer = 0): <#=name#>(parent, layer), IGeometric
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class Geometric<#=name#>(IComponent? parent = null): <#=name#>(parent), IGeometric
 {
     public Rectangle Geometry
 	{
@@ -53,6 +54,15 @@ public abstract class Geometric<#=name#>(IComponent? parent = null, int layer = 
 		{
 			Invalidate();
 			_geometry.Y = value;
+		}
+	}
+	public Point Location
+	{
+		get => _geometry.Location;
+		set
+		{
+			Invalidate();
+			_geometry.Location = value;
 		}
 	}
 	public int Width

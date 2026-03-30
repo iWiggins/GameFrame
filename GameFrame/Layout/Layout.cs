@@ -38,6 +38,15 @@ public abstract class Layout(IComponent? parent = null) : IComponent, IGeometric
 			_geometry = value;
         }
     }
+    public Point Location
+    {
+        get => _geometry.Location;
+        set
+        {
+            Invalidate();
+            _geometry.Location = value;
+        }
+    }
     public int X
     {
         get => _geometry.X;

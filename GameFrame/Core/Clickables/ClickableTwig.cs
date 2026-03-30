@@ -1,5 +1,4 @@
 ﻿using GameFrame.Core.Components;
-using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
@@ -11,14 +10,13 @@ namespace GameFrame.Core.Clickables;
 /// </summary>
 /// <param name="child"><inheritdoc cref="Twig{TChild}.Twig" path="/param[@name='child']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0):
-	GeometricTwig<TChild>(child, parent, layer), IClick where TChild : IComponent
+public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = null):
+	GeometricTwig<TChild>(child, parent), IClick where TChild : IComponent
 {
-	public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+	public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
 	public bool Down { get; private set; } = false;
 
@@ -38,7 +36,7 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
 			if(mouse.LeftDown && !Down)
 			{
@@ -46,7 +44,7 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 				pressedTime = time;
 				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					Pressed(this, new(Mouse.Buttons.Left, mouse.Position));
 				}
 			}
 			else if(!mouse.LeftDown && Down)
@@ -55,7 +53,7 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -67,7 +65,7 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
 			if(Down)
@@ -76,7 +74,7 @@ public abstract class ClickableTwig<TChild>(TChild child, IComponent? parent = n
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}

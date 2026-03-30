@@ -10,8 +10,7 @@ namespace GameFrame.Components.Text;
 /// </summary>
 /// <param name="font"><inheritdoc cref="Text.Font" path="/summary"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// /// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class Text(SpriteFont font, IComponent? parent = null, int layer = 0) : Leaf(parent, layer), IDraw
+public class Text(SpriteFont font, IComponent? parent = null) : Leaf(parent), IDraw
 {
 	/// <summary>
 	/// The font used while drawing the text.

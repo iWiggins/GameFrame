@@ -12,6 +12,11 @@ public interface IGeometric
 	Rectangle Geometry { get; set; }
 
 	/// <summary>
+	/// The position of the top left of the component.
+	/// </summary>
+	Point Location { get; set; }
+
+	/// <summary>
 	/// The X coordinate of the component.
 	/// </summary>
 	int X { get; set; }

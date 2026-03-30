@@ -9,8 +9,7 @@ namespace GameFrame.Components.Buttons;
 /// <param name="font"><inheritdoc cref="HoldTextButton" path="/param[@name='font']"/></param>
 /// <param name="texture"><inheritdoc cref="HoldImageButton" path="/param[@name='texture']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class HoverTextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null, int layer = 0) : TextImageButton(font, texture, parent, layer), IInitialize
+public class HoverTextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null) : TextImageButton(font, texture, parent), IInitialize
 {
 	public bool Initialized { get; private set; } = false;
 	/// <summary>

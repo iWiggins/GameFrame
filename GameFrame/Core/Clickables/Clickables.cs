@@ -1,7 +1,6 @@
 ﻿/// Clickable versions of geometric classes.
 /// This code is generated and should not be manually edited.
 using GameFrame.Core.Components;
-using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using GameFrame.Core.Input;
@@ -12,12 +11,13 @@ namespace GameFrame.Core.Clickables;
 /// <summary>
 /// A <see cref="Branch"/> that is clickable.
 /// </summary>
-public abstract class ClickableBranch(IComponent? parent = null, int layer = 0): GeometricBranch(parent, layer), IClick
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableBranch(IComponent? parent = null): GeometricBranch(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
@@ -36,7 +36,7 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
 			if(mouse.LeftDown && !Down)
 			{
@@ -44,7 +44,7 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 				pressedTime = time;
 				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					Pressed(this, new(Mouse.Buttons.Left, mouse.Position));
 				}
 			}
 			else if(!mouse.LeftDown && Down)
@@ -53,7 +53,7 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -65,7 +65,7 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
 			if(Down)
@@ -74,7 +74,7 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -116,12 +116,13 @@ public abstract class ClickableBranch(IComponent? parent = null, int layer = 0):
 /// <summary>
 /// A <see cref="Component"/> that is clickable.
 /// </summary>
-public abstract class ClickableComponent(IComponent? parent = null, int layer = 0): GeometricComponent(parent, layer), IClick
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableComponent(IComponent? parent = null): GeometricComponent(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
@@ -140,7 +141,7 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
 			if(mouse.LeftDown && !Down)
 			{
@@ -148,7 +149,7 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 				pressedTime = time;
 				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					Pressed(this, new(Mouse.Buttons.Left, mouse.Position));
 				}
 			}
 			else if(!mouse.LeftDown && Down)
@@ -157,7 +158,7 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -169,7 +170,7 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
 			if(Down)
@@ -178,7 +179,7 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -220,12 +221,13 @@ public abstract class ClickableComponent(IComponent? parent = null, int layer = 
 /// <summary>
 /// A <see cref="Leaf"/> that is clickable.
 /// </summary>
-public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): GeometricLeaf(parent, layer), IClick
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableLeaf(IComponent? parent = null): GeometricLeaf(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
 	public bool Down { get; private set; } = false;
 	public bool Hovering {get; private set; } = false;
@@ -244,7 +246,7 @@ public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): G
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
 			if(mouse.LeftDown && !Down)
 			{
@@ -252,7 +254,7 @@ public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): G
 				pressedTime = time;
 				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					Pressed(this, new(Mouse.Buttons.Left, mouse.Position));
 				}
 			}
 			else if(!mouse.LeftDown && Down)
@@ -261,7 +263,7 @@ public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): G
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
@@ -273,7 +275,7 @@ public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): G
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
 			if(Down)
@@ -282,7 +284,7 @@ public abstract class ClickableLeaf(IComponent? parent = null, int layer = 0): G
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
 				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(Mouse.Buttons.Left, mouse.Position, dt));
 				}
 			}
 		}
