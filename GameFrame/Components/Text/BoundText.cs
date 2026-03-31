@@ -20,8 +20,18 @@ public class BoundText : GeometricComponent
 		Center,
 		Bottom
 	}
-
+	/// <summary>
+	/// The vertical alignment of the text.
+	/// </summary>
 	public VerticalAlignment VerticalAlign { get; set; } = VerticalAlignment.Center;
+	/// <summary>
+	/// <inheritdoc cref="Text.HorizontalAlign" path="/summary"/>
+	/// </summary>
+	public Text.HorizontalAlignment HorizontalAlign
+	{
+		get => _text.HorizontalAlign;
+		set => _text.HorizontalAlign = value;
+	}
 
 	/// <summary>
 	/// <inheritdoc cref="Text.Font" path="/summary"/>

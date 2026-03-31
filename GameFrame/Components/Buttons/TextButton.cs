@@ -16,6 +16,23 @@ public class TextButton(SpriteFont font, IComponent? parent = null):
 	ClickableTwig<BoundText>(new(font), null, parent), IButton
 {
 	/// <summary>
+	/// <inheritdoc cref="BoundText.VerticalAlign" path="/summary"/>
+	/// </summary>
+	public BoundText.VerticalAlignment VerticalAlign
+	{
+		get => Child.VerticalAlign;
+		set => Child.VerticalAlign = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="Text.HorizontalAlign" path="/summary"/>
+	/// </summary>
+	public Text.Text.HorizontalAlignment HorizontalAlign
+	{
+		get => Child.HorizontalAlign;
+		set => Child.HorizontalAlign = value;
+	}
+
+	/// <summary>
 	/// The button text's font.
 	/// </summary>
 	public SpriteFont Font

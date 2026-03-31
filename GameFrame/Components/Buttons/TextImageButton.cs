@@ -18,6 +18,22 @@ public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? par
 	ClickableComponent([Mouse.Buttons.Left], parent), IButton
 {
 	/// <summary>
+	/// <inheritdoc cref="BoundText.VerticalAlign" path="/summary"/>
+	/// </summary>
+	public BoundText.VerticalAlignment VerticalAlign
+	{
+		get => _text.VerticalAlign;
+		set => _text.VerticalAlign = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="Text.HorizontalAlign" path="/summary"/>
+	/// </summary>
+	public Text.Text.HorizontalAlignment HorizontalAlign
+	{
+		get => _text.HorizontalAlign;
+		set => _text.HorizontalAlign = value;
+	}
+	/// <summary>
 	/// <inheritdoc cref="TextButton.Font"/>
 	/// </summary>
 	public SpriteFont Font
