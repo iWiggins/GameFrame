@@ -3,7 +3,9 @@ using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameFrame.Components.Text;
 
@@ -12,6 +14,15 @@ namespace GameFrame.Components.Text;
 /// </summary>
 public class BoundText : GeometricComponent
 {
+	public enum VerticalAlignment
+	{
+		Top,
+		Center,
+		Bottom
+	}
+
+	public VerticalAlignment VerticalAlign { get; set; } = VerticalAlignment.Center;
+
 	/// <summary>
 	/// <inheritdoc cref="Text.Font" path="/summary"/>
 	/// </summary>
@@ -44,12 +55,72 @@ public class BoundText : GeometricComponent
 		get => _text.Effect;
 		set => _text.Effect = value;
 	}
+	/// <summary>
+	/// The proportional space between the sides of the component and the text.
+	/// </summary>
+	public double Margins
+	{
+		set
+		{
+			Invalidate();
+			_marginLeft = _marginRight = _marginTop = _marginBottom = value;
+		}
+	}
+	/// <summary>
+	/// The proportional space between the left of the component and the text.
+	/// </summary>
+
+	public double MarginLeft
+	{
+		get => _marginLeft;
+		set
+		{
+			Invalidate();
+			_marginLeft = value;
+		}
+	}
+	/// <summary>
+	/// The proportional space between the right of the component and the text.
+	/// </summary>
+	public double MarginRight
+	{ 
+		get => _marginRight;
+		set
+		{
+			Invalidate();
+			_marginRight = value;
+		}
+	}
+	/// <summary>
+	/// The proportional space between the top of the component and the text.
+	/// </summary>
+	public double MarginTop
+	{
+		get => _marginTop;
+		set
+		{
+			Invalidate();
+			_marginTop = value;
+		}
+	}
+	/// <summary>
+	/// The proportional space between the bottom of the component and the text.
+	/// </summary>
+	public double MarginBottom
+	{
+		get => _marginBottom;
+		set
+		{
+			Invalidate();
+			_marginBottom = value;
+		}
+	}
 
 	public override IEnumerable<IComponent> Children
 	{
 		get
 		{
-			if(!valid) FitText();
+			if(!_valid) FitText();
 			yield return _text;
 		}
 	}
@@ -63,12 +134,15 @@ public class BoundText : GeometricComponent
 		base(parent)
 	{
 		_text = new(font, this);
-		valid = false;
+		_valid = false;
 	}
 
 	public override bool AddChild(IComponent component) => false;
-	public override void Invalidate() =>
-		valid = false;
+	public override void Invalidate()
+	{
+		_valid = false;
+		_text.Invalidate();
+	}
 	public override bool RemoveChild(IComponent component) => false;
 
 	/// <summary>
@@ -76,39 +150,61 @@ public class BoundText : GeometricComponent
 	/// </summary>
 	public void FitText()
 	{
-		if(Contents != "")
+		if(!_text.IsEmpty)
 		{
-			Vector2 textSize = Font.MeasureString(Contents);
+			Vector2 textSize = _text.CalculateMeasure();
 
 			// if Either dimension is 0, do nothing.
 			if(textSize.X != 0 && textSize.Y != 0)
 			{
+				int leftMargin = (int)(Width * _marginLeft);
+				int rightMargin = (int)(Width * _marginRight);
+				int topMargin = (int)(Width * _marginTop);
+				int bottomMargin = (int)(Width * _marginBottom);
+
+				int effectiveWidth = Width - (leftMargin + rightMargin);
+				int effectiveHeight = Height - (topMargin + bottomMargin);
+
+				int effectiveX = X + leftMargin;
+
+				int effectiveY = Y + topMargin;
+
 				// by default, attempt to scale width first
-				int newWidth = Width;
+				int newWidth = effectiveWidth;
 				float scaleFactor = newWidth / textSize.X;
 				int newHeight = (int)(scaleFactor * textSize.Y);
 
 				// If new height would exceed parent, set new height to parent
 				// height and calculate new scale factor for the width
-				if(newHeight > Height)
+				if(newHeight > effectiveHeight)
 				{
-					newHeight = Height;
+					newHeight = effectiveHeight;
 					scaleFactor = newHeight / textSize.Y;
 					newWidth = (int)(scaleFactor * textSize.X);
 				}
 
 				_text.Scale = new(scaleFactor, scaleFactor);
 
-				int xOffset = (Width - newWidth) / 2;
-				int yOffset = (Height - newHeight) / 2;
+				int xOffset = VerticalAlign switch
+				{
+					VerticalAlignment.Top => topMargin,
+					VerticalAlignment.Center => (effectiveWidth - newWidth) / 2,
+					VerticalAlignment.Bottom => effectiveWidth - newWidth,
+					_ => throw new InvalidOperationException("Invalid BoundText alignment.")
+				};
+				int yOffset = (effectiveHeight - newHeight) / 2;
 
-				_text.Position = new(X + xOffset, Y + yOffset);				
+				_text.Position = new(effectiveX + xOffset, effectiveY + yOffset);				
 			}
 		}
 
-		valid = true;
+		_valid = true;
 	}
 
 	private readonly Text _text;
-	private bool valid;
+	private bool _valid;
+	private double _marginLeft = 0;
+	private double _marginRight = 0;
+	private double _marginTop = 0;
+	private double _marginBottom = 0;
 }

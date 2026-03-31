@@ -57,6 +57,45 @@ public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? par
 		get => _text.Effect;
 		set => _text.Effect = value;
 	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.Margins" path="/summary"/>
+	/// </summary>
+	public double Margins
+	{
+		set => _text.Margins = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginLeft" path="/summary"/>
+	/// </summary>
+	public double MarginLeft
+	{
+		get => _text.MarginLeft;
+		set => _text.MarginLeft = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginRight" path="/summary"/>
+	/// </summary>
+	public double MarginRight
+	{
+		get => _text.MarginRight;
+		set => _text.MarginRight = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginTop" path="/summary"/>
+	/// </summary>
+	public double MarginTop
+	{
+		get => _text.MarginTop;
+		set => _text.MarginTop = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginBottom" path="/summary"/>
+	/// </summary>
+	public double MarginBottom
+	{
+		get => _text.MarginBottom;
+		set => _text.MarginBottom = value;
+	}
 	public override bool AddChild(IComponent component) => false;
 	public override bool RemoveChild(IComponent component) => false;
 	public override void Invalidate()

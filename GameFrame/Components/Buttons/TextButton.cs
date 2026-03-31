@@ -47,4 +47,43 @@ public class TextButton(SpriteFont font, IComponent? parent = null):
 		get => Child.Effect;
 		set => Child.Effect = value;
 	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.Margins" path="/summary"/>
+	/// </summary>
+	public double Margins
+	{
+		set => Child.Margins = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginLeft" path="/summary"/>
+	/// </summary>
+	public double MarginLeft
+	{
+		get => Child.MarginLeft;
+		set => Child.MarginLeft = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginRight" path="/summary"/>
+	/// </summary>
+	public double MarginRight
+	{
+		get => Child.MarginRight;
+		set => Child.MarginRight = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginTop" path="/summary"/>
+	/// </summary>
+	public double MarginTop
+	{
+		get => Child.MarginTop;
+		set => Child.MarginTop = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginBottom" path="/summary"/>
+	/// </summary>
+	public double MarginBottom
+	{
+		get => Child.MarginBottom;
+		set => Child.MarginBottom = value;
+	}
 }
