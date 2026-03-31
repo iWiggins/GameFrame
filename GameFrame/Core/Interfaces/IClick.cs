@@ -29,6 +29,10 @@ public interface IClick: IReset
 	/// </summary>
 	bool Down { get; }
 	/// <summary>
+	/// The button held down.
+	/// </summary>
+	Mouse.Buttons? DownButton { get; }
+	/// <summary>
 	/// Whether a pointer is currently hovering over the component.
 	/// </summary>
 	bool Hovering { get; }

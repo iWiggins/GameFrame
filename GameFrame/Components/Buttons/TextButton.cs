@@ -1,6 +1,7 @@
 ﻿using GameFrame.Components.Text;
 using GameFrame.Core.Clickables;
 using GameFrame.Core.Components;
+using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +13,7 @@ namespace GameFrame.Components.Buttons;
 /// <param name="font">The font for the button's text.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public class TextButton(SpriteFont font, IComponent? parent = null):
-	ClickableTwig<BoundText>(new(font), parent), IButton
+	ClickableTwig<BoundText>([Mouse.Buttons.Left], new(font), parent), IButton
 {
 	/// <summary>
 	/// The button text's font.

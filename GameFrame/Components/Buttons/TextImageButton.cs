@@ -1,6 +1,7 @@
 ﻿using GameFrame.Components.Images;
 using GameFrame.Components.Text;
 using GameFrame.Core.Clickables;
+using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +15,7 @@ namespace GameFrame.Components.Buttons;
 /// <param name="texture"><inheritdoc cref="ImageButton.ImageButton" path="/param[@name='texture']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null):
-	ClickableComponent(parent), IButton
+	ClickableComponent([Mouse.Buttons.Left], parent), IButton
 {
 	/// <summary>
 	/// <inheritdoc cref="TextButton.Font"/>

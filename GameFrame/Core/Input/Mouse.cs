@@ -122,6 +122,13 @@ public class Mouse(IRoot root) : IComponent, IUpdate, IInitialize, IReset
 	/// Whether the right button is down.
 	/// </summary>
 	public bool RightDown { get; private set; }
+	public bool IsDown(Buttons button) => button switch
+	{ 
+		Buttons.Left => LeftDown,
+		Buttons.Right => RightDown,
+		_ => throw new ArgumentOutOfRangeException(nameof(button))
+	};
+	public bool ButtonDown => LeftDown || RightDown;
 
 	public IComponent? Parent => root;
 
