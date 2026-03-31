@@ -13,8 +13,8 @@ namespace GameFrame.Core.Clickables;
 /// <param name="child"><inheritdoc cref="Twig{TChild}.Twig" path="/param[@name='child']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public abstract class ClickableTwig<TChild>(
-	IEnumerable<Mouse.Buttons> buttons,
 	TChild child,
+	IEnumerable<Mouse.Buttons>? buttons = null,
 	IComponent? parent = null):
 	GeometricTwig<TChild>(child, parent), IClick where TChild : IComponent
 {
@@ -46,7 +46,7 @@ public abstract class ClickableTwig<TChild>(
 			}
 			if(DownButton is null)
 			{
-				foreach(var button in buttons)
+				foreach(var button in _buttons)
 				{
 					if(mouse.IsDown(button))
 					{
@@ -128,5 +128,5 @@ public abstract class ClickableTwig<TChild>(
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-	private readonly List<Mouse.Buttons> _buttons = [.. buttons];
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [Mouse.Buttons.Left] : [.. buttons];
 }

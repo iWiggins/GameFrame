@@ -14,7 +14,7 @@ namespace GameFrame.Core.Clickables;
 /// </summary>
 /// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class ClickableBranch(IEnumerable<Mouse.Buttons> buttons, IComponent? parent = null): GeometricBranch(parent), IClick
+public abstract class ClickableBranch(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricBranch(parent), IClick
 {
     public event ClickablePressedHandler? Pressed;
 	public event ClickableReleasedHandler? Released;
@@ -44,7 +44,7 @@ public abstract class ClickableBranch(IEnumerable<Mouse.Buttons> buttons, ICompo
 			}
 			if(DownButton is null)
 			{
-				foreach(var button in buttons)
+				foreach(var button in _buttons)
 				{
 					if(mouse.IsDown(button))
 					{
@@ -126,14 +126,14 @@ public abstract class ClickableBranch(IEnumerable<Mouse.Buttons> buttons, ICompo
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-	private readonly List<Mouse.Buttons> _buttons = [.. buttons];
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }
 /// <summary>
 /// A <see cref="Component"/> that is clickable.
 /// </summary>
 /// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class ClickableComponent(IEnumerable<Mouse.Buttons> buttons, IComponent? parent = null): GeometricComponent(parent), IClick
+public abstract class ClickableComponent(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricComponent(parent), IClick
 {
     public event ClickablePressedHandler? Pressed;
 	public event ClickableReleasedHandler? Released;
@@ -163,7 +163,7 @@ public abstract class ClickableComponent(IEnumerable<Mouse.Buttons> buttons, ICo
 			}
 			if(DownButton is null)
 			{
-				foreach(var button in buttons)
+				foreach(var button in _buttons)
 				{
 					if(mouse.IsDown(button))
 					{
@@ -245,14 +245,14 @@ public abstract class ClickableComponent(IEnumerable<Mouse.Buttons> buttons, ICo
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-	private readonly List<Mouse.Buttons> _buttons = [.. buttons];
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }
 /// <summary>
 /// A <see cref="Leaf"/> that is clickable.
 /// </summary>
 /// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class ClickableLeaf(IEnumerable<Mouse.Buttons> buttons, IComponent? parent = null): GeometricLeaf(parent), IClick
+public abstract class ClickableLeaf(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricLeaf(parent), IClick
 {
     public event ClickablePressedHandler? Pressed;
 	public event ClickableReleasedHandler? Released;
@@ -282,7 +282,7 @@ public abstract class ClickableLeaf(IEnumerable<Mouse.Buttons> buttons, ICompone
 			}
 			if(DownButton is null)
 			{
-				foreach(var button in buttons)
+				foreach(var button in _buttons)
 				{
 					if(mouse.IsDown(button))
 					{
@@ -364,5 +364,5 @@ public abstract class ClickableLeaf(IEnumerable<Mouse.Buttons> buttons, ICompone
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-	private readonly List<Mouse.Buttons> _buttons = [.. buttons];
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }

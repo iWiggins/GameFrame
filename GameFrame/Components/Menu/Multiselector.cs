@@ -13,7 +13,7 @@ namespace GameFrame.Components.Menu;
 /// <param name="options">The components to switch between.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public class Multiselector(IEnumerable<IComponent> options, IComponent? parent = null) :
-	ClickableTwig<FillLayout>([Mouse.Buttons.Left], new(), parent), IInitialize
+	ClickableTwig<FillLayout>(new(), null, parent), IInitialize
 {
 	/// <summary>
 	/// Handler for when the current selection has been changed.

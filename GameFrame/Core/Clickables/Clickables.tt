@@ -27,7 +27,7 @@ foreach(string fname in Directory.GetFiles(path))
 /// </summary>
 /// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class Clickable<#=name#>(IEnumerable<Mouse.Buttons> buttons, IComponent? parent = null): Geometric<#=name#>(parent), IClick
+public abstract class Clickable<#=name#>(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): Geometric<#=name#>(parent), IClick
 {
     public event ClickablePressedHandler? Pressed;
 	public event ClickableReleasedHandler? Released;
@@ -57,7 +57,7 @@ public abstract class Clickable<#=name#>(IEnumerable<Mouse.Buttons> buttons, ICo
 			}
 			if(DownButton is null)
 			{
-				foreach(var button in buttons)
+				foreach(var button in _buttons)
 				{
 					if(mouse.IsDown(button))
 					{
@@ -139,7 +139,7 @@ public abstract class Clickable<#=name#>(IEnumerable<Mouse.Buttons> buttons, ICo
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
-	private readonly List<Mouse.Buttons> _buttons = [.. buttons];
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }
 <#
 }

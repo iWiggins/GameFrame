@@ -13,7 +13,7 @@ namespace GameFrame.Components.Buttons;
 /// <param name="font">The font for the button's text.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
 public class TextButton(SpriteFont font, IComponent? parent = null):
-	ClickableTwig<BoundText>([Mouse.Buttons.Left], new(font), parent), IButton
+	ClickableTwig<BoundText>(new(font), null, parent), IButton
 {
 	/// <summary>
 	/// The button text's font.
