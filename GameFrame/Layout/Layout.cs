@@ -19,7 +19,15 @@ public abstract class Layout(IComponent? parent = null) : IComponent, IGeometric
 
 	public ulong Id { get; } = Identity.GenerateId();
 
-	public int Layer { get; set; } = 0;
+	public int Layer
+    {
+        get => _layer;
+        set
+        {
+            Parent?.Invalidate();
+            _layer = value;
+        }
+    }
 	public bool Enabled { get; set; } = true;
 
     public bool Initialized { get; private set; }
@@ -221,6 +229,7 @@ public abstract class Layout(IComponent? parent = null) : IComponent, IGeometric
 
 
 	protected Rectangle _geometry;
+    protected int _layer = 0;
     protected readonly HashSet<IComponent> _children = [];
     protected IEnumerable<IComponent>? _cache = null;
 }
