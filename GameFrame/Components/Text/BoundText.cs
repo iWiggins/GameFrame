@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GameFrame.Components.Text;
 
@@ -195,14 +194,15 @@ public class BoundText : GeometricComponent
 
 				_text.Scale = new(scaleFactor, scaleFactor);
 
-				int xOffset = VerticalAlign switch
+				int xOffset = (effectiveWidth - newWidth) / 2;
+
+				int yOffset = VerticalAlign switch
 				{
 					VerticalAlignment.Top => topMargin,
-					VerticalAlignment.Center => (effectiveWidth - newWidth) / 2,
-					VerticalAlignment.Bottom => effectiveWidth - newWidth,
+					VerticalAlignment.Center => (effectiveHeight - newHeight) / 2,
+					VerticalAlignment.Bottom => effectiveHeight - newHeight,
 					_ => throw new InvalidOperationException("Invalid BoundText alignment.")
 				};
-				int yOffset = (effectiveHeight - newHeight) / 2;
 
 				_text.Position = new(effectiveX + xOffset, effectiveY + yOffset);				
 			}

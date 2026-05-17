@@ -101,17 +101,20 @@ public class Text(SpriteFont font, IComponent? parent = null) : Leaf(parent), ID
 	{
 		var measure = CalculateMeasure();
 		float y = Position.Y;
+		float yOffset = measure.Y / _lines.Count * Scale.Y;
 		foreach(string line in _lines)
 		{
 			float x = Position.X;
 			Vector2 lineMeasure = Font.MeasureString(line);
-			x = HorizontalAlign switch
+			float xOffset = (HorizontalAlign switch
 			{
-				HorizontalAlignment.Left => x,
-				HorizontalAlignment.Right => x + (measure.X - lineMeasure.X),
-				HorizontalAlignment.Center => x + (measure.X - lineMeasure.X) / 2,
+				HorizontalAlignment.Left => 0,
+				HorizontalAlignment.Right => measure.X - lineMeasure.X,
+				HorizontalAlignment.Center => (measure.X - lineMeasure.X) / 2,
 				_ => throw new InvalidOperationException("Invalid Text alignment.")
-			};
+			}) * Scale.X;
+
+			x += xOffset;
 
 			spriteBatch.DrawString(
 				Font,
@@ -125,7 +128,7 @@ public class Text(SpriteFont font, IComponent? parent = null) : Leaf(parent), ID
 				0.0f
 				);
 
-			y += lineMeasure.Y;
+			y += yOffset;
 		}
 	}
 
