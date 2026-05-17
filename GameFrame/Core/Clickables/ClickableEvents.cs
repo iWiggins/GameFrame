@@ -24,8 +24,6 @@ public class ClickablePressedEventArgs(Mouse.Buttons button, Point position): Ev
 /// <summary>
 /// Arguments for a mouse released event.
 /// </summary>
-/// <param name="button"></param>
-/// <param name="position"></param>
 /// <param name="button"><inheritdoc cref="Button" path="/summary"/></param>
 /// <param name="position"><inheritdoc cref="Position" path="/summary"/></param>
 public class ClickableReleasedEventArgs(Mouse.Buttons button, Point position, double duration) : EventArgs
