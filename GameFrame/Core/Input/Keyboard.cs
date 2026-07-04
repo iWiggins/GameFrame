@@ -57,6 +57,15 @@ public partial class Keyboard : IComponent, IUpdate
 	public bool IsKeyUp(Keys key) =>
 		KeyState.IsKeyUp(key);
 
+
+	public event Key.KeyDownHandler KeyPressed;
+	public event Key.KeyUpHandler KeyReleased;
+
+	internal void RaiseKeyPressed(Keys key) =>
+		KeyPressed(key);
+	internal void RaiseKeyReleased(Keys key, double duration) =>
+		KeyReleased(key, duration);
+
 	private KeyboardState KeyState;
 
 	private readonly IRoot _root;
