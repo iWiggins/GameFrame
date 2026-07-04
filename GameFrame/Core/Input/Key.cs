@@ -62,15 +62,17 @@ public class Key(Keyboard parent, Keys keycode) : Leaf(parent), IUpdate, IReset
 			{
 				KeyPressed(KeyCode);
 			}
+			parent.RaiseKeyPressed(KeyCode);
 		}
 		else if(!pressed && IsDown)
 		{
 			IsDown = false;
+			double dt = time.TotalGameTime.TotalMilliseconds - PressedOn.TotalGameTime.TotalMilliseconds;
 			if(KeyReleased is not null)
 			{
-				double dt = time.TotalGameTime.TotalMilliseconds - PressedOn.TotalGameTime.TotalMilliseconds;
 				KeyReleased(KeyCode, dt);
 			}
+			parent.RaiseKeyReleased(KeyCode, dt);
 		}
 	}
 

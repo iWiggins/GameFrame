@@ -2,6 +2,8 @@
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 
 namespace GameFrame.Components.Text;
 
@@ -10,21 +12,52 @@ namespace GameFrame.Components.Text;
 /// </summary>
 /// <param name="font"><inheritdoc cref="Text.Font" path="/summary"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// /// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class Text(SpriteFont font, IComponent? parent = null, int layer = 0) : Leaf(parent, layer), IDraw
+public class Text(SpriteFont font, IComponent? parent = null) : Leaf(parent), IDraw
 {
+	public enum HorizontalAlignment
+	{
+		Left,
+		Center,
+		Right
+	}
+	/// <summary>
+	/// The horizontal alignment of the text.
+	/// </summary>
+	public HorizontalAlignment HorizontalAlign { get; set; } = HorizontalAlignment.Center;
 	/// <summary>
 	/// The font used while drawing the text.
 	/// </summary>
 	public SpriteFont Font { get; set; } = font;
 	/// <summary>
-	/// The string data being drawn.
+	/// The string data the text represents.
 	/// </summary>
-	public string Contents { get; set; } = "";
+	public string Contents
+	{
+		get => _contents;
+		set
+		{
+			Invalidate();
+			_contents = value;
+			_lines.Clear();
+			_lines.AddRange(StringSupport.SplitLines(value));
+		}
+	}
+	/// <summary>
+	/// Whether there the string the text represents is empty.
+	/// </summary>
+	public bool IsEmpty => _lines.Count <= 0;
 	/// <summary>
 	/// Scale transformation to increase or decrease the size of the rendered image.
 	/// </summary>
-	public Vector2 Scale { get; set; } = Vector2.One;
+	public Vector2 Scale
+	{
+		get => _scale;
+		set
+		{
+			Invalidate();
+			_scale = value;
+		}
+	}
 	/// <summary>
 	/// The color to draw the text in.
 	/// </summary>
@@ -41,18 +74,67 @@ public class Text(SpriteFont font, IComponent? parent = null, int layer = 0) : L
 	/// </summary>
 	public SpriteEffects Effect { get; set; } = SpriteEffects.None;
 
+	public Vector2 CalculateMeasure()
+	{
+		if(_valid)
+		{
+			return _measure;
+		}
+		else
+		{
+			float maxWidth = 0;
+			float height = 0;
+			foreach(var line in _lines)
+			{
+				var measure = Font.MeasureString(line);
+				if(measure.X > maxWidth) maxWidth = measure.X;
+				height += measure.Y;
+			}
+			_measure = new(maxWidth, height);
+			return _measure;
+		}
+	}
+
+	public override void Invalidate() => _valid = false;
+
 	public void Draw(SpriteBatch spriteBatch)
 	{
-		spriteBatch.DrawString(
-			Font,
-			Contents,
-			Position,
-			Color,
-			0.0f, // rotation, TODO: Implement rotation
-			Vector2.Zero, // origin, TODO: Implement rotation
-			Scale,
-			Effect,
-			0.0f
-			);
+		var measure = CalculateMeasure();
+		float y = Position.Y;
+		float yOffset = measure.Y / _lines.Count * Scale.Y;
+		foreach(string line in _lines)
+		{
+			float x = Position.X;
+			Vector2 lineMeasure = Font.MeasureString(line);
+			float xOffset = (HorizontalAlign switch
+			{
+				HorizontalAlignment.Left => 0,
+				HorizontalAlignment.Right => measure.X - lineMeasure.X,
+				HorizontalAlignment.Center => (measure.X - lineMeasure.X) / 2,
+				_ => throw new InvalidOperationException("Invalid Text alignment.")
+			}) * Scale.X;
+
+			x += xOffset;
+
+			spriteBatch.DrawString(
+				Font,
+				line,
+				new(x,y),
+				Color,
+				0.0f,
+				Vector2.Zero,
+				Scale,
+				Effect,
+				0.0f
+				);
+
+			y += yOffset;
+		}
 	}
+
+	private readonly List<string> _lines = [];
+	private string _contents = "";
+	private Vector2 _measure;
+	private Vector2 _scale = Vector2.One;
+	private bool _valid = false;
 }

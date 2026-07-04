@@ -1,5 +1,7 @@
-﻿using GameFrame.Components.Text;
+﻿using GameFrame.Components.Images;
+using GameFrame.Components.Text;
 using GameFrame.Core.Clickables;
+using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,9 +14,25 @@ namespace GameFrame.Components.Buttons;
 /// <param name="font"><inheritdoc cref="TextButton.TextButton" path="/param[@name='font']"/></param>
 /// <param name="texture"><inheritdoc cref="ImageButton.ImageButton" path="/param[@name='texture']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null, int layer = 0) : ClickableComponent(parent, layer), IButton
+public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? parent = null):
+	ClickableComponent([Mouse.Buttons.Left], parent), IButton
 {
+	/// <summary>
+	/// <inheritdoc cref="BoundText.VerticalAlign" path="/summary"/>
+	/// </summary>
+	public BoundText.VerticalAlignment VerticalAlign
+	{
+		get => _text.VerticalAlign;
+		set => _text.VerticalAlign = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="Text.HorizontalAlign" path="/summary"/>
+	/// </summary>
+	public Text.Text.HorizontalAlignment HorizontalAlign
+	{
+		get => _text.HorizontalAlign;
+		set => _text.HorizontalAlign = value;
+	}
 	/// <summary>
 	/// <inheritdoc cref="TextButton.Font"/>
 	/// </summary>
@@ -54,6 +72,45 @@ public class TextImageButton(SpriteFont font, Texture2D texture, IComponent? par
 	{
 		get => _text.Effect;
 		set => _text.Effect = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.Margins" path="/summary"/>
+	/// </summary>
+	public double Margins
+	{
+		set => _text.Margins = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginLeft" path="/summary"/>
+	/// </summary>
+	public double MarginLeft
+	{
+		get => _text.MarginLeft;
+		set => _text.MarginLeft = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginRight" path="/summary"/>
+	/// </summary>
+	public double MarginRight
+	{
+		get => _text.MarginRight;
+		set => _text.MarginRight = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginTop" path="/summary"/>
+	/// </summary>
+	public double MarginTop
+	{
+		get => _text.MarginTop;
+		set => _text.MarginTop = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginBottom" path="/summary"/>
+	/// </summary>
+	public double MarginBottom
+	{
+		get => _text.MarginBottom;
+		set => _text.MarginBottom = value;
 	}
 	public override bool AddChild(IComponent component) => false;
 	public override bool RemoveChild(IComponent component) => false;

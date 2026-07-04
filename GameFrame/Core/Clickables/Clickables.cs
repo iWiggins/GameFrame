@@ -1,30 +1,34 @@
 ﻿/// Clickable versions of geometric classes.
 /// This code is generated and should not be manually edited.
 using GameFrame.Core.Components;
-using GameFrame.Core.EventHandlers;
 using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using GameFrame.Core.Input;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace GameFrame.Core.Clickables;
 
 /// <summary>
 /// A <see cref="Branch"/> that is clickable.
 /// </summary>
-public abstract class ClickableBranch(IComponent? parent, int layer = 0): GeometricBranch(parent, layer), IClick
+/// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableBranch(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricBranch(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
-	public bool Down { get; private set; } = false;
-	public bool Hovering {get; private set; } = false;
+	public bool Down => DownButton is not null;
+	public Mouse.Buttons? DownButton { get; private set; } = null;
+
+	public bool Hovering { get; private set; } = false;
 
 	public void Reset()
 	{
-		Down = false;
+		DownButton = null;
 		Hovering = false;
 	}
 
@@ -36,24 +40,34 @@ public abstract class ClickableBranch(IComponent? parent, int layer = 0): Geomet
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
-			if(mouse.LeftDown && !Down)
+			if(DownButton is null)
 			{
-				Down = true;
-				pressedTime = time;
-				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
+				foreach(var button in _buttons)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					if(mouse.IsDown(button))
+					{
+						DownButton = button;
+						pressedTime = time;
+						if(OnPressed(button, mouse.Position) && Pressed is not null)
+						{
+							Pressed(this, new(button, mouse.Position));
+						}
+						break;
+					}
 				}
 			}
-			else if(!mouse.LeftDown && Down)
+			else
 			{
-				Down = false;
-				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(!mouse.IsDown(DownButton.Value))
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+					if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
+					{
+						Released(this, new(DownButton.Value, mouse.Position, dt));
+					}
+					DownButton = null;
 				}
 			}
 		}
@@ -65,36 +79,36 @@ public abstract class ClickableBranch(IComponent? parent, int layer = 0): Geomet
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
-			if(Down)
+			if(DownButton is not null)
 			{
-				Down = false;
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(DownButton.Value, mouse.Position, dt));
 				}
+				DownButton = null;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Internal callback when the button is hovered.
+	/// Overridable logic for when the component is hovered over.
 	/// </summary>
 	/// <returns>Whether the Hovered event should be raised.</returns>
 	protected virtual bool OnHovered() => true;
 
 	/// <summary>
-	/// Internal callback when the button is unhovered.
+	/// Overridable logic for when a pointer stops hovering the component.
 	/// </summary>
-	/// <param name="dt">The time the button was hovered.</param>
+	/// <param name="dt">The duration the component was hovered.</param>
 	/// <returns>Whether the Unhovered event should be raised.</returns>
 	protected virtual bool OnUnhovered(double dt) => true;
 
 	/// <summary>
-	/// Internal callback when the button is pressed.
+	/// Overridable logic for when the component is pressed.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
@@ -102,33 +116,38 @@ public abstract class ClickableBranch(IComponent? parent, int layer = 0): Geomet
 	protected virtual bool OnPressed(Mouse.Buttons button, Point position) => true;
 
 	/// <summary>
-	/// Internal callback when the button is released.
+	/// Overridable logic for when the component is released.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
-	/// <param name="duration">The time the button spent down.</param>
+	/// <param name="duration">The time the component spent down.</param>
 	/// <returns>Whether the Released event should be raised.</returns>
 	protected virtual bool OnReleased(Mouse.Buttons button, Point position, double duration) => true;
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }
 /// <summary>
 /// A <see cref="Component"/> that is clickable.
 /// </summary>
-public abstract class ClickableComponent(IComponent? parent, int layer = 0): GeometricComponent(parent, layer), IClick
+/// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableComponent(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricComponent(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
-	public bool Down { get; private set; } = false;
-	public bool Hovering {get; private set; } = false;
+	public bool Down => DownButton is not null;
+	public Mouse.Buttons? DownButton { get; private set; } = null;
+
+	public bool Hovering { get; private set; } = false;
 
 	public void Reset()
 	{
-		Down = false;
+		DownButton = null;
 		Hovering = false;
 	}
 
@@ -140,24 +159,34 @@ public abstract class ClickableComponent(IComponent? parent, int layer = 0): Geo
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
-			if(mouse.LeftDown && !Down)
+			if(DownButton is null)
 			{
-				Down = true;
-				pressedTime = time;
-				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
+				foreach(var button in _buttons)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					if(mouse.IsDown(button))
+					{
+						DownButton = button;
+						pressedTime = time;
+						if(OnPressed(button, mouse.Position) && Pressed is not null)
+						{
+							Pressed(this, new(button, mouse.Position));
+						}
+						break;
+					}
 				}
 			}
-			else if(!mouse.LeftDown && Down)
+			else
 			{
-				Down = false;
-				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(!mouse.IsDown(DownButton.Value))
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+					if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
+					{
+						Released(this, new(DownButton.Value, mouse.Position, dt));
+					}
+					DownButton = null;
 				}
 			}
 		}
@@ -169,36 +198,36 @@ public abstract class ClickableComponent(IComponent? parent, int layer = 0): Geo
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
-			if(Down)
+			if(DownButton is not null)
 			{
-				Down = false;
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(DownButton.Value, mouse.Position, dt));
 				}
+				DownButton = null;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Internal callback when the button is hovered.
+	/// Overridable logic for when the component is hovered over.
 	/// </summary>
 	/// <returns>Whether the Hovered event should be raised.</returns>
 	protected virtual bool OnHovered() => true;
 
 	/// <summary>
-	/// Internal callback when the button is unhovered.
+	/// Overridable logic for when a pointer stops hovering the component.
 	/// </summary>
-	/// <param name="dt">The time the button was hovered.</param>
+	/// <param name="dt">The duration the component was hovered.</param>
 	/// <returns>Whether the Unhovered event should be raised.</returns>
 	protected virtual bool OnUnhovered(double dt) => true;
 
 	/// <summary>
-	/// Internal callback when the button is pressed.
+	/// Overridable logic for when the component is pressed.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
@@ -206,33 +235,38 @@ public abstract class ClickableComponent(IComponent? parent, int layer = 0): Geo
 	protected virtual bool OnPressed(Mouse.Buttons button, Point position) => true;
 
 	/// <summary>
-	/// Internal callback when the button is released.
+	/// Overridable logic for when the component is released.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
-	/// <param name="duration">The time the button spent down.</param>
+	/// <param name="duration">The time the component spent down.</param>
 	/// <returns>Whether the Released event should be raised.</returns>
 	protected virtual bool OnReleased(Mouse.Buttons button, Point position, double duration) => true;
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }
 /// <summary>
 /// A <see cref="Leaf"/> that is clickable.
 /// </summary>
-public abstract class ClickableLeaf(IComponent? parent, int layer = 0): GeometricLeaf(parent, layer), IClick
+/// <param name="buttons">The mouse buttons that should trigger the clickable.</param>
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class ClickableLeaf(IEnumerable<Mouse.Buttons>? buttons = null, IComponent? parent = null): GeometricLeaf(parent), IClick
 {
-    public event MouseDownHandler? Pressed;
-	public event MouseUpHandler? Released;
-	public event MouseHoverHandler? Hovered;
-	public event MouseUnhoverHandler? Unhovered;
+    public event ClickablePressedHandler? Pressed;
+	public event ClickableReleasedHandler? Released;
+	public event ClickableHoveredHandler? Hovered;
+	public event ClickableUnhoveredHandler? Unhovered;
 
-	public bool Down { get; private set; } = false;
-	public bool Hovering {get; private set; } = false;
+	public bool Down => DownButton is not null;
+	public Mouse.Buttons? DownButton { get; private set; } = null;
+
+	public bool Hovering { get; private set; } = false;
 
 	public void Reset()
 	{
-		Down = false;
+		DownButton = null;
 		Hovering = false;
 	}
 
@@ -244,24 +278,34 @@ public abstract class ClickableLeaf(IComponent? parent, int layer = 0): Geometri
 			{
 				Hovering = true;
 				hoverTime = time;
-				if(OnHovered() && Hovered is not null) Hovered();
+				if(OnHovered() && Hovered is not null) Hovered(this, new(mouse.Position));
 			}
-			if(mouse.LeftDown && !Down)
+			if(DownButton is null)
 			{
-				Down = true;
-				pressedTime = time;
-				if(OnPressed(Mouse.Buttons.Left, mouse.Position) && Pressed is not null)
+				foreach(var button in _buttons)
 				{
-					Pressed(Mouse.Buttons.Left, mouse.Position);
+					if(mouse.IsDown(button))
+					{
+						DownButton = button;
+						pressedTime = time;
+						if(OnPressed(button, mouse.Position) && Pressed is not null)
+						{
+							Pressed(this, new(button, mouse.Position));
+						}
+						break;
+					}
 				}
 			}
-			else if(!mouse.LeftDown && Down)
+			else
 			{
-				Down = false;
-				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(!mouse.IsDown(DownButton.Value))
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
+					if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
+					{
+						Released(this, new(DownButton.Value, mouse.Position, dt));
+					}
+					DownButton = null;
 				}
 			}
 		}
@@ -273,36 +317,36 @@ public abstract class ClickableLeaf(IComponent? parent, int layer = 0): Geometri
 				double dt = time.TotalGameTime.TotalMilliseconds - hoverTime.TotalGameTime.TotalMilliseconds;
 				if(OnUnhovered(dt) && Unhovered is not null)
 				{
-					Unhovered(dt);
+					Unhovered(this, new(mouse.Position, dt));
 				}
 			}
-			if(Down)
+			if(DownButton is not null)
 			{
-				Down = false;
 				double dt = time.TotalGameTime.TotalMilliseconds - pressedTime.TotalGameTime.TotalMilliseconds;
-				if(OnReleased(Mouse.Buttons.Left, mouse.Position, dt) && Released is not null)
+				if(OnReleased(DownButton.Value, mouse.Position, dt) && Released is not null)
 				{
-					Released(Mouse.Buttons.Left, mouse.Position, dt);
+					Released(this, new(DownButton.Value, mouse.Position, dt));
 				}
+				DownButton = null;
 			}
 		}
 	}
 
 	/// <summary>
-	/// Internal callback when the button is hovered.
+	/// Overridable logic for when the component is hovered over.
 	/// </summary>
 	/// <returns>Whether the Hovered event should be raised.</returns>
 	protected virtual bool OnHovered() => true;
 
 	/// <summary>
-	/// Internal callback when the button is unhovered.
+	/// Overridable logic for when a pointer stops hovering the component.
 	/// </summary>
-	/// <param name="dt">The time the button was hovered.</param>
+	/// <param name="dt">The duration the component was hovered.</param>
 	/// <returns>Whether the Unhovered event should be raised.</returns>
 	protected virtual bool OnUnhovered(double dt) => true;
 
 	/// <summary>
-	/// Internal callback when the button is pressed.
+	/// Overridable logic for when the component is pressed.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
@@ -310,14 +354,15 @@ public abstract class ClickableLeaf(IComponent? parent, int layer = 0): Geometri
 	protected virtual bool OnPressed(Mouse.Buttons button, Point position) => true;
 
 	/// <summary>
-	/// Internal callback when the button is released.
+	/// Overridable logic for when the component is released.
 	/// </summary>
 	/// <param name="button">The mouse button pressed.</param>
 	/// <param name="position">The position of the mouse.</param>
-	/// <param name="duration">The time the button spent down.</param>
+	/// <param name="duration">The time the component spent down.</param>
 	/// <returns>Whether the Released event should be raised.</returns>
 	protected virtual bool OnReleased(Mouse.Buttons button, Point position, double duration) => true;
 
 	private GameTime pressedTime = new();
 	private GameTime hoverTime = new();
+	private readonly List<Mouse.Buttons> _buttons = buttons is null ? [] : [.. buttons];
 }

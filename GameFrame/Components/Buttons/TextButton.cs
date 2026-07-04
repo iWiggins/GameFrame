@@ -1,6 +1,7 @@
 ﻿using GameFrame.Components.Text;
 using GameFrame.Core.Clickables;
 using GameFrame.Core.Components;
+using GameFrame.Core.Input;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,10 +12,26 @@ namespace GameFrame.Components.Buttons;
 /// </summary>
 /// <param name="font">The font for the button's text.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class TextButton(SpriteFont font, IComponent? parent = null, int layer = 0):
-	ClickableTwig<BoundText>(new(font), parent, layer), IButton
+public class TextButton(SpriteFont font, IComponent? parent = null):
+	ClickableTwig<BoundText>(new(font), null, parent), IButton
 {
+	/// <summary>
+	/// <inheritdoc cref="BoundText.VerticalAlign" path="/summary"/>
+	/// </summary>
+	public BoundText.VerticalAlignment VerticalAlign
+	{
+		get => Child.VerticalAlign;
+		set => Child.VerticalAlign = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="Text.HorizontalAlign" path="/summary"/>
+	/// </summary>
+	public Text.Text.HorizontalAlignment HorizontalAlign
+	{
+		get => Child.HorizontalAlign;
+		set => Child.HorizontalAlign = value;
+	}
+
 	/// <summary>
 	/// The button text's font.
 	/// </summary>
@@ -46,5 +63,44 @@ public class TextButton(SpriteFont font, IComponent? parent = null, int layer = 
 	{
 		get => Child.Effect;
 		set => Child.Effect = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.Margins" path="/summary"/>
+	/// </summary>
+	public double Margins
+	{
+		set => Child.Margins = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginLeft" path="/summary"/>
+	/// </summary>
+	public double MarginLeft
+	{
+		get => Child.MarginLeft;
+		set => Child.MarginLeft = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginRight" path="/summary"/>
+	/// </summary>
+	public double MarginRight
+	{
+		get => Child.MarginRight;
+		set => Child.MarginRight = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginTop" path="/summary"/>
+	/// </summary>
+	public double MarginTop
+	{
+		get => Child.MarginTop;
+		set => Child.MarginTop = value;
+	}
+	/// <summary>
+	/// <inheritdoc cref="BoundText.MarginBottom" path="/summary"/>
+	/// </summary>
+	public double MarginBottom
+	{
+		get => Child.MarginBottom;
+		set => Child.MarginBottom = value;
 	}
 }

@@ -15,8 +15,7 @@ namespace GameFrame.Core.Geometrics;
 /// <typeparam name="TChild">The type for this twig's child component.</typeparam>
 /// <param name="child"><inheritdoc cref="Twig{TChild}.Twig" path="/param[@name='child']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = null, int layer = 0) : Twig<TChild>(child, parent, layer), IGeometric where TChild : IComponent
+public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = null) : Twig<TChild>(child, parent), IGeometric where TChild : IComponent
 {
 	public Rectangle Geometry
 	{
@@ -26,6 +25,16 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 			Invalidate();
 			if(Child is IGeometric geo) geo.Geometry = value;
 			else _geometry = value;
+		}
+	}
+	public Point Location
+	{
+		get => Geometry.Location;
+		set
+		{
+			Invalidate();
+			if(Child is IGeometric geo) geo.Location = value;
+			else _geometry.Location = value;
 		}
 	}
 	public int X

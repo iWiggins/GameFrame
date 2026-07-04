@@ -11,9 +11,8 @@ namespace GameFrame.Core.Components;
 /// <typeparam name="TChild">The child component's type.</typeparam>
 /// <param name="child">This Twig's child.</param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public abstract class Twig<TChild>(TChild child, IComponent? parent = null, int layer = 0):
-	Component(parent, layer) where TChild : IComponent
+public abstract class Twig<TChild>(TChild child, IComponent? parent = null):
+	Component(parent) where TChild : IComponent
 {
 	public override IEnumerable<IComponent> Children => [child];
 

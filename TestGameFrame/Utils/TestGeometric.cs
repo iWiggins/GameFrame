@@ -11,6 +11,7 @@ internal class TestGeometric(ulong id, IComponent? parent = null, int layer = 0)
 	}
 	public int X { get => _geometry.X; set => _geometry.X = value; }
 	public int Y { get => _geometry.Y; set => _geometry.Y = value; }
+	public Point Location { get => _geometry.Location; set => _geometry.Location = value; }
 	public int Width { get =>_geometry.Width; set => _geometry.Width = value; }
 	public int Height { get => _geometry.Height; set => _geometry.Height = value; }
 	public Point Center { get => _geometry.Center; set => SetCenter(value); }

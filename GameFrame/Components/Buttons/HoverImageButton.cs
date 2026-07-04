@@ -8,8 +8,7 @@ namespace GameFrame.Components.Buttons;
 /// </summary>
 /// <param name="texture"><inheritdoc cref="ImageButton.ImageButton" path="/param[@name='texture']"/></param>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-/// <param name="layer"><inheritdoc cref="Component.Component" path="/param[@name='layer']"/></param>
-public class HoverImageButton(Texture2D texture, IComponent? parent = null, int layer = 0) : ImageButton(texture, parent, layer), IInitialize
+public class HoverImageButton(Texture2D texture, IComponent? parent = null) : ImageButton(texture, parent), IInitialize
 {
 	public bool Initialized { get; private set; } = false;
 	/// <summary>

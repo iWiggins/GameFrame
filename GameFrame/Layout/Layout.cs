@@ -13,13 +13,21 @@ namespace GameFrame.Layout;
 /// A layout is a UI element that spatially organizes its children in a configurable manner.
 /// </summary>
 /// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
-public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInitialize
+public abstract class Layout(IComponent? parent = null) : IComponent, IGeometric, IInitialize
 {
 	public IComponent? Parent { get; } = parent;
 
 	public ulong Id { get; } = Identity.GenerateId();
 
-	public int Layer { get; set; } = 0;
+	public int Layer
+    {
+        get => _layer;
+        set
+        {
+            Parent?.Invalidate();
+            _layer = value;
+        }
+    }
 	public bool Enabled { get; set; } = true;
 
     public bool Initialized { get; private set; }
@@ -36,6 +44,15 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
         {
             Invalidate();
 			_geometry = value;
+        }
+    }
+    public Point Location
+    {
+        get => _geometry.Location;
+        set
+        {
+            Invalidate();
+            _geometry.Location = value;
         }
     }
     public int X
@@ -212,6 +229,7 @@ public abstract class Layout(IComponent? parent) : IComponent, IGeometric, IInit
 
 
 	protected Rectangle _geometry;
+    protected int _layer = 0;
     protected readonly HashSet<IComponent> _children = [];
     protected IEnumerable<IComponent>? _cache = null;
 }

@@ -10,17 +10,16 @@ namespace GameFrame.Core.Components;
 /// of custom components by implementing the minimal boilerplate needed for components.
 /// </remarks>
 /// <param name="parent">This component's parent (default null).</param>
-/// <param name="layer">This component's layer (default 0).</param>
-public abstract class Component(IComponent? parent = null, int layer = 0) : IComponent
+public abstract class Component(IComponent? parent = null) : IComponent
 {
 	public IComponent? Parent { get; } = parent;
 	public ulong Id { get; } = Identity.GenerateId();
 	public int Layer
 	{
-		get => layer;
+		get => _layer;
 		set
 		{
-			layer = value;
+			_layer = value;
 			Parent?.Invalidate();
 		}
 	}
@@ -34,4 +33,6 @@ public abstract class Component(IComponent? parent = null, int layer = 0) : ICom
 	public abstract bool RemoveChild(IComponent component);
 
 	public abstract void Invalidate();
+
+	private int _layer = 0;
 }

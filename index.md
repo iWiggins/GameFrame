@@ -22,7 +22,7 @@ A frame is a major unit of function, such as a menu or the core gameplay. Frames
 
 Every game object is a component. Each component contains logic for its operation, how it behaves, how it interacts, and what it looks like. Components contain child components to build up complex functionality from individual parts.
 
-All components are ancestors of the root component of a frame. The frame then automates the behavior of all of the components it contains.
+All components are descendents of the root component of a frame. The frame then automates the behavior of all of the components it contains.
 
 ### Layouts
 

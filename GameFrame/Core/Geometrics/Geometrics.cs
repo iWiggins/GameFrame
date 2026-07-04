@@ -13,7 +13,8 @@ namespace GameFrame.Core.Geometrics;
 /// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
 /// of custom components by implementing the minimal boilerplate needed for geometric components.
 /// </remarks>
-public abstract class GeometricBranch(IComponent? parent = null, int layer = 0): Branch(parent, layer), IGeometric
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class GeometricBranch(IComponent? parent = null): Branch(parent), IGeometric
 {
     public Rectangle Geometry
 	{
@@ -40,6 +41,15 @@ public abstract class GeometricBranch(IComponent? parent = null, int layer = 0):
 		{
 			Invalidate();
 			_geometry.Y = value;
+		}
+	}
+	public Point Location
+	{
+		get => _geometry.Location;
+		set
+		{
+			Invalidate();
+			_geometry.Location = value;
 		}
 	}
 	public int Width
@@ -129,7 +139,8 @@ public abstract class GeometricBranch(IComponent? parent = null, int layer = 0):
 /// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
 /// of custom components by implementing the minimal boilerplate needed for geometric components.
 /// </remarks>
-public abstract class GeometricComponent(IComponent? parent = null, int layer = 0): Component(parent, layer), IGeometric
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class GeometricComponent(IComponent? parent = null): Component(parent), IGeometric
 {
     public Rectangle Geometry
 	{
@@ -156,6 +167,15 @@ public abstract class GeometricComponent(IComponent? parent = null, int layer = 
 		{
 			Invalidate();
 			_geometry.Y = value;
+		}
+	}
+	public Point Location
+	{
+		get => _geometry.Location;
+		set
+		{
+			Invalidate();
+			_geometry.Location = value;
 		}
 	}
 	public int Width
@@ -245,7 +265,8 @@ public abstract class GeometricComponent(IComponent? parent = null, int layer = 
 /// ABCs in the <see cref="GameFrame.Core.Geometrics"/> namespace ease development
 /// of custom components by implementing the minimal boilerplate needed for geometric components.
 /// </remarks>
-public abstract class GeometricLeaf(IComponent? parent = null, int layer = 0): Leaf(parent, layer), IGeometric
+/// <param name="parent"><inheritdoc cref="Component.Component" path="/param[@name='parent']"/></param>
+public abstract class GeometricLeaf(IComponent? parent = null): Leaf(parent), IGeometric
 {
     public Rectangle Geometry
 	{
@@ -272,6 +293,15 @@ public abstract class GeometricLeaf(IComponent? parent = null, int layer = 0): L
 		{
 			Invalidate();
 			_geometry.Y = value;
+		}
+	}
+	public Point Location
+	{
+		get => _geometry.Location;
+		set
+		{
+			Invalidate();
+			_geometry.Location = value;
 		}
 	}
 	public int Width
