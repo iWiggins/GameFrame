@@ -15,7 +15,7 @@
     <PackageTags>game;game engine;monogame</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/iWiggins/GameFrame</RepositoryUrl>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="README.md" />
