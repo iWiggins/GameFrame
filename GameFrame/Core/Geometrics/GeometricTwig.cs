@@ -53,7 +53,7 @@ public abstract class GeometricTwig<TChild>(TChild child, IComponent? parent = n
 		set
 		{
 			Invalidate();
-			if(Child is IGeometric geo) geo.X = value;
+			if(Child is IGeometric geo) geo.Y = value;
 			else _geometry.X = value;
 		}
 	}
