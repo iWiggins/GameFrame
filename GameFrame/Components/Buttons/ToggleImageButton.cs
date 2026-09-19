@@ -47,7 +47,7 @@ public class ToggleImageButton(Texture2D texture, IComponent? parent = null) : I
 		}
 	}
 
-	public void Initialize()
+	public virtual void Initialize()
 	{
 		Color = OffColor;
 		Initialized = true;

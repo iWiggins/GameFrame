@@ -3,7 +3,6 @@ using GameFrame.Core.Geometrics;
 using GameFrame.Core.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace GameFrame.Components.Images;
 /// <summary>

@@ -61,10 +61,15 @@ public partial class Keyboard : IComponent, IUpdate
 	public event Key.KeyDownHandler KeyPressed;
 	public event Key.KeyUpHandler KeyReleased;
 
-	internal void RaiseKeyPressed(Keys key) =>
-		KeyPressed(key);
-	internal void RaiseKeyReleased(Keys key, double duration) =>
-		KeyReleased(key, duration);
+	internal void RaiseKeyPressed(Keys key)
+	{
+		if(KeyPressed is not null) KeyPressed(key);
+	}
+
+	internal void RaiseKeyReleased(Keys key, double duration)
+	{
+		if(KeyReleased is not null) KeyReleased(key, duration);
+	}
 
 	private KeyboardState KeyState;
 
